@@ -3,14 +3,26 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Filament\Models\Contracts\FilamentUser;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements FilamentUser
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
+
+    /**
+     * Determina si el usuario puede acceder al panel de administración.
+     */
+    public function canAccessPanel(Panel $panel): bool
+    {
+        // Permitir acceso a todos los usuarios autenticados
+        // Puedes cambiar esto para restringir por rol o email
+        return true;
+    }
 
     /**
      * The attributes that are mass assignable.
