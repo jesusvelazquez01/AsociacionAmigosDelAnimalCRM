@@ -28,7 +28,7 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
 # 4. CONFIGURAR NGINX
 RUN rm -f /etc/nginx/sites-enabled/default
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY docker/nginx.conf /etc/nginx/nginx.conf
 # Creamos carpeta para ini si no existe y copiamos
 RUN mkdir -p /usr/local/etc/php/conf.d/
 COPY docker/uploads.ini /usr/local/etc/php/conf.d/uploads.ini
@@ -62,6 +62,6 @@ RUN chmod -R 775 storage bootstrap/cache
 
 # 11. ENTRYPOINT
 EXPOSE 80
-COPY entrypoint.sh /entrypoint.sh
+COPY docker/entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 ENTRYPOINT ["/entrypoint.sh"]
