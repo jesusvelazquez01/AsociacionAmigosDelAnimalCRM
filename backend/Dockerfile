@@ -15,8 +15,9 @@ RUN apt-get update && apt-get install -y \
     libicu-dev \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
+    libwebp-dev \
     && rm -rf /var/lib/apt/lists/* \
-    && docker-php-ext-configure gd --with-freetype --with-jpeg \
+    && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip gmp intl
 
 # 2. INSTALAR NODE.JS (Versión 20)
