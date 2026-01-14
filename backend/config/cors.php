@@ -15,11 +15,14 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 'sanctum/csrf-cookie', 'login', 'logout', 'register'],
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
+    'allowed_origins' => [
+        'https://asociacion-amigos-del-animal-crm.vercel.app',
+        'http://localhost:3000',  // Para desarrollo local
+    ],
 
     'allowed_origins_patterns' => [],
 
@@ -29,6 +32,6 @@ return [
 
     'max_age' => 0,
 
-    'supports_credentials' => false,
+    'supports_credentials' => true,  // Importante para autenticación con cookies/tokens
 
 ];
