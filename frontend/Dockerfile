@@ -1,22 +1,16 @@
-# 1. Imagen base para instalar dependencias
-FROM node:20-alpine AS deps
-
-# Instalar libc6-compat para compatibilidad con binarios nativos (lightningcss, etc.)
-RUN apk add --no-cache libc6-compat
+# 1. Imagen base para instalar dependencias (usando Debian Slim para compatibilidad con lightningcss)
+FROM node:20-slim AS deps
 
 WORKDIR /app
 
 # Copiamos package.json y lockfile
 COPY package.json package-lock.json* ./
 
-# Instalamos dependencias (incluyendo las de desarrollo para que el build funcione)
+# Instalamos dependencias
 RUN npm ci
 
 # 2. Imagen para construir el proyecto (Builder)
-FROM node:20-alpine AS builder
-
-# Instalar libc6-compat también en el builder
-RUN apk add --no-cache libc6-compat
+FROM node:20-slim AS builder
 
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
@@ -33,15 +27,15 @@ ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 RUN npm run build
 
 # 3. Imagen final para producción (Runner)
-FROM node:20-alpine AS runner
+FROM node:20-slim AS runner
 WORKDIR /app
 
 ENV NODE_ENV=production
 ENV NEXT_TELEMETRY_DISABLED=1
 
-RUN addgroup --system --gid 1001 asoc_amigos_26
-
-RUN adduser --system --uid 1001 asoc_amigos_26
+# Crear usuario y grupo para seguridad
+RUN groupadd --system --gid 1001 asoc_amigos_26 && \
+    useradd --system --uid 1001 --gid asoc_amigos_26 asoc_amigos_26
 
 # --- PERMISOS ---
 COPY --from=builder --chown=asoc_amigos_26:asoc_amigos_26 /app/public ./public
@@ -53,7 +47,6 @@ USER asoc_amigos_26
 EXPOSE 3000
 
 ENV PORT=3000
-
 ENV HOSTNAME="0.0.0.0"
 
 CMD ["node", "server.js"]
