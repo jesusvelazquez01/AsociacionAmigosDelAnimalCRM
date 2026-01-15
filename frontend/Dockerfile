@@ -1,5 +1,9 @@
 # 1. Imagen base para instalar dependencias
 FROM node:20-alpine AS deps
+
+# Instalar libc6-compat para compatibilidad con binarios nativos (lightningcss, etc.)
+RUN apk add --no-cache libc6-compat
+
 WORKDIR /app
 
 # Copiamos package.json y lockfile
@@ -10,26 +14,30 @@ RUN npm ci
 
 # 2. Imagen para construir el proyecto (Builder)
 FROM node:20-alpine AS builder
+
+# Instalar libc6-compat también en el builder
+RUN apk add --no-cache libc6-compat
+
 WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 
 # Deshabilitamos telemetría de Next.js
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NEXT_TELEMETRY_DISABLED=1
 
 # Argumentos de construcción (Las variables de entorno de Easypanel se pasan aquí)
 ARG NEXT_PUBLIC_API_URL
 ENV NEXT_PUBLIC_API_URL=$NEXT_PUBLIC_API_URL
 
-# Ejecutamos el build (Aquí es donde te daba el error 127, ahora funcionará)
+# Ejecutamos el build
 RUN npm run build
 
 # 3. Imagen final para producción (Runner)
 FROM node:20-alpine AS runner
 WORKDIR /app
 
-ENV NODE_ENV production
-ENV NEXT_TELEMETRY_DISABLED 1
+ENV NODE_ENV=production
+ENV NEXT_TELEMETRY_DISABLED=1
 
 RUN addgroup --system --gid 1001 asoc_amigos_26
 
@@ -44,8 +52,8 @@ USER asoc_amigos_26
 
 EXPOSE 3000
 
-ENV PORT 3000
+ENV PORT=3000
 
-ENV HOSTNAME "0.0.0.0"
+ENV HOSTNAME="0.0.0.0"
 
 CMD ["node", "server.js"]
