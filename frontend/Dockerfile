@@ -1,4 +1,4 @@
-# 1. Imagen base para instalar dependencias (usando Debian Slim para compatibilidad con lightningcss)
+# 1. Imagen base para instalar dependencias
 FROM node:20-slim AS deps
 
 WORKDIR /app
@@ -6,8 +6,9 @@ WORKDIR /app
 # Copiamos package.json y lockfile
 COPY package.json package-lock.json* ./
 
-# Instalamos dependencias
-RUN npm ci
+# Instalamos dependencias y forzamos la instalación de binarios nativos de lightningcss
+RUN npm ci && \
+    npm rebuild lightningcss
 
 # 2. Imagen para construir el proyecto (Builder)
 FROM node:20-slim AS builder
