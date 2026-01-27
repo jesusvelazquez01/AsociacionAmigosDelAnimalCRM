@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import { ChevronLeft, ChevronRight, ArrowRight, Heart } from 'lucide-react';
 
 const images = [
     '/Foto-perritos/perrito1.jpg',
@@ -37,23 +38,25 @@ const AdoptionCTA = () => {
     };
 
     return (
-        <section className="py-20 bg-white relative overflow-hidden">
-            {/* Decorative elements */}
-            <div className="absolute top-0 left-0 w-64 h-64 bg-pink-100 rounded-full -translate-x-1/2 -translate-y-1/2 opacity-50" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-50 rounded-full translate-x-1/2 translate-y-1/2 opacity-50" />
-            
+        <section className="py-24 bg-gradient-to-b from-background via-secondary/10 to-background relative overflow-hidden">
+            {/* Decoraciones de fondo */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl" />
+            </div>
+
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                 <div className="grid lg:grid-cols-2 gap-12 items-center">
-                    
+
                     {/* Carousel - Left side */}
-                    <motion.div 
+                    <motion.div
                         className="relative"
                         initial={{ opacity: 0, x: -50 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6 }}
+                        transition={{ duration: 6.0 }}
                         viewport={{ once: true }}
                     >
-                        <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl">
+                        <div className="relative aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl border border-border/50">
                             <AnimatePresence mode="wait">
                                 <motion.img
                                     key={currentIndex}
@@ -63,30 +66,14 @@ const AdoptionCTA = () => {
                                     initial={{ opacity: 0, scale: 1.1 }}
                                     animate={{ opacity: 1, scale: 1 }}
                                     exit={{ opacity: 0, scale: 0.95 }}
-                                    transition={{ duration: 0.5 }}
+                                    transition={{ duration: 1.6 }}
                                 />
                             </AnimatePresence>
-                            
+
                             {/* Gradient overlay */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
-                            
-                            {/* Navigation arrows */}
-                            <button 
-                                onClick={prevSlide}
-                                className="absolute left-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-all hover:scale-110"
-                            >
-                                <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                                </svg>
-                            </button>
-                            <button 
-                                onClick={nextSlide}
-                                className="absolute right-4 top-1/2 -translate-y-1/2 w-12 h-12 bg-white/90 backdrop-blur-sm rounded-full flex items-center justify-center shadow-lg hover:bg-white transition-all hover:scale-110"
-                            >
-                                <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                                </svg>
-                            </button>
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
+
+
 
                             {/* Dots indicator */}
                             <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
@@ -94,48 +81,48 @@ const AdoptionCTA = () => {
                                     <button
                                         key={index}
                                         onClick={() => setCurrentIndex(index)}
-                                        className={`w-2 h-2 rounded-full transition-all ${
-                                            index === currentIndex 
-                                                ? 'bg-white w-6' 
-                                                : 'bg-white/50 hover:bg-white/80'
-                                        }`}
+                                        className={`h-2 rounded-full transition-all ${index === currentIndex
+                                            ? 'bg-primary w-6'
+                                            : 'bg-white/50 w-2 hover:bg-white/80'
+                                            }`}
                                     />
                                 ))}
                             </div>
-                        </div>
 
-                        
+
+                        </div>
                     </motion.div>
 
                     {/* Content - Right side */}
-                    <motion.div 
+                    <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.6, delay: 0.2 }}
                         viewport={{ once: true }}
                     >
-                        {/* Paw prints decoration */}
-                        <motion.div 
-                            className="flex gap-3 mb-6"
-                            initial={{ opacity: 0, y: -10 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                        {/* Badge */}
+                        <motion.span
+                            className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-bold mb-6"
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5, delay: 0.3 }}
                             viewport={{ once: true }}
                         >
-                        </motion.div>
+                            Dale una segunda oportunidad
+                        </motion.span>
 
-                        <motion.h2 
-                            className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight"
+                        <motion.h2
+                            className="text-4xl md:text-5xl font-bold text-foreground mb-6 leading-tight"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.4 }}
                             viewport={{ once: true }}
                         >
-                            Adoptá un <span className="text-transparent bg-clip-text bg-primary">Asoc</span> y cambiá sus vidas.
+                            Adoptá un <span className="text-primary">Asoc</span> y cambiá sus vidas.
                         </motion.h2>
 
-                        <motion.div 
-                            className="space-y-4 text-lg text-gray-600 leading-relaxed"
+                        <motion.div
+                            className="space-y-4 text-lg text-muted-foreground leading-relaxed"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.5 }}
@@ -143,44 +130,37 @@ const AdoptionCTA = () => {
                         >
                             <p>
                                 Adoptar es más que sumar un perro a tu hogar: es abrirle la puerta a una{' '}
-                                <strong className="text-gray-900">nueva vida llena de amor, cuidados y segundas oportunidades</strong>. 
-                                En <span className="text-primary font-semibold">Amigos del Animal</span>, cada angelito tiene una historia, 
+                                <strong className="text-foreground">nueva vida llena de amor, cuidados y segundas oportunidades</strong>.
+                                En <span className="text-primary font-semibold">Amigos del Animal</span>, cada angelito tiene una historia,
                                 un pasado que dejó atrás y un corazón enorme esperando ser parte de una familia.
                             </p>
                             <p>
                                 Cuando elegís adoptar, también estás{' '}
-                                <strong className="text-gray-900">liberando un lugar en el refugio</strong> para que otro 
+                                <strong className="text-foreground">liberando un lugar en el refugio</strong> para que otro
                                 animalito pueda ser rescatado de la calle.
                             </p>
                         </motion.div>
 
-                        <motion.div 
+                        <motion.div
                             className="mt-8 flex flex-wrap gap-4"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.5, delay: 0.6 }}
                             viewport={{ once: true }}
                         >
-                                <Button asChild className="flex items-center gap-2">
-                                    <Link href="/adopcion" className="flex items-center gap-2">
-                                        Enteráte cómo
-                                        <svg 
-                                            className="w-5 h-5" 
-                                            fill="none" 
-                                            stroke="currentColor" 
-                                            viewBox="0 0 24 24"
-                                        >
-                                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                                        </svg>
-                                    </Link>
-                                </Button>
-                                <Button asChild variant="outline">
-                                    <Link href="/voluntariado">Quiero ayudar</Link>
-                                </Button>
+                            <Button asChild size="lg" className="rounded-full px-8 bg-primary hover:bg-primary/90">
+                                <Link href="/adopcion">
+                                    Enteráte cómo
+                                    <ArrowRight className="ml-2 w-5 h-5" />
+                                </Link>
+                            </Button>
+                            <Button asChild size="lg" variant="outline" className="rounded-full px-8 border-primary text-primary hover:bg-primary/10">
+                                <Link href="/voluntariado">Quiero ayudar</Link>
+                            </Button>
                         </motion.div>
 
-                        {/* Mini stats */}
-                        <motion.div 
+                        {/* Stats decorativos */}
+                        <motion.div
                             className="mt-10 flex gap-8"
                             initial={{ opacity: 0 }}
                             whileInView={{ opacity: 1 }}

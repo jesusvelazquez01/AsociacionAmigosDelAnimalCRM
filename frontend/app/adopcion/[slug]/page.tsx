@@ -23,7 +23,7 @@ import {
 } from 'lucide-react';
 import api from '@/lib/axios';
 import { useParams } from 'next/navigation';
-
+import { ModalAdopcion } from '@/components/ui/modal-adopcion';
 interface GalleryImage {
     id: number;
     original: string;
@@ -103,6 +103,7 @@ export default function AnimalDetailPage() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
+    const [isAdoptionModalOpen, setIsAdoptionModalOpen] = useState(false);
 
     useEffect(() => {
         if (!slug) return;
@@ -291,40 +292,41 @@ export default function AnimalDetailPage() {
 
                         {/* CTA Buttons */}
                         <div className="flex flex-col sm:flex-row gap-4">
-                            <Button
-                                asChild
-                                size="lg"
-                                className="bg-primary hover:bg-primary/90 text-white rounded-full px-10 py-7 text-xl font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105"
-                            >
-                                <a
-                                    href={`https://wa.me/+5493884219759?text=${encodeURIComponent(`Hola Asociación Amigos del Animal! 🐾 Me encantaría poder adoptar a ${pet.name}. ¿Cómo podemos seguir?`)}`}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
+                            {/* Columna izquierda: Adoptar y Apadrinar */}
+                            <div className="flex flex-col gap-4">
+                                <Button
+
+                                    size="lg"
+                                    onClick={() => setIsAdoptionModalOpen(true)}
+                                    className="bg-primary hover:bg-primary/90 text-white rounded-full px-10 py-7 text-xl font-bold shadow-lg hover:shadow-xl transition-all hover:scale-105"
                                 >
                                     <Heart className="w-6 h-6 mr-3" />
                                     ¡Quiero adoptarlo!
-                                </a>
-                            </Button>
-                            <Button
-                                asChild
-                                variant="outline"
-                                size="lg"
-                                className="border-2 border-gray-300 hover:border-primary rounded-full px-8 py-7 text-lg"
-                            >
-                                <Link href="/adopcion/requisitos">
-                                    Ver requisitos
-                                </Link>
-                            </Button>
-                            <Button
-                                asChild
-                                variant="outline"
-                                size="lg"
-                                className="border-2 border-gray-300 hover:border-primary rounded-full px-8 py-7 text-lg"
-                            >
-                                <Link href="/apadrinar">
-                                    Apadrinar
-                                </Link>
-                            </Button>
+                                </Button>
+                                <Button
+                                    asChild
+                                    variant="outline"
+                                    size="lg"
+                                    className="border-2 border-gray-300 hover:border-primary rounded-full px-8 py-7 text-lg"
+                                >
+                                    <Link href="/apadrinar">
+                                        Apadrinar
+                                    </Link>
+                                </Button>
+                            </div>
+                            {/* Columna derecha: Ver requisitos */}
+                            <div className="flex items-center">
+                                <Button
+                                    asChild
+                                    variant="outline"
+                                    size="lg"
+                                    className="border-2 border-gray-300 hover:border-primary rounded-full px-8 py-7 text-lg"
+                                >
+                                    <Link href="/adopcion/requisitos">
+                                        Ver requisitos
+                                    </Link>
+                                </Button>
+                            </div>
                         </div>
                     </motion.div>
 
@@ -418,59 +420,61 @@ export default function AnimalDetailPage() {
                         </div>
                     </motion.div>
                 </div>
-            </section>
+            </section >
 
             {/* Otros animalitos en adopción */}
-            {relatedPets.length > 0 && (
-                <section className="bg-gray-50 py-16">
-                    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                        <motion.div
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                            viewport={{ once: true }}
-                        >
-                            <h2 className="text-3xl md:text-4xl font-bold text-primary mb-2 text-center">
-                                Otros animalitos en adopción
-                            </h2>
-                            <p className="text-gray-500 text-center mb-10">
-                                También podrías darle un hogar a alguno de ellos
-                            </p>
+            {
+                relatedPets.length > 0 && (
+                    <section className="bg-gray-50 py-16">
+                        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                            <motion.div
+                                initial={{ opacity: 0, y: 20 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5 }}
+                                viewport={{ once: true }}
+                            >
+                                <h2 className="text-3xl md:text-4xl font-bold text-primary mb-2 text-center">
+                                    Otros animalitos en adopción
+                                </h2>
+                                <p className="text-gray-500 text-center mb-10">
+                                    También podrías darle un hogar a alguno de ellos
+                                </p>
 
-                            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                                {relatedPets.map((related) => (
-                                    <Card
-                                        key={related.id}
-                                        className="overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1 group"
-                                    >
-                                        <Link href={`/adopcion/${related.slug}`}>
-                                            <div className="relative overflow-hidden">
-                                                <img
-                                                    src={related.image || '/Foto-perritos/placeholder.jpg'}
-                                                    alt={`${related.name} en adopción`}
-                                                    className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
-                                                />
-                                            </div>
-                                            <CardContent className="p-4">
-                                                <h3 className="text-xl font-bold text-gray-900 mb-1">{related.name}</h3>
-                                                <p className="text-gray-500 text-sm">{related.age}</p>
-                                            </CardContent>
+                                <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                                    {relatedPets.map((related) => (
+                                        <Card
+                                            key={related.id}
+                                            className="overflow-hidden hover:shadow-xl transition-all hover:-translate-y-1 group"
+                                        >
+                                            <Link href={`/adopcion/${related.slug}`}>
+                                                <div className="relative overflow-hidden">
+                                                    <img
+                                                        src={related.image || '/Foto-perritos/placeholder.jpg'}
+                                                        alt={`${related.name} en adopción`}
+                                                        className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
+                                                    />
+                                                </div>
+                                                <CardContent className="p-4">
+                                                    <h3 className="text-xl font-bold text-gray-900 mb-1">{related.name}</h3>
+                                                    <p className="text-gray-500 text-sm">{related.age}</p>
+                                                </CardContent>
+                                            </Link>
+                                        </Card>
+                                    ))}
+                                </div>
+
+                                <div className="text-center mt-10">
+                                    <Button asChild variant="outline" className="rounded-full px-8">
+                                        <Link href="/adopcion">
+                                            Ver todos los animalitos
                                         </Link>
-                                    </Card>
-                                ))}
-                            </div>
-
-                            <div className="text-center mt-10">
-                                <Button asChild variant="outline" className="rounded-full px-8">
-                                    <Link href="/adopcion">
-                                        Ver todos los animalitos
-                                    </Link>
-                                </Button>
-                            </div>
-                        </motion.div>
-                    </div>
-                </section>
-            )}
+                                    </Button>
+                                </div>
+                            </motion.div>
+                        </div>
+                    </section>
+                )
+            }
 
             {/* CTA Final */}
             <section className="py-20 bg-gray-900 text-center px-4">
@@ -497,7 +501,20 @@ export default function AnimalDetailPage() {
                     </div>
                 </motion.div>
             </section>
-        </div>
+
+
+            {/* Adoption Modal */}
+            {
+                pet && (
+                    <ModalAdopcion
+                        isOpen={isAdoptionModalOpen}
+                        onClose={() => setIsAdoptionModalOpen(false)}
+                        petName={pet.name}
+                        petId={pet.id}
+                    />
+                )
+            }
+        </div >
     );
 }
 

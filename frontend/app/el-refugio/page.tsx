@@ -1,18 +1,51 @@
- 'use client';
-
-
+'use client';
 
 import React, { useRef, useState, useEffect } from 'react';
-
 import Link from 'next/link';
-
 import { Button } from '@/components/ui/button';
+import { motion, useScroll, useSpring } from 'framer-motion';
+import { Heart, Syringe, Home, Sparkles, ChevronRight, GripVertical, Instagram } from 'lucide-react';
+import Script from 'next/script';
 
-import { motion, useScroll, useTransform, useSpring, useMotionValue } from 'framer-motion';
+// --- COMPONENTE INSTAGRAM EMBED ---
+const InstagramEmbed = ({ postUrl }: { postUrl: string }) => {
+  const [isLoaded, setIsLoaded] = useState(false);
 
-import { Heart, Syringe, Home, Sparkles, ChevronRight, GripVertical } from 'lucide-react';
+  useEffect(() => {
+    // Forzar que Instagram procese los embeds cuando el componente se monta
+    if (typeof window !== 'undefined' && (window as any).instgrm) {
+      (window as any).instgrm.Embeds.process();
+    }
+  }, [isLoaded]);
 
+  return (
+    <div className="instagram-embed-container">
+      <blockquote
+        className="instagram-media"
+        data-instgrm-captioned
+        data-instgrm-permalink={postUrl}
+        data-instgrm-version="14"
+        style={{
+          background: '#FFF',
+          border: 0,
+          borderRadius: '12px',
+          boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
+          margin: '0 auto',
+          maxWidth: '540px',
+          minWidth: '280px',
+          padding: 0,
+          width: '100%',
+        }}
+      />
+    </div>
+  );
+};
 
+// Lista de posts de Instagram para mostrar
+const instagramPosts = [
+  'https://www.instagram.com/reel/DTou_bRDKYU/',
+  // Añadí más URLs de posts aquí
+];
 
 // --- COMPONENTE 1: SLIDER ANTES / DESPUÉS ---
 
@@ -30,7 +63,7 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }: { beforeImage: string, a
 
     if (!isDragging.current || !containerRef.current) return;
 
-   
+
 
     // Calcular posición del mouse/dedo relativa al contenedor
 
@@ -40,7 +73,7 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }: { beforeImage: string, a
 
     const position = ((x - rect.left) / rect.width) * 100;
 
-   
+
 
     setSliderPosition(Math.min(100, Math.max(0, position)));
 
@@ -124,7 +157,7 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }: { beforeImage: string, a
 
       </div>
 
-     
+
 
       {/* Hint para el usuario */}
 
@@ -170,7 +203,7 @@ const TimelineItem = ({ icon: Icon, title, desc, index }: any) => {
 
       </div>
 
-     
+
 
       <div className="relative z-10 flex-shrink-0">
 
@@ -182,7 +215,7 @@ const TimelineItem = ({ icon: Icon, title, desc, index }: any) => {
 
       </div>
 
-     
+
 
       <div className="w-1/2" />
 
@@ -206,7 +239,7 @@ export default function ElRefugioPageCreative() {
 
     <div className="bg-white overflow-hidden">
 
-     
+
 
       {/* Barra de progreso de lectura superior */}
 
@@ -221,7 +254,7 @@ export default function ElRefugioPageCreative() {
         {/* Fondo de Video o Imagen Oscura */}
 
         <div className="absolute inset-0 opacity-40">
-           <img src="/Foto-refugio/refugio-4.jpg" className="w-full h-full object-cover " alt="Fondo" />
+          <img src="/Foto-refugio/refugio-4.jpg" className="w-full h-full object-cover " alt="Fondo" />
         </div>
 
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
@@ -262,11 +295,11 @@ export default function ElRefugioPageCreative() {
 
             </p>
 
-           
+
 
             <Button asChild size="lg" className="rounded-full h-16 px-10 text-lg bg-white text-black hover:bg-pink-50 transition-all hover:scale-105">
 
-                <Link href="/adopcion">Ver a los protagonistas</Link>
+              <Link href="/adopcion">Ver a los protagonistas</Link>
 
             </Button>
 
@@ -302,7 +335,7 @@ export default function ElRefugioPageCreative() {
 
                 Lo encontramos temblando bajo la lluvia, con sarna y desnutrición severa. Tenía miedo de su propia sombra.
 
-                <br/><br/>
+                <br /><br />
 
                 3 meses después, Benito es el rey de las pelotas de tenis y ama dormir en el sillón.
 
@@ -314,7 +347,7 @@ export default function ElRefugioPageCreative() {
 
               </Button>
             </motion.div>
-            
+
             {/* SLIDER ANTES/DESPUÉS */}
             <motion.div
               initial={{ opacity: 0, x: 50 }}
@@ -322,7 +355,7 @@ export default function ElRefugioPageCreative() {
               transition={{ duration: 0.6, delay: 0.2 }}
               viewport={{ once: true }}
             >
-              <BeforeAfterSlider 
+              <BeforeAfterSlider
                 beforeImage="/Foto-perritos/perrito12.jpg"
                 afterImage="/Foto-perritos/perrito13.jpg"
               />
@@ -429,53 +462,53 @@ export default function ElRefugioPageCreative() {
 
         <div className="relative w-full flex overflow-hidden mask-linear-gradient">
 
-           {/* Contenedor que se mueve */}
+          {/* Contenedor que se mueve */}
 
-           <motion.div
+          <motion.div
 
-             className="flex gap-6 whitespace-nowrap"
+            className="flex gap-6 whitespace-nowrap"
 
-             animate={{ x: ["0%", "-50%"] }}
+            animate={{ x: ["0%", "-50%"] }}
 
-             transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
+            transition={{ repeat: Infinity, ease: "linear", duration: 20 }}
 
-           >
+          >
 
-              {/* Duplicamos las imágenes para el efecto infinito */}
+            {/* Duplicamos las imágenes para el efecto infinito */}
 
-              {[...Array(2)].map((_, i) => (
+            {[...Array(2)].map((_, i) => (
 
-                <div key={i} className="flex gap-6">
+              <div key={i} className="flex gap-6">
 
-                   {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
+                {[1, 2, 3, 4, 5, 6, 7, 8].map((num) => (
 
-                     <div key={num} className="w-64 h-80 relative rounded-2xl overflow-hidden group cursor-pointer">
+                  <div key={num} className="w-64 h-80 relative rounded-2xl overflow-hidden group cursor-pointer">
 
-                        <img
+                    <img
 
-                          src={`/Foto-perritos/perrito${num}.jpg`} // Asegúrate de tener estas fotos o usa placeholders
+                      src={`/Foto-perritos/perrito${num}.jpg`} // Asegúrate de tener estas fotos o usa placeholders
 
-                          alt={`Perrito ${num}`}
+                      alt={`Perrito ${num}`}
 
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
 
-                        />
+                    />
 
-                        <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
 
-                           <span className="text-white font-bold text-xl">Nombre {num}</span>
+                      <span className="text-white font-bold text-xl">Nombre {num}</span>
 
-                        </div>
+                    </div>
 
-                     </div>
+                  </div>
 
-                   ))}
+                ))}
 
-                </div>
+              </div>
 
-              ))}
+            ))}
 
-           </motion.div>
+          </motion.div>
 
         </div>
 
@@ -497,23 +530,23 @@ export default function ElRefugioPageCreative() {
 
         >
 
-            <Heart className="w-16 h-16 text-primary mx-auto mb-6 animate-pulse" />
+          <Heart className="w-16 h-16 text-primary mx-auto mb-6 animate-pulse" />
 
-            <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
+          <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
 
-              Tu ayuda es su futuro.
+            Tu ayuda es su futuro.
 
-            </h2>
+          </h2>
 
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
+          <div className="flex flex-col sm:flex-row justify-center gap-4">
 
-              <Button asChild className="bg-primary text-white rounded-full px-12 py-8 text-xl h-auto">
+            <Button asChild className="bg-primary text-white rounded-full px-12 py-8 text-xl h-auto">
 
-                <Link href="/donar">Donar Ahora</Link>
+              <Link href="/donar">Donar Ahora</Link>
 
-              </Button>
+            </Button>
 
-            </div>
+          </div>
 
         </motion.div>
 

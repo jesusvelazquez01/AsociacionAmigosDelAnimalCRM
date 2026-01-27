@@ -116,10 +116,12 @@ class AnimalitoForm
                                 'italic',
                                 'bulletList',
                                 'orderedList',
+                                'alignJustify',
                                 'h2',
                                 'h3',
                                 'link',
                                 'undo',
+                                
                                 'redo'
                             ])
                             ->columnSpanFull(),

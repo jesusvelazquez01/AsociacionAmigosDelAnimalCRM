@@ -4,6 +4,8 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, useScroll, useSpring } from 'framer-motion';
+import { MapPin, Mail, Phone, Facebook, Instagram, MessageCircle, Send, Heart } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 import api from '@/lib/axios';
 
 const formSchema = z.object({
@@ -69,35 +71,45 @@ export default function ContactoPage() {
   }
 
   return (
-    <div className="bg-white overflow-hidden">
+    <div className="bg-background overflow-hidden">
 
       {/* Barra de progreso de lectura superior */}
-      <motion.div className="fixed top-0 left-0 right-0 h-1.5 bg-primary origin-left z-[60]" style={{ scaleX }} />
+      <motion.div className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]" style={{ scaleX }} />
 
-      {/* --- HERO: VISUAL IMPACT (Adaptado para Contacto) --- */}
-      <section className="relative min-h-[90vh] flex items-center justify-center bg-[#0a0a0a] text-white overflow-hidden">
-        {/* Fondo de Video o Imagen Oscura */}
-        <div className="absolute inset-0 opacity-60">
-          <img src="/Foto-refugio/refugio-4.jpg" className="w-full h-full object-cover" alt="Fondo" />
+      {/* --- HERO ESTILO FURS CON IMAGEN --- */}
+      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
+        {/* Imagen de fondo */}
+        <div className="absolute inset-0">
+          <img
+            src="/Foto-refugio/refugio-4.jpg"
+            className="w-full h-full object-cover"
+            alt="Refugio Amigos del Animal"
+          />
+          <div className="absolute inset-0 " />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
 
-        <div className="relative z-10 text-center max-w-4xl px-4">
+        {/* Decoraciones de fondo */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-20 right-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
+          <div className="absolute bottom-20 left-20 w-96 h-96 bg-secondary/30 rounded-full blur-3xl" />
+        </div>
+
+        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center py-20">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1 }}
+            transition={{ duration: 0.8 }}
           >
-            <span className="inline-block py-1 px-3 rounded-full border border-primary text-primary text-sm mb-6 uppercase tracking-[0.2em] bg-pink-500/10 backdrop-blur-md">
+            <span className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm text-primary px-4 py-2 rounded-full text-sm font-bold mb-6">
+              <MessageCircle className="w-4 h-4" />
               Estamos para ayudarte
             </span>
-            <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none">
-              HABLEMOS<br />
-              <span className="text-transparent bg-clip-text bg-primary/80 animate-gradient-xy">
-                AHORA
-              </span>
+
+            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
+              Hablemos <span className="text-primary">Ahora</span>
             </h1>
-            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-10 font-light">
+
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
               ¿Tienes preguntas sobre adopción, voluntariado o donaciones? Tu mensaje puede cambiar una vida.
             </p>
           </motion.div>
@@ -105,159 +117,212 @@ export default function ContactoPage() {
       </section>
 
 
-      <section className="py-20 bg-white">
+      {/* --- SECCIÓN DE CONTACTO --- */}
+      <section className="py-20 bg-background">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12">
-            {/* Info */}
-            <div>
-              <h2 className="text-3xl font-bold text-gray-900 mb-8">Información de Contacto</h2>
+
+            {/* Info de contacto */}
+            <motion.div
+              initial={{ opacity: 0, x: -30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl font-bold text-foreground mb-8">Información de Contacto</h2>
 
               <div className="space-y-6">
+                {/* Ubicación */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                    </svg>
+                  <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <MapPin className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900">Ubicación</h3>
-                    <p className="text-gray-600">San Salvador de Jujuy, Argentina</p>
+                    <h3 className="text-lg font-bold text-foreground">Ubicación</h3>
+                    <p className="text-muted-foreground">San Salvador de Jujuy, Argentina</p>
                   </div>
                 </div>
 
+                {/* Email */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
+                  <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <Mail className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900">Email</h3>
-                    <p className="text-gray-600">asociacionamigosdelanimal-jujuy@hotmail.com</p>
+                    <h3 className="text-lg font-bold text-foreground">Email</h3>
+                    <a href="mailto:asociacionamigosdelanimal-jujuy@hotmail.com" className="text-muted-foreground hover:text-primary transition-colors">
+                      asociacionamigosdelanimal-jujuy@hotmail.com
+                    </a>
                   </div>
                 </div>
 
+                {/* Teléfono */}
                 <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center flex-shrink-0">
-                    <svg className="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                    </svg>
+                  <div className="w-12 h-12 bg-primary/10 rounded-2xl flex items-center justify-center flex-shrink-0">
+                    <Phone className="w-6 h-6 text-primary" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-bold text-gray-900">Teléfono / WhatsApp</h3>
-                    <p className="text-gray-600"><a href="https://wa.me/5493884219759">+54 9 388 421-9759</a></p>
+                    <h3 className="text-lg font-bold text-foreground">Teléfono / WhatsApp</h3>
+                    <a href="https://wa.me/5493884219759" className="text-muted-foreground hover:text-primary transition-colors">
+                      +54 9 388 421-9759
+                    </a>
                   </div>
                 </div>
               </div>
 
-              {/* Social */}
-              <div className="mt-8">
-                <h3 className="text-lg font-bold text-gray-900 mb-4">Síguenos</h3>
-                <div className="flex gap-4">
-                  <a href="https://www.facebook.com/AsocAmigosDelAnimal?mibextid=2JQ9oc&utm_source=ig&utm_medium=social&utm_content=link_in_bio" className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white text-pink-500 transition">
-                    <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-                    </svg>
+              {/* Redes Sociales */}
+              <div className="mt-10">
+                <h3 className="text-lg font-bold text-foreground mb-4">Síguenos</h3>
+                <div className="flex gap-3">
+                  <a
+                    href="https://www.facebook.com/AsocAmigosDelAnimal"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors group"
+                  >
+                    <Facebook className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
                   </a>
-                  <a href="https://www.instagram.com/asoc_amigosdelanimal__jujuy?utm_source=ig_web_button_share_sheet&igsh=ZDNlZDc0MzIxNw==" className="w-12 h-12 bg-pink-100 rounded-full flex items-center justify-center hover:bg-pink-500 hover:text-white text-pink-500 transition">
-                    <svg className="w-5 h-5 text-primary" fill="currentColor" viewBox="0 0 24 24">
-                      <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
-                    </svg>
+                  <a
+                    href="https://www.instagram.com/asoc_amigosdelanimal__jujuy"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary transition-colors group"
+                  >
+                    <Instagram className="w-5 h-5 text-primary group-hover:text-white transition-colors" />
                   </a>
                 </div>
               </div>
-            </div>
 
-            {/* Form */}
-            <div className="bg-gradient-to-br from-pink-50 to-rose-50 p-8 rounded-3xl">
-              <h2 className="text-3xl font-bold text-gray-900 mb-6">Envíanos un Mensaje</h2>
+              {/* Card CTA */}
+              <motion.div
+                className="mt-10 bg-gradient-to-br from-primary to-primary/80 p-6 rounded-3xl text-white"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}
+              >
+                <Heart className="w-10 h-10 mb-3 opacity-90" />
+                <h4 className="font-bold text-lg mb-2">¿Urgencia con un animal?</h4>
+                <p className="text-white/80 text-sm mb-4">
+                  Si encontraste un animal en peligro, contáctanos de inmediato por WhatsApp.
+                </p>
+                <a
+                  href="https://wa.me/5493884219759?text=Hola,%20encontré%20un%20animal%20que%20necesita%20ayuda%20urgente"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-block w-full bg-white text-primary font-semibold py-3 px-4 rounded-full hover:bg-white/90 transition-colors text-center"
+                >
+                  WhatsApp Urgente
+                </a>
+              </motion.div>
+            </motion.div>
+
+            {/* Formulario */}
+            <motion.div
+              className="bg-card border border-border/50 p-8 rounded-3xl"
+              initial={{ opacity: 0, x: 30 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
+              <h2 className="text-3xl font-bold text-foreground mb-6">Envíanos un Mensaje</h2>
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Nombre</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Nombre *</label>
                     <input
                       type="text"
                       {...register("firstName")}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition bg-white"
+                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-foreground"
                       placeholder="Tu nombre"
                     />
-                    {errors.firstName && <p className="text-red-500 text-sm mt-1">{errors.firstName.message}</p>}
+                    {errors.firstName && <p className="text-destructive text-sm mt-1">{errors.firstName.message}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Apellido</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Apellido</label>
                     <input
                       type="text"
                       {...register("lastName")}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition bg-white"
+                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-foreground"
                       placeholder="Tu apellido"
                     />
-                    {errors.lastName && <p className="text-red-500 text-sm mt-1">{errors.lastName.message}</p>}
+                    {errors.lastName && <p className="text-destructive text-sm mt-1">{errors.lastName.message}</p>}
                   </div>
                 </div>
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Email *</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Email *</label>
                     <input
                       type="email"
                       {...register("email")}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition bg-white"
+                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-foreground"
                       placeholder="tu@email.com"
                     />
-                    {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
+                    {errors.email && <p className="text-destructive text-sm mt-1">{errors.email.message}</p>}
                   </div>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">Teléfono / WhatsApp</label>
+                    <label className="block text-sm font-medium text-foreground mb-2">Teléfono / WhatsApp</label>
                     <input
                       type="tel"
                       {...register("phone")}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition bg-white"
+                      className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-foreground"
                       placeholder="+54 9 388 123-4567"
                     />
-                    <p className="text-gray-400 text-xs mt-1">Opcional - Para contactarte más rápido</p>
+                    <p className="text-muted-foreground text-xs mt-1">Opcional - Para contactarte más rápido</p>
                   </div>
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Asunto *</label>
-                  <select {...register("subject")} className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition bg-white">
+                  <label className="block text-sm font-medium text-foreground mb-2">Asunto *</label>
+                  <select
+                    {...register("subject")}
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition text-foreground"
+                  >
                     <option>Consulta sobre adopción</option>
                     <option>Quiero ser voluntario</option>
                     <option>Información sobre donaciones</option>
                     <option>Reportar animal en peligro</option>
                     <option>Otro</option>
                   </select>
-                  {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject.message}</p>}
+                  {errors.subject && <p className="text-destructive text-sm mt-1">{errors.subject.message}</p>}
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Mensaje</label>
+                  <label className="block text-sm font-medium text-foreground mb-2">Mensaje *</label>
                   <textarea
                     rows={5}
                     {...register("message")}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition resize-none bg-white"
+                    className="w-full px-4 py-3 rounded-xl border border-border bg-background focus:border-primary focus:ring-2 focus:ring-primary/20 outline-none transition resize-none text-foreground"
                     placeholder="Escribe tu mensaje aquí..."
                   />
-                  {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
+                  {errors.message && <p className="text-destructive text-sm mt-1">{errors.message.message}</p>}
                 </div>
+
                 {submitStatus && (
-                  <div className={submitStatus.success ? "text-green-500" : "text-red-500"}>
+                  <div className={`p-4 rounded-xl ${submitStatus.success ? "bg-green-500/10 text-green-600" : "bg-destructive/10 text-destructive"}`}>
                     {submitStatus.message}
                   </div>
                 )}
-                <button
+
+                <Button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full bg-primary text-white py-4 hover:bg-primary/90 rounded-full font-semibold transition shadow-lg"
+                  className="w-full bg-primary hover:bg-primary/90 text-white py-6 rounded-full font-semibold text-lg"
+                  size="lg"
                 >
-                  {isSubmitting ? "Enviando..." : "Enviar Mensaje"}
-                </button>
+                  {isSubmitting ? "Enviando..." : (
+                    <>
+                      Enviar Mensaje
+                      <Send className="w-5 h-5 ml-2" />
+                    </>
+                  )}
+                </Button>
               </form>
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Map placeholder */}
-      <section className="h-96 bg-gray-200 relative">
+      {/* Mapa */}
+      <section className="h-96 bg-secondary/20 relative border-t border-border/50">
         <iframe
           src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d116449.33585378545!2d-65.3879568664789!3d-24.20531749128765!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x941b0f4e8bd7a62f%3A0x315150e057f6e499!2sSan%20Salvador%20de%20Jujuy%2C%20Jujuy!5e0!3m2!1ses!2sar!4v1765853941308!5m2!1ses!2sar"
           width="100%"

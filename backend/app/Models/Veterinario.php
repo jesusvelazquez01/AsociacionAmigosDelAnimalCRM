@@ -10,4 +10,9 @@ class Veterinario extends Model
     protected $fillable = [
         'nombre',
     ];
+
+    public function tratamientos()
+    {
+        return $this->hasMany(Tratamiento::class);
+    }
 }

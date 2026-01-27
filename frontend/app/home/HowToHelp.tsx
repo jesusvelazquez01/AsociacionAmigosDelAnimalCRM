@@ -3,119 +3,143 @@
 import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Button } from '@/components/ui/button'; // Asumo que tienes este componente
+import { Button } from '@/components/ui/button';
+import { Heart, UserPlus, HandCoins, ArrowRight } from 'lucide-react';
 
 const helpOptions = [
     {
         title: "Adopta",
         description: "Dale un hogar a uno de nuestros animalitos rescatados y cambia una vida para siempre.",
-        icon: (
-            <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-        ),
+        icon: Heart,
         link: "/adopcion",
-        buttonText: "Ver Mascotas",
-        delay: 0.2
+        buttonText: "Ver Animalitos",
     },
     {
         title: "Sé Voluntario",
         description: "Únete a nuestro equipo de voluntarios y ayúdanos en el cuidado y paseo de los animales.",
-        icon: (
-            <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-            </svg>
-        ),
+        icon: UserPlus,
         link: "/voluntarios",
         buttonText: "Quiero Ayudar",
-        delay: 0.3
     },
     {
         title: "Dona",
         description: "Tu donación nos ayuda a cubrir gastos veterinarios, alimentación y refugio para los animales.",
-        icon: (
-            <svg className="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth={1.5}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-        ),
+        icon: HandCoins,
         link: "/donar",
         buttonText: "Hacer Donación",
-        delay: 0.4
     }
 ];
 
+const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            staggerChildren: 0.15,
+        },
+    },
+};
+
+const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+        opacity: 1,
+        y: 0,
+        transition: {
+            duration: 0.5,
+        },
+    },
+};
+
 const HowToHelp = () => {
     return (
-        <section className="py-24 bg-white relative overflow-hidden">
-            {/* Elementos decorativos de fondo (Blobs) */}
-            <div className="absolute top-0 left-0 w-72 h-72 bg-pink-100 rounded-full -translate-x-1/2 -translate-y-1/2 opacity-40 blur-3xl" />
-            <div className="absolute bottom-0 right-0 w-96 h-96 bg-pink-50 rounded-full translate-x-1/3 translate-y-1/3 opacity-40 blur-3xl" />
+        <section className="py-24 bg-gradient-to-b from-background via-secondary/10 to-background relative overflow-hidden">
+            {/* Decoraciones de fondo */}
+            <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-20 right-10 w-96 h-96 bg-secondary/20 rounded-full blur-3xl" />
+            </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 
                 {/* Header de la sección */}
-                <div className="text-center mb-16">
+                <motion.div
+                    className="text-center mb-16"
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                >
                     <motion.span
-                        className="inline-block bg-pink-50 text-primary px-4 py-1.5 rounded-full text-sm font-semibold mb-4 border border-pink-100"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        whileInView={{ opacity: 1, scale: 1 }}
+                        transition={{ duration: 0.5, delay: 0.1 }}
                         viewport={{ once: true }}
                     >
                         Tu ayuda hace la diferencia
                     </motion.span>
 
-                    <motion.h2
-                        className="text-4xl md:text-5xl font-bold text-gray-900 mb-6"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        viewport={{ once: true }}
-                    >
-                        ¿Cómo puedes <span className="text-transparent bg-clip-text bg-primary">Colaborar</span>?
-                    </motion.h2>
+                    <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
+                        ¿Cómo puedes <span className="text-primary">Colaborar</span>?
+                    </h2>
 
-                    <motion.p
-                        className="text-xl text-gray-600 max-w-2xl mx-auto leading-relaxed"
-                        initial={{ opacity: 0, y: 20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.2 }}
-                        viewport={{ once: true }}
-                    >
+                    <p className="text-xl text-muted-foreground max-w-2xl mx-auto leading-relaxed">
                         Hay muchas formas de ser parte del cambio. Elige la que más resuene con vos y ayudanos a seguir salvando vidas.
-                    </motion.p>
-                </div>
+                    </p>
+                </motion.div>
 
                 {/* Grid de Tarjetas */}
-                <div className="grid md:grid-cols-3 gap-8">
-                    {helpOptions.map((option, index) => (
-                        <motion.div
-                            key={index}
-                            className="bg-white p-8 rounded-[2rem] border border-gray-100 shadow-xl shadow-pink-100/20 text-center hover:shadow-2xl hover:shadow-pink-100/40 transition-all duration-300 group"
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5, delay: option.delay }}
-                            viewport={{ once: true }}
-                            whileHover={{ y: -5 }}
-                        >
-                            {/* Círculo del ícono */}
-                            <div className="w-20 h-20 bg-pink-50 rounded-2xl flex items-center justify-center mx-auto mb-6 group-hover:scale-110 group-hover:bg-pink-100 transition-all duration-300">
-                                {option.icon}
-                            </div>
+                <motion.div
+                    className="grid md:grid-cols-3 gap-8"
+                    variants={containerVariants}
+                    initial="hidden"
+                    whileInView="visible"
+                    viewport={{ once: true }}
+                >
+                    {helpOptions.map((option, index) => {
+                        const Icon = option.icon;
 
-                            <h3 className="text-2xl font-bold text-gray-900 mb-3">{option.title}</h3>
+                        return (
+                            <motion.div
+                                key={index}
+                                variants={itemVariants}
+                                className="group"
+                            >
+                                <div className="relative h-full bg-white rounded-3xl border border-border/50 p-8 text-center transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1 overflow-hidden">
+                                    {/* Decoración de fondo */}
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-primary/5 rounded-full -translate-y-1/2 translate-x-1/2 blur-2xl group-hover:bg-primary/10 transition-colors" />
 
-                            <p className="text-gray-600 mb-8 leading-relaxed">
-                                {option.description}
-                            </p>
+                                    {/* Ícono con estilo Furs */}
+                                    <div className="relative w-20 h-20 bg-primary/10 rounded-2xl flex items-center justify-center mx-auto mb-6 transition-all duration-300 group-hover:bg-primary group-hover:scale-105">
+                                        <Icon className="w-10 h-10 text-primary group-hover:text-white transition-colors" />
+                                    </div>
 
-                            <Button asChild className="w-full rounded-xl text-md py-6 shadow-lg shadow-pink-200 hover:shadow-pink-300 transition-all">
-                                <Link href={option.link}>
-                                    {option.buttonText}
-                                </Link>
-                            </Button>
-                        </motion.div>
-                    ))}
-                </div>
+                                    {/* Título */}
+                                    <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+                                        {option.title}
+                                    </h3>
+
+                                    {/* Descripción */}
+                                    <p className="text-muted-foreground mb-8 leading-relaxed">
+                                        {option.description}
+                                    </p>
+
+                                    {/* Botón */}
+                                    <Button asChild className="w-full rounded-full bg-primary hover:bg-primary/90 py-6 text-base">
+                                        <Link href={option.link}>
+                                            {option.buttonText}
+                                            <ArrowRight className="ml-2 w-5 h-5" />
+                                        </Link>
+                                    </Button>
+
+                                    {/* Línea decorativa inferior */}
+                                    <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-primary/50 via-primary to-primary/50 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
+                                </div>
+                            </motion.div>
+                        );
+                    })}
+                </motion.div>
             </div>
         </section>
     );

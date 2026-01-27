@@ -137,6 +137,10 @@ class Animalito extends Model implements HasMedia
         return $this->hasMany(Vacuna::class);
     }
 
+        //Relacion con Adoptente  de muchos a muchos
+    public function adoptantes(){
+        return $this->belongsToMany(Adoptante::class);
+    }
     // ═══════════════════════════════════════════════════════════════
     // MÉTODOS Y ACCESSORS
     // ═══════════════════════════════════════════════════════════════
