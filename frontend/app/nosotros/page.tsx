@@ -48,8 +48,8 @@ export default function SobreNosotros() {
     <div className="min-h-screen bg-pink-50 overflow-hidden">
       {/* Barra de progreso de lectura */}
       <motion.div className="fixed top-0 left-0 right-0 h-1.5 bg-primary origin-left z-[60]" style={{ scaleX }} />
-
-      {/* Hero Section */}
+      
+      {/* Hero Section - Inicio Original */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-pink-50 to-white">
         {/* Decorative Elements */}
         <div className="absolute top-20 right-20 w-80 h-80 bg-primary/30 rounded-full opacity-80" />
@@ -95,13 +95,13 @@ export default function SobreNosotros() {
               </div>
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-black  leading-tight">
-              Casi 40 Años<br />
-              <span className="text-primary">de Amor</span>
+            <h1 className="text-5xl lg:text-7xl font-black leading-tight">
+              Casi 40 <br />
+              <span className="text-primary">Años de Amor</span>
             </h1>
 
             <p className="text-lg text-gray-600 leading-relaxed max-w-lg">
-              La Asociación Amigos del Animal Jujuy rescata, protege y transforma vidas. Sin fines de lucro, solo con el corazón de personas como Ana Lía Quispe y Brenda Córdoba.
+              Compromiso que se multiplica. La Asociación Amigos del Animal Jujuy es una organización sin fines de lucro que rescata y protege animales víctimas del abandono y el maltrato desde 1987. Hoy, esa historia continúa con una nueva generación que decidió no mirar para otro lado.
             </p>
 
             <div className="flex flex-col sm:flex-row gap-4">
@@ -159,8 +159,8 @@ export default function SobreNosotros() {
         </div>
       </section>
 
-      {/* About Section */}
-      <section className="py-24 bg-white relative overflow-hidden">
+      {/* About Section - Sección Detallada de Brenda */}
+      <section className="py-24 bg-gradient-to-b from-pink-50 to-white relative overflow-hidden">
         {/* Decorative Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           <div className="absolute top-16 right-16 w-80 h-80 bg-pink-100/60 rounded-full" />
@@ -170,6 +170,8 @@ export default function SobreNosotros() {
           <div className="absolute top-20 left-20 w-60 h-60 bg-pink-300/15" style={{ borderRadius: '70% 30% 40% 60% / 30% 70% 60% 40%' }} />
           <div className="absolute bottom-32 right-1/2 w-56 h-56 bg-primary/12 rounded-full blur-md" />
           <div className="absolute top-1/2 right-1/3 w-88 h-88 bg-pink-100/30" style={{ borderRadius: '40% 60% 30% 70% / 60% 40% 70% 30%' }} />
+          <div className="absolute top-40 right-40 w-60 h-60 bg-gray-300 rounded-full opacity-60" />
+          <div className="absolute bottom-1/4 right-1/4 w-40 h-40 bg-pink-300/50 rounded-full opacity-70" />
 
           {/* Scattered Paw Prints with Lucide Icons */}
           <PawPrint className="absolute top-32 right-1/4 w-40 h-40 text-primary/12 transform -rotate-12" />
@@ -181,108 +183,212 @@ export default function SobreNosotros() {
           <PawPrint className="absolute top-3/4 left-1/3 w-36 h-36 text-primary/14 transform rotate-50" />
           <PawPrint className="absolute top-10 right-1/2 w-28 h-28 text-primary/22 transform -rotate-80" />
         </div>
+
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="text-center mb-16">
+          <div className="text-center mb-20">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
             >
               <span className="inline-block bg-pink-100 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4">
-                Nuestra Historia
+                La Cara Visible Hoy
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold  mb-4">
-                Sobre <span className="text-primary">Nosotros</span>
+              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+                La <span className="text-primary">Historia de Brenda</span>
               </h2>
-              <p className="text-lg text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Nuestro refugio es el resultado de una historia de amor, lucha y compromiso real con los animales.
+              <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
+                Cómo una adolescente heredó un legado y lo transformó en su propósito
               </p>
             </motion.div>
           </div>
 
-          {/* Ana Lía Section */}
-          <div className="grid md:grid-cols-2 gap-16 items-center mb-32">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <span className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
-                Fundadora
-              </span>
-              <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-                Ana Lía Quispe
-              </h3>
-              <p className="text-xl text-primary font-semibold mb-6">40 años defendiendo vidas</p>
-              <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
-                <p>
-                  Ana Lía Quispe lleva más de 40 años rescatando perritos, incluso en los momentos más duros, cuando todo parecía estar en contra. Con una fuerza admirable y un amor incondicional, jamás abandonó su camino.
-                </p>
-                <p>
-                  Es una defensora incansable de los derechos de los animales, y su ejemplo trascendió generaciones. Ana Lía supo transmitir su amor por los animales a sus hijos, y hoy una de ellas continúa su legado.
-                </p>
-              </div>
-            </motion.div>
+          {/* Timeline de la Historia de Brenda */}
+          <div className="space-y-24">
+            {/* Etapa 1: Los Primeros Años */}
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <div className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
+                  Los Primeros Años
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Desde los 5 años, rescatando
+                </h3>
+                <p className="text-xl text-primary font-semibold mb-6">La infancia que cambió todo</p>
+                <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    Brenda no tuvo una infancia típica. Mientras otros niños jugaban en parques, ella acompañaba a su madre Ana Lía en rescates de perros abandonados. Con solo 5 años, realizó su primer rescate, aprendiendo desde temprana edad que la vida animal merecía ser defendida.
+                  </p>
+                  <p>
+                    Esa experiencia temprana le mostró la brutal realidad del abandono: perros desnutridos, con sarna, heridas graves, y un corazón roto esperando una segunda oportunidad. A una edad donde otros niños aún estaban jugando con juguetes, Brenda ya entendía la importancia de salvar vidas.
+                  </p>
+                </div>
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="relative"
-            >
-              <div className="relative rounded-[3rem] overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500">
-                <img
-                  src="/Foto-perfil/analia.jpg"
-                  alt="Ana Lía Quispe"
-                  className="w-full h-[500px] object-cover"
-                />
-              </div>
-            </motion.div>
-          </div>
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-500">
+                  <img
+                    src="/Foto-perfil/brenda-amigos-del-animal-1.webp"
+                    alt="Brenda en rescates"
+                    className="w-full h-[450px] object-cover"
+                  />
+                </div>
+                <div className="absolute -bottom-6 -right-6 bg-white rounded-xl p-4 shadow-lg border-2 border-primary/30">
+                  <p className="font-bold text-gray-900">Primer rescate</p>
+                  <p className="text-sm text-primary">5 años de edad</p>
+                </div>
+              </motion.div>
+            </div>
 
-          {/* Brenda Section */}
-          <div className="grid md:grid-cols-2 gap-16 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.8 }}
-              viewport={{ once: true }}
-              className="relative order-2 md:order-1"
-            >
-              <div className="relative overflow-hidden shadow-2xl transform rotate-2 hover:rotate-0 transition-transform duration-500" style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }}>
-                <img
-                  src="/Foto-perfil/brenda.jpg"
-                  alt="Brenda Córdoba"
-                  className="w-full h-[500px] object-cover"
-                />
-              </div>
-            </motion.div>
+            {/* Etapa 2: Adolescencia Comprometida */}
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="relative order-2 md:order-1"
+              >
+                <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                  <img
+                    src="/Foto-perfil/brenda1.jpeg"
+                    alt="Brenda activista"
+                    className="w-full h-[450px] object-cover"
+                  />
+                </div>
+              </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="order-1 md:order-2"
-            >
-              <span className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
-                Co-Fundadora
-              </span>
-              <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
-                Brenda Córdoba
-              </h3>
-              <p className="text-xl text-primary font-semibold mb-6">Pasión que mueve montañas</p>
-              <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
-                <p>
-                  Desde los 10 años, Brenda comenzó a rescatar perros de la calle, y desde entonces nunca paró. Lo que empezó como un acto de amor se transformó en una misión de vida.
-                </p>
-                <p>
-                  Hoy en día, Brenda es el alma de la Asociación Amigos del Animal. A través de sus redes sociales, logró poner al refugio en el mapa, visibilizando la realidad de los animales abandonados.
-                </p>
-              </div>
-            </motion.div>
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="order-1 md:order-2"
+              >
+                <div className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
+                  La Transformación
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  A los 16 años, ya más de 100 vidas
+                </h3>
+                <p className="text-xl text-primary font-semibold mb-6">Cuando la adolescencia se convierte en propósito</p>
+                <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    Mientras muchos adolescentes se preocupan por modas, redes sociales o entretenimiento, Brenda eligió un camino completamente diferente. Con solo 16 años, ya ha participado en el rescate de más de 100 animales, devolviéndoles la dignidad, el cuidado y la esperanza de un hogar.
+                  </p>
+                  <p>
+                    Su juventud no es un obstáculo, sino una fortaleza. Brenda entiende que su generación tiene la responsabilidad de cambiar las cosas, de tomar conciencia, de actuar.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Etapa 3: La Voz Pública */}
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+              >
+                <div className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
+                  La Activista Digital
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Redes sociales como herramienta de lucha
+                </h3>
+                <p className="text-xl text-primary font-semibold mb-6">Educando a miles de personas</p>
+                <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    Brenda no solo rescata animales; también educa. A través de sus redes sociales, logró poner a Amigos del Animal Jujuy en el centro de la escena, visibilizando la realidad brutal del abandono y el maltrato animal en nuestra provincia.
+                  </p>
+                  <p>
+                    Sus publicaciones sobre castración responsable, adopción consciente y denuncias de maltrato han movilizado a miles de personas. Cada post, cada historia compartida, es un acto de activismo genuino.
+                  </p>
+                  <p>
+                    Su forma de comunicar es auténtica, cruda, sin filtros. Muestra la realidad tal como es: el dolor, la esperanza, el trabajo real que implica rescatar y rehabilitar a un animal traumatizado por el abandono.
+                  </p>
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="relative"
+              >
+                <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl" style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }}>
+                  <img
+                    src="/Foto-perfil/adoptame.jpeg"
+                    alt="Brenda en redes sociales"
+                    className="w-full h-[450px] object-cover"
+                    style={{ objectPosition: 'center top' }}
+                  />
+                </div>
+                <div className="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-lg border-2 border-primary/30">
+                  <p className="font-bold text-gray-900">Impacto Digital</p>
+                  <p className="text-sm text-primary">Miles de personas movilizadas</p>
+                </div>
+              </motion.div>
+            </div>
+
+            {/* Etapa 4: El Legado */}
+            <div className="grid md:grid-cols-2 gap-16 items-center">
+              <motion.div
+                initial={{ opacity: 0, x: -50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8 }}
+                viewport={{ once: true }}
+                className="relative order-2 md:order-1"
+              >
+                <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500">
+                  <img
+                    src="/Foto-perfil/analia.jpg"
+                    alt="Ana Lía y Brenda"
+                    className="w-full h-[450px] object-cover"
+                  />
+                </div>
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, x: 50 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.6 }}
+                viewport={{ once: true }}
+                className="order-1 md:order-2"
+              >
+                <div className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
+                  El Futuro
+                </div>
+                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                  Continuidad del legado de Ana Lía
+                </h3>
+                <p className="text-xl text-primary font-semibold mb-6">La semilla que florece</p>
+                <div className="space-y-4 text-lg text-gray-700 leading-relaxed">
+                  <p>
+                    Ana Lía Quispe fundó Amigos del Animal hace casi 40 años con un sueño: rescatar y proteger a los animales más vulnerables. Sembró una semilla de amor que hoy florece con toda su fuerza en el corazón de su hija.
+                  </p>
+                  <p>
+                    Brenda no es solo heredera de una asociación; es la guardia de un legado de sacrificio, dedicación y amor incondicional. Ella representa lo que su madre construyó, llevándolo a una nueva era con herramientas modernas y una voz joven que resuena más fuerte cada día.
+                  </p>
+                  <p className="pt-4">
+                    La historia de Brenda es la historia de una generación que dice <strong>"no voy a mirar para otro lado"</strong>. Es el futuro de Amigos del Animal, y ese futuro es brillante.
+                  </p>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
