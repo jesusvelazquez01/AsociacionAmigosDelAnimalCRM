@@ -8,6 +8,7 @@ import {
   ChevronDown, MapPin, FileText, Camera, Users,
   Scale, BookOpen, PawPrint, Heart, ExternalLink
 } from 'lucide-react';
+import { Button } from '@/components/ui/button';
 
 // Datos del acordeón de pasos
 const stepsData = [
@@ -380,9 +381,11 @@ export default function DenunciarPage() {
               No esperes. Cada minuto cuenta cuando se trata de salvar una vida.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/contacto" className="btn-pill-secondary text-lg px-8 py-4">
-                Más información
-              </Link>
+              <Button asChild variant="outline" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-4 text-lg h-auto font-bold">
+                <Link href="/contacto">
+                  Más información
+                </Link>
+              </Button>
             </div>
           </motion.div>
         </div>

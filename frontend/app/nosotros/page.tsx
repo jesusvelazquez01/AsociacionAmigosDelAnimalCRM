@@ -517,9 +517,11 @@ export default function SobreNosotros() {
               <Link href="/voluntarios" className="btn-pill-primary text-lg px-8 py-4">
                 Ser voluntario
               </Link>
-              <Link href="/adopcion" className="btn-pill-secondary text-lg px-8 py-4">
-                Hogar temporal
-              </Link>
+              <Button asChild variant="outline" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-4 text-lg h-auto font-bold">
+                <Link href="/adopcion">
+                  Hogar temporal
+                </Link>
+              </Button>
             </div>
           </motion.div>
         </div>

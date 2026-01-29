@@ -583,9 +583,11 @@ export default function AdopcionPage() {
               <Link href="/contacto" className="btn-pill-primary text-lg px-8 py-4">
                 Contactar al Refugio
               </Link>
-              <Link href="/apadrinar" className="btn-pill-secondary text-lg px-8 py-4">
-                Apadrinar
-              </Link>
+              <Button asChild variant="outline" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-4 text-lg h-auto font-bold">
+                <Link href="/apadrinar">
+                  Apadrinar
+                </Link>
+              </Button>
             </div>
           </motion.div>
         </div>
