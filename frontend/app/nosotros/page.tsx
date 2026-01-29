@@ -48,7 +48,7 @@ export default function SobreNosotros() {
     <div className="min-h-screen bg-pink-50 overflow-hidden">
       {/* Barra de progreso de lectura */}
       <motion.div className="fixed top-0 left-0 right-0 h-1.5 bg-primary origin-left z-[60]" style={{ scaleX }} />
-      
+
       {/* Hero Section - Inicio Original */}
       <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-pink-50 to-white">
         {/* Decorative Elements */}
@@ -95,7 +95,7 @@ export default function SobreNosotros() {
               </div>
             </div>
 
-            <h1 className="text-5xl lg:text-7xl font-black leading-tight">
+            <h1 className="text-4xl lg:text-6xl font-black leading-tight">
               Casi 40 <br />
               <span className="text-primary">Años de Amor</span>
             </h1>
@@ -138,7 +138,7 @@ export default function SobreNosotros() {
               <img
                 src="/Foto-perfil/perfil-1.jpg"
                 alt="Ana Lía Quispe y Brenda Córdoba - Fundadoras"
-                className="w-full h-[600px] object-cover"
+                className="w-full h-[400px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>
@@ -194,7 +194,7 @@ export default function SobreNosotros() {
               <span className="inline-block bg-pink-100 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4">
                 La Cara Visible Hoy
               </span>
-              <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              <h2 className="text-3xl md:text-4xl font-bold mb-4">
                 La <span className="text-primary">Historia de Brenda</span>
               </h2>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
@@ -216,7 +216,7 @@ export default function SobreNosotros() {
                 <div className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
                   Los Primeros Años
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                   Desde los 5 años, rescatando
                 </h3>
                 <p className="text-xl text-primary font-semibold mb-6">La infancia que cambió todo</p>
@@ -241,7 +241,7 @@ export default function SobreNosotros() {
                   <img
                     src="/Foto-perfil/brenda-amigos-del-animal-1.webp"
                     alt="Brenda en rescates"
-                    className="w-full h-[450px] object-cover"
+                    className="w-full h-[350px] object-cover"
                   />
                 </div>
                 <div className="absolute -bottom-6 -right-6 bg-white rounded-xl p-4 shadow-lg border-2 border-primary/30">
@@ -264,7 +264,7 @@ export default function SobreNosotros() {
                   <img
                     src="/Foto-perfil/brenda1.jpeg"
                     alt="Brenda activista"
-                    className="w-full h-[450px] object-cover"
+                    className="w-full h-[350px] object-cover"
                   />
                 </div>
               </motion.div>
@@ -279,7 +279,7 @@ export default function SobreNosotros() {
                 <div className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
                   La Transformación
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                   A los 16 años, ya más de 100 vidas
                 </h3>
                 <p className="text-xl text-primary font-semibold mb-6">Cuando la adolescencia se convierte en propósito</p>
@@ -305,7 +305,7 @@ export default function SobreNosotros() {
                 <div className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
                   La Activista Digital
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                   Redes sociales como herramienta de lucha
                 </h3>
                 <p className="text-xl text-primary font-semibold mb-6">Educando a miles de personas</p>
@@ -333,7 +333,7 @@ export default function SobreNosotros() {
                   <img
                     src="/Foto-perfil/adoptame.jpeg"
                     alt="Brenda en redes sociales"
-                    className="w-full h-[450px] object-cover"
+                    className="w-full h-[350px] object-cover"
                     style={{ objectPosition: 'center top' }}
                   />
                 </div>
@@ -357,7 +357,7 @@ export default function SobreNosotros() {
                   <img
                     src="/Foto-perfil/analia.jpg"
                     alt="Ana Lía y Brenda"
-                    className="w-full h-[450px] object-cover"
+                    className="w-full h-[350px] object-cover"
                   />
                 </div>
               </motion.div>
@@ -372,7 +372,7 @@ export default function SobreNosotros() {
                 <div className="inline-block bg-primary text-white px-4 py-2 rounded-full text-sm font-bold mb-6">
                   El Futuro
                 </div>
-                <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                <h3 className="text-2xl md:text-3xl font-bold text-gray-900 mb-4">
                   Continuidad del legado de Ana Lía
                 </h3>
                 <p className="text-xl text-primary font-semibold mb-6">La semilla que florece</p>
@@ -413,7 +413,7 @@ export default function SobreNosotros() {
             <span className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4">
               Nuestro Proceso
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold  mb-4">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
               Cómo Trabajamos en Jujuy
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
@@ -456,7 +456,7 @@ export default function SobreNosotros() {
                     {/* Contenido TOP para elementos pares */}
                     {isTop && (
                       <div className="text-center mb-6 lg:mb-8">
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">
                           {step.title}
                         </h3>
                         <p className="text-gray-600 text-sm leading-relaxed max-w-[200px] mx-auto">
@@ -479,7 +479,7 @@ export default function SobreNosotros() {
                     {/* Contenido BOTTOM para elementos impares */}
                     {!isTop && (
                       <div className="text-center mt-6 lg:mt-8">
-                        <h3 className="text-xl font-bold text-gray-900 mb-2">
+                        <h3 className="text-lg font-bold text-gray-900 mb-2">
                           {step.title}
                         </h3>
                         <p className="text-gray-600 text-sm leading-relaxed max-w-[200px] mx-auto">
