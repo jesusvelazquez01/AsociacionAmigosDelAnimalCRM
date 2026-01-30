@@ -148,13 +148,13 @@ const AdoptionCTA = () => {
                             transition={{ duration: 0.5, delay: 0.6 }}
                             viewport={{ once: true }}
                         >
-                            <Button asChild size="lg" className="rounded-full px-8 bg-primary hover:bg-primary/90">
+                            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold rounded-full px-8 py-6 text-lg h-auto">
                                 <Link href="/adopcion">
                                     Enteráte cómo
                                     <ArrowRight className="ml-2 w-5 h-5" />
                                 </Link>
                             </Button>
-                            <Button asChild size="lg" variant="outline" className="rounded-full px-8 border-primary text-primary hover:bg-primary/10">
+                            <Button asChild size="lg" variant="outline" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-6 text-lg h-auto font-bold">
                                 <Link href="/voluntariado">Quiero ayudar</Link>
                             </Button>
                         </motion.div>

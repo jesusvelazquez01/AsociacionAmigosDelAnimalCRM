@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Heart, CheckCircle2, AlertCircle, X } from 'lucide-react';
+import { Heart, CheckCircle2, AlertCircle, X, PawPrint } from 'lucide-react';
 
 interface AdoptionModalProps {
     isOpen: boolean;
@@ -67,7 +67,7 @@ export function ModalAdopcion({ isOpen, onClose, petName, petId }: AdoptionModal
                                         className="text-center"
                                     >
                                         <div className="flex justify-center mb-6">
-                                            <div className="bg-gradient-to-br from-primary to-pink-400 rounded-full p-3 shadow-lg">
+                                            <div className="bg-primary rounded-full p-3 shadow-lg">
                                                 <Heart className="w-6 h-6 text-white" />
                                             </div>
                                         </div>
@@ -137,9 +137,9 @@ export function ModalAdopcion({ isOpen, onClose, petName, petId }: AdoptionModal
                                             <motion.div
                                                 animate={{ scale: [1, 1.1, 1] }}
                                                 transition={{ duration: 2, repeat: Infinity }}
-                                                className="bg-gradient-to-br from-green-400 to-primary rounded-full p-3 shadow-lg"
+                                                className="bg-primary rounded-full p-3 shadow-lg"
                                             >
-                                                <Heart className="w-6 h-6 text-white" />
+                                                <PawPrint className="w-6 h-6 text-white" />
                                             </motion.div>
                                         </div>
 

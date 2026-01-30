@@ -60,7 +60,7 @@ export default function DonarPage() {
         <div className="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-20 left-10 w-64 h-64 bg-secondary/20 rounded-full blur-3xl" />
 
-        <div className="furs-container relative z-10">
+        <div className="furs-container relative z-10 mt-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Contenido izquierda */}
             <motion.div
@@ -68,10 +68,7 @@ export default function DonarPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="furs-badge bg-primary/10 text-primary border border-primary/20 mb-6">
-                <Heart className="w-4 h-4 mr-2" />
-                Tu ayuda transforma vidas
-              </span>
+
 
               <h1 className="furs-title-xl text-foreground mb-6">
                 Con tu donación,<br />
@@ -83,11 +80,11 @@ export default function DonarPage() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <a href="#metodos-donacion" className="btn-pill-primary text-lg px-8 py-4">
+                <a href="#metodos-donacion" className="bg-primary hover:bg-primary/80 text-white font-bold rounded-full px-8 py-6 text-lg h-auto">
                   Donar ahora
                 </a>
-                <Link href="/apadrinar" className="btn-pill-secondary text-lg px-8 py-4">
-                  Apadrinar
+                <Link href="/apadrinar" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-6 text-lg h-auto font-bold">
+                  <PawPrint className="w-5 h-5 mr-2 " />Apadrinar
                 </Link>
               </div>
             </motion.div>
@@ -197,7 +194,7 @@ export default function DonarPage() {
       {/* ═══════════════════════════════════════════════════════════════════════════
           DONACIÓN RÁPIDA - Estilo Montecito (montos predefinidos)
           ═══════════════════════════════════════════════════════════════════════════ */}
-      <section className="furs-section bg-gradient-to-br from-primary/10 via-background to-secondary/5">
+      <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-primary/5 via-background to-secondary/10 overflow-hidden">
         <div className="furs-container">
           <div className="text-center mb-12">
             <span className="furs-badge bg-primary/10 text-primary border border-primary/20 mb-4">
@@ -273,7 +270,7 @@ export default function DonarPage() {
       {/* ═══════════════════════════════════════════════════════════════════════════
           MÉTODOS DE DONACIÓN
           ═══════════════════════════════════════════════════════════════════════════ */}
-      <section id="metodos-donacion" className="furs-section bg-background">
+      <section id="metodos-donacion" className="furs-section bg-card border-y border-border/30">
         <div className="furs-container">
           <div className="text-center mb-12">
             <span className="furs-badge bg-primary/10 text-primary border border-primary/20 mb-4">
