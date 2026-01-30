@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
@@ -84,10 +85,11 @@ function CarouselImage({
             transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.4 }}
             className="absolute inset-0 cursor-grab active:cursor-grabbing"
         >
-            <img
+            <Image
                 src={image}
                 alt="Foto del animalito"
-                className="w-full h-full object-cover rounded-3xl"
+                fill
+                className="object-cover rounded-3xl"
                 draggable={false}
             />
         </motion.div>
@@ -394,9 +396,11 @@ export default function AnimalDetailPage() {
                                                         : 'border-gray-200 hover:border-primary/50'
                                                         }`}
                                                 >
-                                                    <img
+                                                    <Image
                                                         src={pet.gallery?.[index]?.mini || img}
                                                         alt={`Miniatura ${index + 1}`}
+                                                        width={64}
+                                                        height={64}
                                                         className="w-full h-full object-cover"
                                                     />
                                                 </button>
@@ -448,9 +452,11 @@ export default function AnimalDetailPage() {
                                         >
                                             <Link href={`/adopcion/${related.slug}`}>
                                                 <div className="relative overflow-hidden">
-                                                    <img
+                                                    <Image
                                                         src={related.image || '/Foto-perritos/placeholder.jpg'}
                                                         alt={`${related.name} en adopción`}
+                                                        width={400}
+                                                        height={192}
                                                         className="w-full h-48 object-cover group-hover:scale-110 transition-transform duration-300"
                                                     />
                                                 </div>

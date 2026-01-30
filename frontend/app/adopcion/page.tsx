@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -430,12 +431,12 @@ export default function AdopcionPage() {
                           <div className="bg-card rounded-3xl border border-border/50 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                             {/* Imagen con badges */}
                             <div className="relative overflow-hidden aspect-[4/3]">
-                              <img
+                              <Image
                                 src={pet.image || '/Foto-perritos/placeholder.jpg'}
                                 alt={`${pet.name} en adopción`}
-                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                                fill
+                                className="object-cover group-hover:scale-110 transition-transform duration-500"
                               />
-
                               {/* Badge tipo animal - arriba izquierda */}
                               <div className="absolute top-3 left-3">
                                 <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-sm text-foreground shadow-sm px-3 py-1.5 rounded-full text-xs font-medium">
@@ -447,9 +448,11 @@ export default function AdopcionPage() {
                               {/* Logo refugio - arriba derecha */}
                               <div className="absolute top-3 right-3">
                                 <div className="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center overflow-hidden">
-                                  <img
+                                  <Image
                                     src="/Asoc.jpg"
                                     alt="Amigos del Animal"
+                                    width={40}
+                                    height={40}
                                     className="w-full h-full object-cover"
                                   />
                                 </div>

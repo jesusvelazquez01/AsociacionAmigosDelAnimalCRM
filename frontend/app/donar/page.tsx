@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import {
   Heart, Utensils, Syringe, Stethoscope, Package,
@@ -116,9 +117,11 @@ export default function DonarPage() {
                     <CarouselItem key={index} className="pl-2 basis-1/2 md:basis-1/2">
                       <div className="furs-card bg-card border border-border/50 p-2 h-full">
                         <div className="relative">
-                          <img
+                          <Image
                             src={item.src}
                             alt={`Rescatadito ${index + 1}`}
+                            width={400}
+                            height={480}
                             className="furs-image w-full h-120 md:h-120 object-cover"
                           />
                           <span className={`absolute bottom-2 left-2 furs-badge text-xs ${item.label === "Antes"

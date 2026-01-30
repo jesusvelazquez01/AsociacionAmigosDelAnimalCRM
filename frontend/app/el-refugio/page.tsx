@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import {
@@ -86,10 +87,10 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }: { beforeImage: string, a
       onTouchEnd={() => isDragging.current = false}
       onTouchMove={handleMouseMove}
     >
-      <img src={afterImage} alt="Después" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+      <Image src={afterImage} alt="Después" fill className="absolute inset-0 object-cover" draggable={false} />
       <div className="absolute top-4 right-4 bg-green-500/90 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-bold uppercase">Ahora</div>
       <div className="absolute inset-0 w-full h-full overflow-hidden border-r-2 border-white" style={{ width: `${sliderPosition}%` }}>
-        <img src={beforeImage} alt="Antes" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+        <Image src={beforeImage} alt="Antes" fill className="absolute inset-0 object-cover" draggable={false} />
         <div className="absolute top-4 left-4 bg-gray-900/80 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-bold uppercase">Antes</div>
       </div>
       <div className="absolute top-0 bottom-0 w-1 bg-white flex items-center justify-center" style={{ left: `${sliderPosition}%` }}>
@@ -296,9 +297,11 @@ export default function ElRefugioPageCreative() {
             className="relative"
           >
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3">
-              <img
+              <Image
                 src="/Foto-refugio/refugio-4.jpg"
                 alt="El Refugio del Amor"
+                width={600}
+                height={400}
                 className="w-full h-[400px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -355,7 +358,7 @@ export default function ElRefugioPageCreative() {
               <p className="text-lg text-gray-600 leading-relaxed">Dedicados al rescate, cuidado y rehabilitación de animales abandonados en San Salvador de Jujuy. Cada animal recibe atención veterinaria completa y amor incondicional.</p>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="relative h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-              <img src="/Foto-actividad-refugio/brenda-amigos-del-animal.webp" alt="Refugio" className="w-full h-full object-cover" />
+              <Image src="/Foto-actividad-refugio/brenda-amigos-del-animal.webp" alt="Refugio" fill className="object-cover" />
             </motion.div>
           </div>
 

@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -79,9 +80,11 @@ function PetCard({ card, onDragEnd }: { card: any, onDragEnd: any }) {
       transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.5 }}
       className="absolute w-full h-full bg-white rounded-3xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden border-4 border-white"
     >
-      <img
+      <Image
         src={card.image}
         alt={card.name}
+        width={400}
+        height={360}
         className="w-full h-3/4 object-cover"
       />
       <div className="p-6 text-center">
@@ -128,9 +131,10 @@ export default function ApadrinarPage() {
       <section className="relative min-h-[80vh] flex items-center bg-[#0a0a0a] text-white">
         {/* Fondo con imagen oscura y tinte */}
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/Foto-refugio/refugio-4.jpg"
-            className="w-full h-full object-cover opacity-40"
+            fill
+            className="object-cover opacity-40"
             alt="Fondo Refugio"
           />
         </div>
@@ -292,9 +296,11 @@ export default function ApadrinarPage() {
             >
               <div className="bg-white p-8 rounded-3xl shadow-xl">
                 <div className="rounded-xl overflow-hidden">
-                  <img
+                  <Image
                     src="/Foto-perritos/unnamed.jpg"
                     alt="Amigos del Animal"
+                    width={500}
+                    height={400}
                     className="w-full h-auto object-contain"
                   />
                 </div>

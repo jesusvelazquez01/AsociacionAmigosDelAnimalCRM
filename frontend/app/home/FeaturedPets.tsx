@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Heart, ArrowRight } from 'lucide-react';
@@ -75,9 +76,11 @@ const PetCard = ({ pet }: { pet: Pet }) => (
         <div className="relative h-full bg-white rounded-3xl border border-border/50 overflow-hidden transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 hover:-translate-y-1">
             {/* Imagen */}
             <div className="relative overflow-hidden">
-                <img
+                <Image
                     src={pet.image}
                     alt={`${pet.name} en adopción`}
+                    width={400}
+                    height={256}
                     className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500"
                 />
                 {/* Overlay con gradiente */}

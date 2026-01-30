@@ -1,5 +1,6 @@
 "use client";
 import React, { useState } from 'react';
+import Image from 'next/image';
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -80,9 +81,10 @@ export default function ContactoPage() {
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* Imagen de fondo */}
         <div className="absolute inset-0">
-          <img
+          <Image
             src="/Foto-refugio/refugio-4.jpg"
-            className="w-full h-full object-cover"
+            fill
+            className="object-cover"
             alt="Refugio Amigos del Animal"
           />
           <div className="absolute inset-0 " />

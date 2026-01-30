@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   AlertTriangle, Phone, MessageCircle, Mail, Shield,
@@ -208,9 +209,11 @@ export default function DenunciarPage() {
               className="relative"
             >
               <div className="furs-card bg-card border border-border/50 p-4 shadow-xl">
-                <img
+                <Image
                   src="/Foto-denuncia/denuncia-2.png"
                   alt="Protegé a los animales"
+                  width={500}
+                  height={400}
                   className="furs-image w-full h-100 object-cover"
                 />
                 <div className="absolute bottom-8 left-8 right-8">
@@ -334,9 +337,11 @@ export default function DenunciarPage() {
               className="relative"
             >
               <div className="furs-card bg-card border border-border/50 p-6">
-                <img
+                <Image
                   src="/Foto-perritos/perrito7.jpg"
                   alt="Protección animal"
+                  width={500}
+                  height={400}
                   className="furs-image w-full h-100 object-cover"
                 />
                 <div className="text-center mt-4">

@@ -1,5 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Heart } from 'lucide-react';
 
 const Footer = () => {
@@ -9,9 +10,11 @@ const Footer = () => {
                 <div className="grid md:grid-cols-4 gap-8 mb-12">
                     <div>
                         <div className="flex items-center gap-3 mb-6">
-                            <img
+                            <Image
                                 src="/Asoc.jpg"
                                 alt="Logo Amigos del Animal"
+                                width={48}
+                                height={48}
                                 className="w-12 h-12 rounded-full object-cover border-2 border-primary"
                             />
                             <div>

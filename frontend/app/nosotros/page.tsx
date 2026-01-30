@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Heart, Syringe, Home, ChevronRight, MapPin, Users, Car, PawPrint } from 'lucide-react';
+import Image from 'next/image';
+
 
 // --- COMPONENTE 2: TIMELINE MEJORADO ---
 const timelineSteps = [
@@ -135,9 +137,11 @@ export default function SobreNosotros() {
             className="relative"
           >
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3">
-              <img
+              <Image
                 src="/Foto-perfil/perfil-1.jpg"
                 alt="Ana Lía Quispe y Brenda Córdoba - Fundadoras"
+                width={800}
+                height={400}
                 className="w-full h-[400px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
@@ -238,9 +242,11 @@ export default function SobreNosotros() {
                 className="relative"
               >
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-500">
-                  <img
+                  <Image
                     src="/Foto-perfil/brenda-amigos-del-animal-1.webp"
                     alt="Brenda en rescates"
+                    width={500}
+                    height={350}
                     className="w-full h-[350px] object-cover"
                   />
                 </div>
@@ -261,9 +267,11 @@ export default function SobreNosotros() {
                 className="relative order-2 md:order-1"
               >
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
-                  <img
+                  <Image
                     src="/Foto-perfil/brenda1.jpeg"
                     alt="Brenda activista"
+                    width={500}
+                    height={350}
                     className="w-full h-[350px] object-cover"
                   />
                 </div>
@@ -330,9 +338,11 @@ export default function SobreNosotros() {
                 className="relative"
               >
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl" style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }}>
-                  <img
+                  <Image
                     src="/Foto-perfil/adoptame.jpeg"
                     alt="Brenda en redes sociales"
+                    width={500}
+                    height={350}
                     className="w-full h-[350px] object-cover"
                     style={{ objectPosition: 'center top' }}
                   />
@@ -354,9 +364,11 @@ export default function SobreNosotros() {
                 className="relative order-2 md:order-1"
               >
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500">
-                  <img
+                  <Image
                     src="/Foto-perfil/analia.jpg"
                     alt="Ana Lía y Brenda"
+                    width={500}
+                    height={350}
                     className="w-full h-[350px] object-cover"
                   />
                 </div>
