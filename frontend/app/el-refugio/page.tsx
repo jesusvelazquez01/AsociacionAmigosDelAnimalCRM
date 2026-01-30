@@ -30,10 +30,10 @@ const activitiesData = [
   {
     id: "socializacion",
     icon: Heart,
-    title: "Socialización y Adiestramiento",
-    description: "Trabajamos en la confianza y comportamiento de los animales. Les enseñamos comandos básicos y los ayudamos a superar miedos para que estén listos para convivir en armonía con su futura familia.",
+    title: "Rescate y Protección",
+    description: "Rescatamos animales en situación de abandono, maltrato o riesgo. Realizamos el seguimiento de denuncias y brindamos acompañamiento en casos de crueldad animal.",
     color: "#EF4444",
-    image: "/Foto-perritos/perrito3.jpg"
+    image: "/Foto-actividad-refugio/rescate.jpg"
   },
   {
     id: "adopcion",
