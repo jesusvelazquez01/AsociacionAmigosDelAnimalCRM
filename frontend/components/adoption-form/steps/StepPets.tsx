@@ -1,7 +1,6 @@
 'use client';
 
 import React from 'react';
-import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -35,11 +34,9 @@ export default function StepPets({
                 <Card className="overflow-hidden border-2 border-primary">
                     <CardContent className="p-6">
                         <div className="flex items-center gap-4">
-                            <Image
+                            <img
                                 src={selectedPet.image || '/Foto-perritos/placeholder.jpg'}
                                 alt={selectedPet.name}
-                                width={80}
-                                height={80}
                                 className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
                             />
                             <div className="flex-1">
@@ -110,11 +107,9 @@ export default function StepPets({
                                                 : 'border-gray-200 hover:border-primary/50'
                                                 }`}
                                         >
-                                            <Image
+                                            <img
                                                 src={pet.image || '/Foto-perritos/placeholder.jpg'}
                                                 alt={pet.name}
-                                                width={200}
-                                                height={96}
                                                 className="w-full h-24 object-cover"
                                             />
                                             <div className="p-2 bg-white">

@@ -431,11 +431,10 @@ export default function AdopcionPage() {
                           <div className="bg-card rounded-3xl border border-border/50 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                             {/* Imagen con badges */}
                             <div className="relative overflow-hidden aspect-[4/3]">
-                              <Image
+                              <img
                                 src={pet.image || '/Foto-perritos/placeholder.jpg'}
                                 alt={`${pet.name} en adopción`}
-                                fill
-                                className="object-cover group-hover:scale-110 transition-transform duration-500"
+                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                               />
                               {/* Badge tipo animal - arriba izquierda */}
                               <div className="absolute top-3 left-3">
