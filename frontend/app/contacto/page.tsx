@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import { useForm } from "react-hook-form";
 import { z } from "zod";
@@ -8,6 +8,28 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { MapPin, Mail, Phone, Facebook, Instagram, MessageCircle, Send, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import api from '@/lib/axios';
+import Script from 'next/script';
+
+// Declarar el tipo global de Turnstile
+declare global {
+  interface Window {
+    turnstile: {
+      render: (container: string | HTMLElement, options: {
+        sitekey: string;
+        callback?: (token: string) => void;
+        'expired-callback'?: () => void;
+        'error-callback'?: () => void;
+        theme?: 'light' | 'dark' | 'auto';
+        size?: 'normal' | 'compact';
+      }) => string;
+      reset: (widgetId: string) => void;
+      remove: (widgetId: string) => void;
+      getResponse: (widgetId: string) => string | undefined;
+    };
+  }
+}
+
+const TURNSTILE_SITE_KEY = "0x4AAAAAACVz_4qEMa4fKiYG";
 
 const formSchema = z.object({
   firstName: z.string().min(2, "El nombre es requerido."),
@@ -28,6 +50,56 @@ export default function ContactoPage() {
     message: string;
   } | null>(null);
 
+  // Turnstile state
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileLoaded, setTurnstileLoaded] = useState(false);
+  const turnstileWidgetId = useRef<string | null>(null);
+  const turnstileContainerRef = useRef<HTMLDivElement>(null);
+
+  // Renderizar Turnstile cuando el script cargue
+  const renderTurnstile = useCallback(() => {
+    if (turnstileContainerRef.current && window.turnstile && !turnstileWidgetId.current) {
+      turnstileWidgetId.current = window.turnstile.render(turnstileContainerRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        callback: (token: string) => {
+          setTurnstileToken(token);
+        },
+        'expired-callback': () => {
+          setTurnstileToken(null);
+        },
+        'error-callback': () => {
+          setTurnstileToken(null);
+        },
+        theme: 'light',
+        size: 'normal',
+      });
+    }
+  }, []);
+
+  // Reset Turnstile después del submit
+  const resetTurnstile = useCallback(() => {
+    if (turnstileWidgetId.current && window.turnstile) {
+      window.turnstile.reset(turnstileWidgetId.current);
+      setTurnstileToken(null);
+    }
+  }, []);
+
+  // Efecto para renderizar cuando el script esté listo
+  useEffect(() => {
+    if (turnstileLoaded) {
+      renderTurnstile();
+    }
+  }, [turnstileLoaded, renderTurnstile]);
+
+  // Cleanup al desmontar
+  useEffect(() => {
+    return () => {
+      if (turnstileWidgetId.current && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetId.current);
+      }
+    };
+  }, []);
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -41,11 +113,23 @@ export default function ContactoPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    // Validar que Turnstile esté completo
+    if (!turnstileToken) {
+      setSubmitStatus({
+        success: false,
+        message: "Por favor, completa la verificación de seguridad.",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
-      const response = await api.post('/mensajes', values);
+      const response = await api.post('/mensajes', {
+        ...values,
+        'cf-turnstile-response': turnstileToken,
+      });
 
       if (response.data.success) {
         setSubmitStatus({
@@ -53,6 +137,7 @@ export default function ContactoPage() {
           message: response.data.message || "¡Mensaje enviado con éxito! Gracias por contactarnos.",
         });
         reset();
+        resetTurnstile(); // Reset el widget para el próximo uso
       } else {
         setSubmitStatus({
           success: false,
@@ -76,7 +161,10 @@ export default function ContactoPage() {
 
       {/* Barra de progreso de lectura superior */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]" style={{ scaleX }} />
-
+      <Script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+        onLoad={() => setTurnstileLoaded(true)}
+      />
       {/* --- HERO ESTILO FURS CON IMAGEN --- */}
       <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
         {/* Imagen de fondo */}
@@ -317,6 +405,11 @@ export default function ContactoPage() {
                     </>
                   )}
                 </Button>
+                {/* Widget de Cloudflare Turnstile */}
+                <div
+                  ref={turnstileContainerRef}
+                  className="flex justify-center"
+                />
               </form>
             </motion.div>
           </div>

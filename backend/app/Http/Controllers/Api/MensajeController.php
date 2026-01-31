@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Mensaje;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Validation\ValidationException;
 
 class MensajeController extends Controller
@@ -23,8 +24,26 @@ class MensajeController extends Controller
                 'phone' => 'nullable|string|max:50',
                 'subject' => 'required|string|min:2|max:255',
                 'message' => 'required|string|min:10',
+                'cf-turnstile-response' => 'required|string',
             ]);
 
+            // Verificar Turnstile con Cloudflare
+            $turnstileResponse = Http::asForm()->post('https://challenges.cloudflare.com/turnstile/v0/siteverify', [
+                'secret' => config('services.turnstile.secret_key'),
+                'response' => $validated['cf-turnstile-response'],
+                'remoteip' => $request->ip(),
+            ]);
+
+            $turnstileData = $turnstileResponse->json();
+
+            if (!($turnstileData['success'] ?? false)) {
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Verificación de seguridad fallida. Por favor, intenta nuevamente.',
+                ], 422);
+            }
+
+            // Turnstile verificado, guardar el mensaje
             $mensaje = Mensaje::create([
                 'nombre' => $validated['firstName'],
                 'apellido' => $validated['lastName'] ?? '',
