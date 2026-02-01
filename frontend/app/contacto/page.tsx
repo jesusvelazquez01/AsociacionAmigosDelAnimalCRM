@@ -166,46 +166,34 @@ export default function ContactoPage() {
         onLoad={() => setTurnstileLoaded(true)}
       />
       {/* --- HERO ESTILO FURS CON IMAGEN --- */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        {/* Imagen de fondo */}
-        <div className="absolute inset-0">
-          <Image
-            src="/Foto-refugio/refugio-4.jpg"
-            fill
-            className="object-cover"
-            alt="Refugio Amigos del Animal"
-          />
-          <div className="absolute inset-0 " />
+      {/* --- HERO: VISUAL IMPACT --- */}
+      <section className="relative min-h-[90vh] flex items-center justify-center bg-[#0a0a0a] text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-60">
+          <img src="/Foto-refugio/refugio-4.jpg" className="w-full h-full object-cover" alt="Fondo" />
         </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
 
-        {/* Decoraciones de fondo */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 right-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-secondary/30 rounded-full blur-3xl" />
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center py-20">
+        <div className="relative z-10 text-center max-w-4xl px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1 }}
           >
-            <span className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm text-primary px-4 py-2 rounded-full text-sm font-bold mb-6">
-              <MessageCircle className="w-4 h-4" />
+            <span className="inline-block py-1 px-3 rounded-full border border-primary text-primary text-sm mb-6 uppercase tracking-[0.2em] bg-pink-500/10 backdrop-blur-md">
               Estamos para ayudarte
             </span>
-
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Hablemos <span className="text-primary">Ahora</span>
+            <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none">
+              HABLEMOS<br />
+              <span className="text-transparent bg-clip-text bg-primary/80 animate-gradient-xy">
+                AHORA
+              </span>
             </h1>
-
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-10 font-light">
               ¿Tienes preguntas sobre adopción, voluntariado o donaciones? Tu mensaje puede cambiar una vida.
             </p>
           </motion.div>
         </div>
       </section>
-
 
       {/* --- SECCIÓN DE CONTACTO --- */}
       <section className="py-20 bg-background">

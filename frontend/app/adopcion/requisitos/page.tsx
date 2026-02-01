@@ -66,50 +66,10 @@ export default function RequisitosPage() {
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]" style={{ scaleX }} />
 
       {/* ═══════════════════════════════════════════════════════════════════════════
-          HERO SECTION
-          ═══════════════════════════════════════════════════════════════════════════ */}
-      <section className="relative min-h-[50vh] flex items-center justify-center bg-gradient-to-br from-primary/10 via-background to-secondary/10 overflow-hidden">
-        {/* Decoración */}
-        <div className="absolute top-20 right-10 w-64 h-64 bg-primary/10 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 left-10 w-48 h-48 bg-secondary/20 rounded-full blur-3xl" />
-
-        <div className="relative z-10 text-center furs-container py-16">
-          {/* Botón volver */}
-          <Link
-            href="/adopcion"
-            className="inline-flex items-center text-muted-foreground hover:text-primary mb-8 transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Volver a ver las mascotas
-          </Link>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-          >
-            <span className="furs-badge bg-primary/10 text-primary border border-primary/20 mb-6">
-              <PawPrint className="w-4 h-4 mr-2" />
-              Leer con atención
-            </span>
-
-            <h1 className="furs-title-xl text-foreground mb-6">
-              Requisitos de<br />
-              <span className="text-primary">Adopción</span>
-            </h1>
-
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Adoptar es un acto de <strong>amor</strong>, pero sobre todo de <strong>responsabilidad</strong>.
-              Buscamos hogares para toda la vida.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════════════════════
           REQUISITOS GRID
           ═══════════════════════════════════════════════════════════════════════════ */}
       <section className="furs-section bg-card border-y border-border/30">
+
         <div className="furs-container">
           <div className="text-center mb-12">
             <span className="furs-badge bg-primary/10 text-primary border border-primary/20 mb-4">
@@ -262,37 +222,24 @@ export default function RequisitosPage() {
       {/* ═══════════════════════════════════════════════════════════════════════════
           CTA FINAL
           ═══════════════════════════════════════════════════════════════════════════ */}
-      <section className="furs-section bg-foreground text-background">
-        <div className="furs-container">
+      <section className="furs-section bg-card border-t border-border/30">
+        <div className="furs-container text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="max-w-3xl mx-auto text-center"
+            className="furs-card bg-gradient-to-br from-primary/5 to-secondary/10 border border-border/50 p-12 max-w-3xl mx-auto"
           >
             <Heart className="w-14 h-14 text-primary mx-auto mb-6" />
-            <h2 className="furs-title-lg text-background mb-4">
+            <h2 className="furs-title-lg text-foreground mb-4">
               ¿Cumplís con los requisitos?
             </h2>
-            <p className="text-xl text-background/80 mb-10">
-              ¡Entonces queremos conocerte! Escribinos para coordinar una visita y encontrar a tu compañero ideal.
+            <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
+              Si cumplís con los requisitos, no dudes en contactarnos para coordinar una visita y encontrar a tu compañero ideal.
             </p>
-
-            <div className="flex flex-col sm:flex-row justify-center gap-4">
-              <a
-                href="https://wa.me/5493881234567"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="btn-pill bg-green-500 hover:bg-green-600 text-white text-lg px-8 py-4 inline-flex items-center justify-center gap-2"
-              >
-                <MessageCircle className="w-5 h-5" />
-                Contactar por WhatsApp
-              </a>
-              <Link
-                href="/adopcion"
-                className="btn-pill bg-primary hover:bg-primary/90 text-primary-foreground text-lg px-8 py-4"
-              >
+            <div className="flex flex-wrap justify-center gap-2">
+              <Link href="/adopcion" className="btn-pill-secondary text-lg px-8 py-4">
                 Ver animalitos disponibles
               </Link>
             </div>

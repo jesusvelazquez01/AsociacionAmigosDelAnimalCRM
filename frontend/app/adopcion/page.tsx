@@ -474,14 +474,9 @@ export default function AdopcionPage() {
                                 <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                                   {pet.name}
                                 </h3>
-                                <Heart className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:fill-primary/20 transition-colors" />
                               </div>
 
-                              {/* Ubicación */}
-                              <div className="flex items-center gap-1.5 text-muted-foreground mb-3">
-                                <MapPin className="w-4 h-4" />
-                                <span className="text-sm">San Salvador de Jujuy</span>
-                              </div>
+
 
                               {/* Badges de info */}
                               <div className="flex flex-wrap gap-2">
@@ -491,11 +486,7 @@ export default function AdopcionPage() {
                                 <Badge className="rounded-full bg-secondary text-secondary-foreground border-0 text-xs px-3">
                                   {pet.size}
                                 </Badge>
-                                {pet.breed && pet.breed !== 'Mestizo' && (
-                                  <Badge className="rounded-full bg-primary/10 text-primary border-0 text-xs px-3">
-                                    {pet.breed}
-                                  </Badge>
-                                )}
+
                               </div>
                             </div>
                           </div>

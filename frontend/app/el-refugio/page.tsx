@@ -14,7 +14,6 @@ import {
 const activitiesData = [
   {
     id: "atencion-vet",
-    icon: Stethoscope,
     title: "Atención Veterinaria Integral",
     description: "Chequeos médicos completos, vacunaciones, desparasitación, cirugías y tratamientos especializados. Contamos con veterinarios voluntarios disponibles 24/7 para emergencias y cuidados intensivos.",
     color: "#EC4899",
@@ -22,7 +21,6 @@ const activitiesData = [
   },
   {
     id: "rehabilitacion",
-    icon: Home,
     title: "Rehabilitación y Cuidados",
     description: "Proporcionamos un ambiente seguro, cómodo y amoroso. Cada animal recibe atención personalizada, alimentación nutritiva y las medicinas necesarias para su pronta recuperación física y emocional.",
     color: "#F97316",
@@ -30,7 +28,6 @@ const activitiesData = [
   },
   {
     id: "socializacion",
-    icon: Heart,
     title: "Socialización y Adiestramiento",
     description: "Trabajamos en la confianza y comportamiento de los animales. Les enseñamos comandos básicos y los ayudamos a superar miedos para que estén listos para convivir en armonía con su futura familia.",
     color: "#EF4444",
@@ -38,7 +35,6 @@ const activitiesData = [
   },
   {
     id: "adopcion",
-    icon: Users,
     title: "Adopción Responsable",
     description: "No solo entregamos animales, buscamos hogares. Realizamos entrevistas exhaustivas, estudios de hogar y seguimiento post-adopción para asegurar que el vínculo sea para toda la vida.",
     color: "#3B82F6",
@@ -46,7 +42,7 @@ const activitiesData = [
   },
   {
     id: "bienestar",
-    icon: Activity,
+
     title: "Enriquecimiento y Bienestar",
     description: "Actividades recreativas, juegos, interacción social y paseos al aire libre. Estimulamos su mente y cuerpo para que su estancia en el refugio sea lo más feliz y activa posible.",
     color: "#10B981",
@@ -54,7 +50,6 @@ const activitiesData = [
   },
   {
     id: "educacion",
-    icon: BookOpen,
     title: "Educación Comunitaria",
     description: "Talleres y charlas sobre tenencia responsable. Creemos que la educación es la base para prevenir el maltrato animal y fomentar una sociedad más empática con los seres sintientes.",
     color: "#8B5CF6",
@@ -125,9 +120,7 @@ const AppStoreActivities = () => {
             <motion.img layoutId={`image-${activity.id}`} src={activity.image} className="absolute inset-0 w-full h-full object-cover" />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
             <div className="absolute bottom-0 p-8 w-full">
-              <motion.div layoutId={`icon-${activity.id}`} className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-lg bg-primary">
-                <activity.icon className="w-6 h-6 text-white" />
-              </motion.div>
+
               <motion.h3 layoutId={`title-${activity.id}`} className="text-2xl font-black text-white mb-2 leading-tight">{activity.title}</motion.h3>
               <p className="text-white/70 text-sm">Toca para más información</p>
             </div>
@@ -298,11 +291,11 @@ export default function ElRefugioPageCreative() {
           >
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3">
               <Image
-                src="/Foto-refugio/refugio-4.jpg"
+                src="/Foto-refugio/refugio-1.png"
                 alt="El Refugio del Amor"
-                width={600}
-                height={400}
-                className="w-full h-[400px] object-cover"
+                width={800}
+                height={600}
+                className="w-full h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>
@@ -367,8 +360,8 @@ export default function ElRefugioPageCreative() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <BeforeAfterSlider beforeImage="/Foto-perritos/perrito12.jpg" afterImage="/Foto-perritos/perrito13.jpg" />
               <div className="space-y-6">
-                <h3 className="text-3xl font-bold text-gray-900">La Transformación de Angelita</h3>
-                <p className="text-lg text-gray-600">Llegó temblando y herida. Con meses de tratamiento y paciencia, hoy Angelita es una perrita sana y feliz. Tu ayuda hace posibles estos milagros.</p>
+                <h3 className="text-3xl font-bold text-gray-900">La Transformación de Almita</h3>
+                <p className="text-lg text-gray-600">Llegó temblando y herida. Con meses de tratamiento y paciencia, hoy Almita es una perrita sana y feliz. Tu ayuda hace posibles estos milagros.</p>
                 <Button asChild className="bg-primary rounded-full">
                   <Link href="/donar">Quiero ayudar</Link>
                 </Button>
