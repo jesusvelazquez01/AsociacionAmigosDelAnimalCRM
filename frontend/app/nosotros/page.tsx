@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Heart, Syringe, Home, Sparkles, ChevronRight, GripVertical, MapPin, Users, Car, PawPrint } from 'lucide-react';
+import Image from 'next/image';
 
 // --- COMPONENTE 1: SLIDER ANTES / DESPUÉS (Mismo código funcional) ---
 const BeforeAfterSlider = ({ beforeImage, afterImage }: { beforeImage: string, afterImage: string }) => {
@@ -176,6 +177,7 @@ export default function SobreNosotros() {
           </motion.div>
         </div>
       </section>
+
       {/* About Section - Sección Detallada de Brenda */}
       <section className="py-24 bg-gradient-to-b from-pink-50 to-white relative overflow-hidden">
         {/* Decorative Background Elements */}
@@ -255,9 +257,11 @@ export default function SobreNosotros() {
                 className="relative"
               >
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform -rotate-3 hover:rotate-0 transition-transform duration-500">
-                  <img
+                  <Image
                     src="/Foto-perfil/brenda-amigos-del-animal-1.webp"
                     alt="Brenda en rescates"
+                    width={500}
+                    height={350}
                     className="w-full h-[350px] object-cover"
                   />
                 </div>
@@ -278,9 +282,11 @@ export default function SobreNosotros() {
                 className="relative order-2 md:order-1"
               >
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
-                  <img
+                  <Image
                     src="/Foto-perfil/brenda1.jpeg"
                     alt="Brenda activista"
+                    width={500}
+                    height={350}
                     className="w-full h-[350px] object-cover"
                   />
                 </div>
@@ -347,9 +353,11 @@ export default function SobreNosotros() {
                 className="relative"
               >
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl" style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }}>
-                  <img
+                  <Image
                     src="/Foto-perfil/adoptame.jpeg"
                     alt="Brenda en redes sociales"
+                    width={500}
+                    height={350}
                     className="w-full h-[350px] object-cover"
                     style={{ objectPosition: 'center top' }}
                   />
@@ -371,9 +379,11 @@ export default function SobreNosotros() {
                 className="relative order-2 md:order-1"
               >
                 <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform -rotate-2 hover:rotate-0 transition-transform duration-500">
-                  <img
+                  <Image
                     src="/Foto-perfil/analia.jpg"
                     alt="Ana Lía y Brenda"
+                    width={500}
+                    height={350}
                     className="w-full h-[350px] object-cover"
                   />
                 </div>
@@ -509,7 +519,6 @@ export default function SobreNosotros() {
               })}
             </div>
           </div>
-
 
         </div>
       </section>

@@ -2,6 +2,7 @@
 
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -29,7 +30,7 @@ export default function VoluntariosPage() {
       <section className="relative min-h-[90vh] flex items-center justify-center bg-[#0a0a0a] text-white overflow-hidden">
         {/* Fondo de Imagen Oscura */}
         <div className="absolute inset-0 opacity-40">
-          <img src="/Foto-refugio/refugio-2.png" className="w-full h-full object-cover grayscale" alt="Fondo" />
+          <Image src="/Foto-refugio/refugio-2.png" fill className="object-cover grayscale" alt="Fondo" />
         </div>
         <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
 
@@ -51,7 +52,7 @@ export default function VoluntariosPage() {
             <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-10 font-light">
               Tu tiempo y dedicación pueden transformar vidas. Únete a nuestro equipo de héroes.
             </p>
-           
+
             <Button asChild size="lg" className="rounded-full h-16 px-10 text-lg bg-white text-black hover:bg-pink-50 transition-all hover:scale-105">
               <Link href="/contacto">Quiero Ser Voluntario</Link>
             </Button>
@@ -71,8 +72,8 @@ export default function VoluntariosPage() {
             {volunteerAreas.map((area, index) => {
               const IconComponent = area.icon;
               return (
-                <motion.div 
-                  key={index} 
+                <motion.div
+                  key={index}
                   initial={{ opacity: 0, y: 50 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   whileHover={{ scale: 1.02, y: -5 }}

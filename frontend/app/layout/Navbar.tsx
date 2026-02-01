@@ -2,6 +2,7 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import {
@@ -48,9 +49,11 @@ const Navbar = () => {
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-3 group">
                         <div className="relative">
-                            <img
+                            <Image
                                 src="/Asoc.jpg"
                                 alt="Logo Amigos del Animal"
+                                width={48}
+                                height={48}
                                 className="w-12 h-12 rounded-full object-cover border-2 border-primary/30 group-hover:border-primary transition-colors"
                             />
                             <div className="absolute inset-0 rounded-full bg-primary/10 opacity-0 group-hover:opacity-100 transition-opacity" />

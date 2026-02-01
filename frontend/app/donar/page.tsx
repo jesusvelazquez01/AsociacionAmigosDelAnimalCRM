@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import {
   Heart, Utensils, Syringe, Stethoscope, Package,
@@ -61,7 +62,7 @@ export default function DonarPage() {
         <div className="absolute top-20 right-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl animate-float" />
         <div className="absolute bottom-20 left-10 w-64 h-64 bg-secondary/20 rounded-full blur-3xl" />
 
-        <div className="furs-container relative z-10">
+        <div className="furs-container relative z-10 mt-10">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Contenido izquierda */}
             <motion.div
@@ -69,10 +70,7 @@ export default function DonarPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="furs-badge bg-primary/10 text-primary border border-primary/20 mb-6">
-                <Heart className="w-4 h-4 mr-2" />
-                Tu ayuda transforma vidas
-              </span>
+
 
               <h1 className="furs-title-xl text-foreground mb-6">
                 Con tu donación,<br />
@@ -84,14 +82,12 @@ export default function DonarPage() {
               </p>
 
               <div className="flex flex-wrap gap-4">
-                <a href="#metodos-donacion" className="btn-pill-primary text-lg px-8 py-4">
+                <a href="#metodos-donacion" className="bg-primary hover:bg-primary/80 text-white font-bold rounded-full px-8 py-6 text-lg h-auto">
                   Donar ahora
                 </a>
-                <Button asChild variant="outline" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-4 text-lg h-auto font-bold">
-                  <Link href="/apadrinar">
-                    Apadrinar
-                  </Link>
-                </Button>
+                <Link href="/apadrinar" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-6 text-lg h-auto font-bold flex items-center">
+                  <PawPrint className="w-5 h-5 mr-2" />Apadrinar
+                </Link>
               </div>
             </motion.div>
 
@@ -122,9 +118,11 @@ export default function DonarPage() {
                     <CarouselItem key={index} className="pl-2 basis-1/2 md:basis-1/2">
                       <div className="furs-card bg-card border border-border/50 p-2 h-full">
                         <div className="relative">
-                          <img
+                          <Image
                             src={item.src}
                             alt={`Rescatadito ${index + 1}`}
+                            width={400}
+                            height={480}
                             className="furs-image w-full h-120 md:h-120 object-cover"
                           />
                           <span className={`absolute bottom-2 left-2 furs-badge text-xs ${item.label === "Antes"
@@ -200,7 +198,7 @@ export default function DonarPage() {
       {/* ═══════════════════════════════════════════════════════════════════════════
           DONACIÓN RÁPIDA - Estilo Montecito (montos predefinidos)
           ═══════════════════════════════════════════════════════════════════════════ */}
-      <section className="furs-section bg-gradient-to-br from-primary/10 via-background to-secondary/5">
+      <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-primary/5 via-background to-secondary/10 overflow-hidden">
         <div className="furs-container">
           <div className="text-center mb-12">
             <span className="furs-badge bg-primary/10 text-primary border border-primary/20 mb-4">
@@ -276,7 +274,7 @@ export default function DonarPage() {
       {/* ═══════════════════════════════════════════════════════════════════════════
           MÉTODOS DE DONACIÓN
           ═══════════════════════════════════════════════════════════════════════════ */}
-      <section id="metodos-donacion" className="furs-section bg-background">
+      <section id="metodos-donacion" className="furs-section bg-card border-y border-border/30">
         <div className="furs-container">
           <div className="text-center mb-12">
             <span className="furs-badge bg-primary/10 text-primary border border-primary/20 mb-4">

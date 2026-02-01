@@ -1,5 +1,6 @@
 "use client";
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
+import Image from 'next/image';
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -7,6 +8,28 @@ import { motion, useScroll, useSpring } from 'framer-motion';
 import { MapPin, Mail, Phone, Facebook, Instagram, MessageCircle, Send, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import api from '@/lib/axios';
+import Script from 'next/script';
+
+// Declarar el tipo global de Turnstile
+declare global {
+  interface Window {
+    turnstile: {
+      render: (container: string | HTMLElement, options: {
+        sitekey: string;
+        callback?: (token: string) => void;
+        'expired-callback'?: () => void;
+        'error-callback'?: () => void;
+        theme?: 'light' | 'dark' | 'auto';
+        size?: 'normal' | 'compact';
+      }) => string;
+      reset: (widgetId: string) => void;
+      remove: (widgetId: string) => void;
+      getResponse: (widgetId: string) => string | undefined;
+    };
+  }
+}
+
+const TURNSTILE_SITE_KEY = "0x4AAAAAACVz_4qEMa4fKiYG";
 
 const formSchema = z.object({
   firstName: z.string().min(2, "El nombre es requerido."),
@@ -27,6 +50,56 @@ export default function ContactoPage() {
     message: string;
   } | null>(null);
 
+  // Turnstile state
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [turnstileLoaded, setTurnstileLoaded] = useState(false);
+  const turnstileWidgetId = useRef<string | null>(null);
+  const turnstileContainerRef = useRef<HTMLDivElement>(null);
+
+  // Renderizar Turnstile cuando el script cargue
+  const renderTurnstile = useCallback(() => {
+    if (turnstileContainerRef.current && window.turnstile && !turnstileWidgetId.current) {
+      turnstileWidgetId.current = window.turnstile.render(turnstileContainerRef.current, {
+        sitekey: TURNSTILE_SITE_KEY,
+        callback: (token: string) => {
+          setTurnstileToken(token);
+        },
+        'expired-callback': () => {
+          setTurnstileToken(null);
+        },
+        'error-callback': () => {
+          setTurnstileToken(null);
+        },
+        theme: 'light',
+        size: 'normal',
+      });
+    }
+  }, []);
+
+  // Reset Turnstile después del submit
+  const resetTurnstile = useCallback(() => {
+    if (turnstileWidgetId.current && window.turnstile) {
+      window.turnstile.reset(turnstileWidgetId.current);
+      setTurnstileToken(null);
+    }
+  }, []);
+
+  // Efecto para renderizar cuando el script esté listo
+  useEffect(() => {
+    if (turnstileLoaded) {
+      renderTurnstile();
+    }
+  }, [turnstileLoaded, renderTurnstile]);
+
+  // Cleanup al desmontar
+  useEffect(() => {
+    return () => {
+      if (turnstileWidgetId.current && window.turnstile) {
+        window.turnstile.remove(turnstileWidgetId.current);
+      }
+    };
+  }, []);
+
   const { register, handleSubmit, formState: { errors }, reset } = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -40,11 +113,23 @@ export default function ContactoPage() {
   });
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
+    // Validar que Turnstile esté completo
+    if (!turnstileToken) {
+      setSubmitStatus({
+        success: false,
+        message: "Por favor, completa la verificación de seguridad.",
+      });
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitStatus(null);
 
     try {
-      const response = await api.post('/mensajes', values);
+      const response = await api.post('/mensajes', {
+        ...values,
+        'cf-turnstile-response': turnstileToken,
+      });
 
       if (response.data.success) {
         setSubmitStatus({
@@ -52,6 +137,7 @@ export default function ContactoPage() {
           message: response.data.message || "¡Mensaje enviado con éxito! Gracias por contactarnos.",
         });
         reset();
+        resetTurnstile(); // Reset el widget para el próximo uso
       } else {
         setSubmitStatus({
           success: false,
@@ -75,47 +161,39 @@ export default function ContactoPage() {
 
       {/* Barra de progreso de lectura superior */}
       <motion.div className="fixed top-0 left-0 right-0 h-1 bg-primary origin-left z-[60]" style={{ scaleX }} />
-
+      <Script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit"
+        onLoad={() => setTurnstileLoaded(true)}
+      />
       {/* --- HERO ESTILO FURS CON IMAGEN --- */}
-      <section className="relative min-h-[60vh] flex items-center justify-center overflow-hidden">
-        {/* Imagen de fondo */}
-        <div className="absolute inset-0">
-          <img
-            src="/Foto-refugio/refugio-4.jpg"
-            className="w-full h-full object-cover"
-            alt="Refugio Amigos del Animal"
-          />
-          <div className="absolute inset-0 " />
+      {/* --- HERO: VISUAL IMPACT --- */}
+      <section className="relative min-h-[90vh] flex items-center justify-center bg-[#0a0a0a] text-white overflow-hidden">
+        <div className="absolute inset-0 opacity-60">
+          <img src="/Foto-refugio/refugio-4.jpg" className="w-full h-full object-cover" alt="Fondo" />
         </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
 
-        {/* Decoraciones de fondo */}
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-20 right-20 w-72 h-72 bg-primary/20 rounded-full blur-3xl" />
-          <div className="absolute bottom-20 left-20 w-96 h-96 bg-secondary/30 rounded-full blur-3xl" />
-        </div>
-
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center py-20">
+        <div className="relative z-10 text-center max-w-4xl px-4">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 1 }}
           >
-            <span className="inline-flex items-center gap-2 bg-primary/10 backdrop-blur-sm text-primary px-4 py-2 rounded-full text-sm font-bold mb-6">
-              <MessageCircle className="w-4 h-4" />
+            <span className="inline-block py-1 px-3 rounded-full border border-primary text-primary text-sm mb-6 uppercase tracking-[0.2em] bg-pink-500/10 backdrop-blur-md">
               Estamos para ayudarte
             </span>
-
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground mb-6">
-              Hablemos <span className="text-primary">Ahora</span>
+            <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none">
+              HABLEMOS<br />
+              <span className="text-transparent bg-clip-text bg-primary/80 animate-gradient-xy">
+                AHORA
+              </span>
             </h1>
-
-            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-xl md:text-2xl text-gray-300 max-w-2xl mx-auto mb-10 font-light">
               ¿Tienes preguntas sobre adopción, voluntariado o donaciones? Tu mensaje puede cambiar una vida.
             </p>
           </motion.div>
         </div>
       </section>
-
 
       {/* --- SECCIÓN DE CONTACTO --- */}
       <section className="py-20 bg-background">
@@ -315,6 +393,11 @@ export default function ContactoPage() {
                     </>
                   )}
                 </Button>
+                {/* Widget de Cloudflare Turnstile */}
+                <div
+                  ref={turnstileContainerRef}
+                  className="flex justify-center"
+                />
               </form>
             </motion.div>
           </div>

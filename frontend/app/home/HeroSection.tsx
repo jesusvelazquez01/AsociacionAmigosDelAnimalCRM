@@ -4,11 +4,11 @@ import React from 'react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
-import { Heart, ArrowRight, MapPin } from 'lucide-react';
+import { Heart, ArrowRight, MapPin, PawPrint } from 'lucide-react';
 
 const HeroSection = () => {
     return (
-        <section className="bg-gradient-to-br from-secondary/30 via-background to-background py-24 relative overflow-hidden">
+        <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-primary/5 via-background to-secondary/10 overflow-hidden">
             {/* Decoraciones de fondo */}
             <div className="absolute inset-0 pointer-events-none">
                 <div className="absolute top-20 right-20 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
@@ -66,13 +66,13 @@ const HeroSection = () => {
                             transition={{ duration: 0.6, delay: 0.4 }}
                             viewport={{ once: true }}
                         >
-                            <Button asChild size="lg" className="rounded-full px-8 bg-primary hover:bg-primary/90 shadow-lg shadow-primary/25">
+                            <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-white font-bold rounded-full px-8 py-6 text-lg h-auto">
                                 <Link href="/el-refugio">
                                     Ver Refugio
                                     <ArrowRight className="ml-2 w-5 h-5" />
                                 </Link>
                             </Button>
-                            <Button asChild size="lg" variant="outline" className="rounded-full px-8 border-primary text-primary hover:bg-primary/10">
+                            <Button asChild size="lg" variant="outline" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-6 text-lg h-auto font-bold">
                                 <Link href="/contacto">
                                     Contactar
                                 </Link>
@@ -92,13 +92,12 @@ const HeroSection = () => {
                             <motion.img
                                 src="/Foto-refugio/refugio-9.jpg"
                                 alt="Perros rescatados por Amigos del Animal"
-                                className="rounded-3xl shadow-2xl w-full object-cover border border-border/50"
+                                className="rounded-3xl shadow-2xl w-full h-[500px] object-cover border border-border/50"
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.3 }}
                             />
 
-                            {/* Overlay decorativo */}
-                            <div className="absolute inset-0 rounded-3xl bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+
                         </div>
 
                         {/* Card flotante de estadísticas */}
@@ -112,11 +111,11 @@ const HeroSection = () => {
                         >
                             <div className="flex items-center gap-4">
                                 <div className="bg-primary/10 p-4 rounded-2xl">
-                                    <Heart className="w-8 h-8 text-primary" />
+                                    <PawPrint className="w-8 h-8 text-primary" />
                                 </div>
                                 <div>
-                                    <div className="text-3xl font-bold text-foreground">+350</div>
-                                    <div className="text-sm text-muted-foreground">Adopciones Exitosas</div>
+                                    <div className="text-3xl font-bold text-foreground">+200</div>
+                                    <div className="text-sm text-muted-foreground">Animales Rescatados</div>
                                 </div>
                             </div>
                         </motion.div>

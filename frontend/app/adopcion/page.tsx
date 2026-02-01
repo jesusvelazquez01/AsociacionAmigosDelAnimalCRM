@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useCallback } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
@@ -435,7 +436,6 @@ export default function AdopcionPage() {
                                 alt={`${pet.name} en adopción`}
                                 className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
                               />
-
                               {/* Badge tipo animal - arriba izquierda */}
                               <div className="absolute top-3 left-3">
                                 <span className="inline-flex items-center gap-1 bg-white/95 backdrop-blur-sm text-foreground shadow-sm px-3 py-1.5 rounded-full text-xs font-medium">
@@ -447,9 +447,11 @@ export default function AdopcionPage() {
                               {/* Logo refugio - arriba derecha */}
                               <div className="absolute top-3 right-3">
                                 <div className="w-10 h-10 bg-white rounded-full shadow-lg flex items-center justify-center overflow-hidden">
-                                  <img
+                                  <Image
                                     src="/Asoc.jpg"
                                     alt="Amigos del Animal"
+                                    width={40}
+                                    height={40}
                                     className="w-full h-full object-cover"
                                   />
                                 </div>
@@ -472,14 +474,9 @@ export default function AdopcionPage() {
                                 <h3 className="text-xl font-bold text-foreground group-hover:text-primary transition-colors">
                                   {pet.name}
                                 </h3>
-                                <Heart className="w-5 h-5 text-muted-foreground group-hover:text-primary group-hover:fill-primary/20 transition-colors" />
                               </div>
 
-                              {/* Ubicación */}
-                              <div className="flex items-center gap-1.5 text-muted-foreground mb-3">
-                                <MapPin className="w-4 h-4" />
-                                <span className="text-sm">San Salvador de Jujuy</span>
-                              </div>
+
 
                               {/* Badges de info */}
                               <div className="flex flex-wrap gap-2">
@@ -489,11 +486,7 @@ export default function AdopcionPage() {
                                 <Badge className="rounded-full bg-secondary text-secondary-foreground border-0 text-xs px-3">
                                   {pet.size}
                                 </Badge>
-                                {pet.breed && pet.breed !== 'Mestizo' && (
-                                  <Badge className="rounded-full bg-primary/10 text-primary border-0 text-xs px-3">
-                                    {pet.breed}
-                                  </Badge>
-                                )}
+
                               </div>
                             </div>
                           </div>

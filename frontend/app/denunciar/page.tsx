@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   AlertTriangle, Phone, MessageCircle, Mail, Shield,
@@ -170,12 +171,12 @@ export default function DenunciarPage() {
       {/* ═══════════════════════════════════════════════════════════════════════════
           HERO SECTION - Estilo Furs + El Campito
           ═══════════════════════════════════════════════════════════════════════════ */}
-      <section className="relative min-h-[80vh] flex items-center bg-gradient-to-br from-red-50 via-background to-orange-50/30 overflow-hidden">
+      <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-primary/5 via-background to-secondary/10 overflow-hidden">
         {/* Decoración orgánica */}
         <div className="absolute top-20 right-10 w-72 h-72 bg-red-100/50 rounded-full blur-3xl" />
         <div className="absolute bottom-20 left-10 w-64 h-64 bg-orange-100/50 rounded-full blur-3xl" />
 
-        <div className="furs-container relative z-10">
+        <div className="furs-container relative mt-1">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Contenido izquierda */}
             <motion.div
@@ -183,10 +184,6 @@ export default function DenunciarPage() {
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.8 }}
             >
-              <span className="furs-badge bg-red-100 text-red-600 border border-red-200 mb-6">
-                <AlertTriangle className="w-4 h-4 mr-2" />
-                El maltrato animal es un delito
-              </span>
 
               <h1 className="furs-title-xl text-foreground mb-6">
                 Sé la voz de<br />
@@ -213,10 +210,12 @@ export default function DenunciarPage() {
               className="relative"
             >
               <div className="furs-card bg-card border border-border/50 p-4 shadow-xl">
-                <img
+                <Image
                   src="/Foto-denuncia/denuncia-2.png"
                   alt="Protegé a los animales"
-                  className="furs-image w-full h-80 object-cover"
+                  width={500}
+                  height={400}
+                  className="furs-image w-full h-100 object-cover"
                 />
                 <div className="absolute bottom-8 left-8 right-8">
                   <div className="furs-card-sm bg-white/95 backdrop-blur-sm p-4 shadow-lg">
@@ -266,7 +265,7 @@ export default function DenunciarPage() {
       {/* ═══════════════════════════════════════════════════════════════════════════
           LEY 14.346 - Información Legal
           ═══════════════════════════════════════════════════════════════════════════ */}
-      <section className="furs-section bg-gradient-to-br from-orange-50/50 via-background to-primary/5">
+      <section className="relative min-h-[85vh] flex items-center bg-gradient-to-br from-primary/5 via-background to-secondary/10 overflow-hidden">
         <div className="furs-container">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Contenido */}
@@ -339,10 +338,12 @@ export default function DenunciarPage() {
               className="relative"
             >
               <div className="furs-card bg-card border border-border/50 p-6">
-                <img
+                <Image
                   src="/Foto-perritos/perrito7.jpg"
                   alt="Protección animal"
-                  className="furs-image w-full h-72 object-cover"
+                  width={500}
+                  height={400}
+                  className="furs-image w-full h-100 object-cover"
                 />
                 <div className="text-center mt-4">
                   <Heart className="w-8 h-8 text-primary mx-auto mb-2" />

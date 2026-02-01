@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion';
 import {
@@ -30,10 +31,10 @@ const activitiesData = [
   {
     id: "socializacion",
     icon: Heart,
-    title: "Rescate y Protección",
-    description: "Rescatamos animales en situación de abandono, maltrato o riesgo. Realizamos el seguimiento de denuncias y brindamos acompañamiento en casos de crueldad animal.",
+    title: "Socialización y Adiestramiento",
+    description: "Trabajamos en la confianza y comportamiento de los animales. Les enseñamos comandos básicos y los ayudamos a superar miedos para que estén listos para convivir en armonía con su futura familia.",
     color: "#EF4444",
-    image: "/Foto-actividad-refugio/rescate.jpg"
+    image: "/Foto-perritos/perrito3.jpg"
   },
   {
     id: "adopcion",
@@ -86,10 +87,10 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }: { beforeImage: string, a
       onTouchEnd={() => isDragging.current = false}
       onTouchMove={handleMouseMove}
     >
-      <img src={afterImage} alt="Después" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+      <Image src={afterImage} alt="Después" fill className="absolute inset-0 object-cover" draggable={false} />
       <div className="absolute top-4 right-4 bg-green-500/90 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-bold uppercase">Ahora</div>
       <div className="absolute inset-0 w-full h-full overflow-hidden border-r-2 border-white" style={{ width: `${sliderPosition}%` }}>
-        <img src={beforeImage} alt="Antes" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+        <Image src={beforeImage} alt="Antes" fill className="absolute inset-0 object-cover" draggable={false} />
         <div className="absolute top-4 left-4 bg-gray-900/80 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-bold uppercase">Antes</div>
       </div>
       <div className="absolute top-0 bottom-0 w-1 bg-white flex items-center justify-center" style={{ left: `${sliderPosition}%` }}>
@@ -154,56 +155,32 @@ const AppStoreActivities = () => {
     </div>
   );
 };
+
 // --- COMPONENTE 2: TIMELINE ANIMADO ---
-
 const TimelineItem = ({ icon: Icon, title, desc, index }: any) => {
-
   return (
-
     <motion.div
-
       initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-
       whileInView={{ opacity: 1, x: 0 }}
-
       viewport={{ once: true, margin: "-100px" }}
-
       transition={{ duration: 0.6, delay: index * 0.2 }}
-
       className={`flex items-center gap-8 mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse text-right'}`}
-
     >
-
       <div className={`w-1/2 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
-
         <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
-
         <p className="text-gray-600">{desc}</p>
-
       </div>
-
-
 
       <div className="relative z-10 flex-shrink-0">
-
         <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-pink-200 border-4 border-white">
-
           <Icon className="w-6 h-6 text-white" />
-
         </div>
-
       </div>
 
-
-
       <div className="w-1/2" />
-
     </motion.div>
-
   );
-
 };
-
 
 // --- PÁGINA PRINCIPAL ---
 export default function ElRefugioPageCreative() {
@@ -296,10 +273,12 @@ export default function ElRefugioPageCreative() {
             className="relative"
           >
             <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3">
-              <img
-                src="/Foto-refugio/refugio-4.jpg"
+              <Image
+                src="/Foto-refugio/refugio-1.png"
                 alt="El Refugio del Amor"
-                className="w-full h-[400px] object-cover"
+                width={800}
+                height={600}
+                className="w-full h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>
@@ -355,7 +334,7 @@ export default function ElRefugioPageCreative() {
               <p className="text-lg text-gray-600 leading-relaxed">Dedicados al rescate, cuidado y rehabilitación de animales abandonados en San Salvador de Jujuy. Cada animal recibe atención veterinaria completa y amor incondicional.</p>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="relative h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
-              <img src="/Foto-actividad-refugio/brenda-amigos-del-animal.webp" alt="Refugio" className="w-full h-full object-cover" />
+              <Image src="/Foto-actividad-refugio/brenda-amigos-del-animal.webp" alt="Refugio" fill className="object-cover" />
             </motion.div>
           </div>
 
@@ -364,8 +343,8 @@ export default function ElRefugioPageCreative() {
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <BeforeAfterSlider beforeImage="/Foto-perritos/perrito12.jpg" afterImage="/Foto-perritos/perrito13.jpg" />
               <div className="space-y-6">
-                <h3 className="text-3xl font-bold text-gray-900">La Transformación de Angelita</h3>
-                <p className="text-lg text-gray-600">Llegó temblando y herida. Con meses de tratamiento y paciencia, hoy Angelita es una perrita sana y feliz. Tu ayuda hace posibles estos milagros.</p>
+                <h3 className="text-3xl font-bold text-gray-900">La Transformación de Almita</h3>
+                <p className="text-lg text-gray-600">Llegó temblando y herida. Con meses de tratamiento y paciencia, hoy Almita es una perrita sana y feliz. Tu ayuda hace posibles estos milagros.</p>
                 <Button asChild className="bg-primary rounded-full">
                   <Link href="/donar">Quiero ayudar</Link>
                 </Button>
@@ -401,7 +380,6 @@ export default function ElRefugioPageCreative() {
       </section>
 
       {/* --- SECTION: THE JOURNEY (ENHANCED CARDS STYLE) --- */}
-
       <section className="py-32 bg-gradient-to-b from-background via-primary/5 to-background relative overflow-hidden">
         {/* Enhanced Decorative Background Elements */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
@@ -584,7 +562,6 @@ export default function ElRefugioPageCreative() {
           </motion.div>
         </div>
       </section>
-
 
       {/* --- CTA FINAL CON CUADRO --- */}
       <section className="relative py-32 bg-background text-center px-4 overflow-hidden">
