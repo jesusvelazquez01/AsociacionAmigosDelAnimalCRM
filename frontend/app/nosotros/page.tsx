@@ -1,12 +1,95 @@
 'use client';
 
-import React from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { motion, useScroll, useSpring } from 'framer-motion';
-import { Heart, Syringe, Home, ChevronRight, MapPin, Users, Car, PawPrint } from 'lucide-react';
+import { Heart, Syringe, Home, Sparkles, ChevronRight, GripVertical, MapPin, Users, Car, PawPrint } from 'lucide-react';
 
-// --- COMPONENTE 2: TIMELINE MEJORADO ---
+// --- COMPONENTE 1: SLIDER ANTES / DESPUÉS (Mismo código funcional) ---
+const BeforeAfterSlider = ({ beforeImage, afterImage }: { beforeImage: string, afterImage: string }) => {
+  const [sliderPosition, setSliderPosition] = useState(50);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const isDragging = useRef(false);
+
+  const handleMouseMove = (e: React.MouseEvent | React.TouchEvent) => {
+    if (!isDragging.current || !containerRef.current) return;
+    const rect = containerRef.current.getBoundingClientRect();
+    const x = 'touches' in e ? e.touches[0].clientX : e.clientX;
+    const position = ((x - rect.left) / rect.width) * 100;
+    setSliderPosition(Math.min(100, Math.max(0, position)));
+  };
+
+  return (
+    <div
+      ref={containerRef}
+      className="relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden cursor-ew-resize shadow-2xl border-4 border-white select-none group"
+      onMouseDown={() => isDragging.current = true}
+      onMouseUp={() => isDragging.current = false}
+      onMouseLeave={() => isDragging.current = false}
+      onMouseMove={handleMouseMove}
+      onTouchStart={() => isDragging.current = true}
+      onTouchEnd={() => isDragging.current = false}
+      onTouchMove={handleMouseMove}
+    >
+      <img src={afterImage} alt="Despues" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+      <div className="absolute top-4 right-4 bg-green-500/90 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+        Hoy (En Casa)
+      </div>
+
+      <div
+        className="absolute inset-0 w-full h-full overflow-hidden border-r-2 border-white"
+        style={{ width: `${sliderPosition}%` }}
+      >
+        <img src={beforeImage} alt="Antes" className="absolute inset-0 w-full h-full object-cover" draggable={false} />
+        <div className="absolute top-4 left-4 bg-gray-900/80 backdrop-blur text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-wider">
+          El Rescate
+        </div>
+      </div>
+
+      <div
+        className="absolute top-0 bottom-0 w-1 bg-white cursor-ew-resize flex items-center justify-center shadow-[0_0_20px_rgba(0,0,0,0.5)]"
+        style={{ left: `${sliderPosition}%` }}
+      >
+        <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg transform active:scale-95 transition-transform text-pink-500">
+          <GripVertical size={20} />
+        </div>
+      </div>
+
+      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 bg-black/50 text-white text-xs px-4 py-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none backdrop-blur-sm">
+        Desliza para ver la recuperación
+      </div>
+    </div>
+  );
+};
+
+// --- COMPONENTE 2: TIMELINE ANIMADO ---
+const TimelineItem = ({ icon: Icon, title, desc, index }: any) => {
+  return (
+    <motion.div
+      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.6, delay: index * 0.2 }}
+      className={`flex items-center gap-8 mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse text-right'}`}
+    >
+      <div className={`w-1/2 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
+        <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
+        <p className="text-gray-600">{desc}</p>
+      </div>
+
+      <div className="relative z-10 flex-shrink-0">
+        <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-pink-200 border-4 border-white">
+          <Icon className="w-6 h-6 text-white" />
+        </div>
+      </div>
+
+      <div className="w-1/2" />
+    </motion.div>
+  );
+};
+
+// --- TIMELINE STEPS (Original) ---
 const timelineSteps = [
   {
     icon: Users,
@@ -45,120 +128,54 @@ export default function SobreNosotros() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
-    <div className="min-h-screen bg-pink-50 overflow-hidden">
+    <div className="bg-white overflow-hidden">
+
       {/* Barra de progreso de lectura */}
       <motion.div className="fixed top-0 left-0 right-0 h-1.5 bg-primary origin-left z-[60]" style={{ scaleX }} />
 
-      {/* Hero Section - Inicio Original */}
-      <section className="relative min-h-[90vh] flex items-center overflow-hidden bg-gradient-to-br from-pink-50 to-white">
-        {/* Decorative Elements */}
-        <div className="absolute top-20 right-20 w-80 h-80 bg-primary/30 rounded-full opacity-80" />
-        <div className="absolute top-40 right-40 w-60 h-60 bg-gray-300 rounded-full opacity-60" />
-        <div className="absolute bottom-20 right-10 w-40 h-40 bg-pink-300/50 rounded-full opacity-70" />
-        <div className="absolute top-1/2 right-1/4 w-20 h-20 bg-gray-400 rounded-full opacity-50" />
-
-        {/* Additional Organic Shapes */}
-        <div className="absolute top-32 left-16 w-80 h-80 bg-primary/15" style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }} />
-        <div className="absolute bottom-32 right-1/3 w-96 h-96 bg-pink-200/20 blur-lg" style={{ borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' }} />
-        <div className="absolute top-1/4 right-10 w-64 h-64 bg-pink-300/25 rounded-full blur-sm" />
-        <div className="absolute bottom-1/4 left-1/3 w-72 h-72 bg-primary/10" style={{ borderRadius: '80% 20% 60% 40% / 50% 70% 30% 50%' }} />
-
-        {/* Animal Paw Prints with Lucide Icons */}
-        <PawPrint className="absolute top-24 left-1/3 w-32 h-32 text-primary/20 transform rotate-12" />
-        <PawPrint className="absolute bottom-40 right-1/4 w-28 h-28 text-pink-300/30 transform -rotate-45" />
-        <PawPrint className="absolute top-1/2 left-20 w-24 h-24 text-primary/15 transform rotate-45" />
-        <PawPrint className="absolute bottom-20 left-1/2 w-28 h-28 text-pink-200/25 transform -rotate-12" />
-        <PawPrint className="absolute top-16 right-1/3 w-20 h-20 text-primary/18 transform rotate-75" />
-
-        {/* Dotted Pattern */}
-        <div className="absolute top-1/3 right-1/3 grid grid-cols-4 gap-2 opacity-40">
-          {[...Array(16)].map((_, i) => (
-            <div key={i} className="w-2 h-2 bg-gray-600 rounded-full" />
-          ))}
+      {/* --- HERO: JUJUY CONTEXT --- */}
+      <section className="relative min-h-[90vh] flex items-center justify-center bg-[#0a0a0a] text-white overflow-hidden">
+        {/* Usar una foto real del refugio en Jujuy o un paisaje de la zona con perros */}
+        <div className="absolute inset-0 opacity-40">
+          <img src="/Foto-refugio/refugio-5.png" className="w-full h-full object-cover" alt="Fondo Refugio Jujuy" />
         </div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent" />
 
-        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-12 items-center relative z-10">
-          {/* Left Content */}
+        <div className="relative z-10 text-center max-w-5xl px-4">
           <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
           >
-            <div className="space-y-2">
-              <div className="flex items-center gap-2 text-sm font-bold text-gray-600 uppercase tracking-wider">
-                <MapPin className="w-4 h-4" />
-                <span>San Salvador de Jujuy, Argentina</span>
-              </div>
-              <div className="bg-primary text-white px-4 py-2 rounded-lg inline-block font-bold text-sm">
-                DESDE 1987 RESCATANDO VIDAS
-              </div>
+            <div className="flex items-center justify-center gap-2 mb-6">
+              <MapPin className="text-primary w-5 h-5" />
+              <span className="text-pink-300 font-bold uppercase tracking-widest text-sm">San Salvador de Jujuy, Argentina</span>
             </div>
 
-            <h1 className="text-4xl lg:text-6xl font-black leading-tight">
-              Casi 40 <br />
-              <span className="text-primary">Años de Amor</span>
+            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter leading-none">
+              CASI 40 AÑOS<br />
+              <span className="text-transparent bg-clip-text bg-primary">
+                DE RESCATE
+              </span>
             </h1>
-
-            <p className="text-lg text-gray-600 leading-relaxed max-w-lg">
-              Compromiso que se multiplica. La Asociación Amigos del Animal Jujuy es una organización sin fines de lucro que rescata y protege animales víctimas del abandono y el maltrato desde 1987. Hoy, esa historia continúa con una nueva generación que decidió no mirar para otro lado.
+            <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-6 font-light leading-relaxed">
+              Desde 1987, la Asociación Amigos del Animal Jujuy rescata, protege y transforma vidas. Sin fines de lucro, solo con el corazón de personas como <strong>Ana Lia Quispe</strong> y <strong>Brenda Cordóba</strong>.
+            </p>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
+              Hoy albergamos a <strong>+280 vidas rescatadas</strong>. Cada uno tiene una historia de sufrimiento que se convirtió en esperanza.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Button asChild className="bg-pink-300 hover:bg-pink-400 text-white font-bold rounded-full px-8 py-6 text-lg h-auto">
-                <Link href="/adopcion">Conocer Historias</Link>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button asChild size="lg" className="rounded-full h-14 px-8 text-lg bg-primary text-white transition-all hover:scale-105">
+                <Link href="/adopcion">Conocer a la manada</Link>
               </Button>
-              <Button asChild variant="outline" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-6 text-lg h-auto font-bold">
-                <Link href="/donar">
-                  <Heart className="w-5 h-5 mr-2" />
-                  Ayudar
-                </Link>
+              <Button asChild size="lg" variant="outline" className="rounded-full h-14 px-8 text-lg border-primary text-primary  ">
+                <Link href="/voluntariado">Sumate como Voluntario</Link>
               </Button>
-            </div>
-
-            <div className="flex items-center gap-4 pt-8">
-              <div className="flex -space-x-2">
-                <div className="w-3 h-3 bg-gray-400 rounded-full" />
-                <div className="w-3 h-3 bg-gray-600 rounded-full" />
-                <div className="w-3 h-3 bg-gray-800 rounded-full" />
-                <div className="w-3 h-3 bg-primary rounded-full" />
-              </div>
-              <span className="text-sm text-gray-500">+280 vidas rescatadas</span>
-            </div>
-          </motion.div>
-
-          {/* Right Image */}
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative"
-          >
-            <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3">
-              <img
-                src="/Foto-perfil/perfil-1.jpg"
-                alt="Ana Lía Quispe y Brenda Córdoba - Fundadoras"
-                className="w-full h-[400px] object-cover"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
-            </div>
-
-            {/* Floating Card */}
-            <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
-                  <PawPrint className="w-6 h-6 text-white" />
-                </div>
-                <div>
-                  <p className="font-bold text-gray-900">Fundadoras</p>
-                  <p className="text-sm text-gray-600">Ana Lía & Brenda</p>
-                </div>
-              </div>
             </div>
           </motion.div>
         </div>
       </section>
-
       {/* About Section - Sección Detallada de Brenda */}
       <section className="py-24 bg-gradient-to-b from-pink-50 to-white relative overflow-hidden">
         {/* Decorative Background Elements */}
