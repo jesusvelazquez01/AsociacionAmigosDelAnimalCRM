@@ -95,7 +95,48 @@ export default function AdopcionPage() {
       setError(null);
     } catch (err) {
       console.error("Error cargando rescataditos:", err);
-      setError("No se pudieron cargar las mascotas. Intenta más tarde.");
+      // Datos mock mientras el backend no está disponible
+      const mockPets: Pet[] = [
+        {
+          id: 1,
+          name: "Luna",
+          slug: "luna",
+          age: "2 años",
+          description: "Perrita muy cariñosa",
+          gender: "Hembra",
+          size: "Mediano",
+          type: "Perro",
+          breed: "Mestizo",
+          color: "Marrón",
+          status: "Disponible",
+          image: "/Foto-perritos/perrito2.jpg"
+        },
+        {
+          id: 2,
+          name: "Max",
+          slug: "max",
+          age: "3 años",
+          description: "Perro muy juguetón",
+          gender: "Macho",
+          size: "Grande",
+          type: "Perro",
+          breed: "Mestizo",
+          color: "Negro",
+          status: "Disponible",
+          image: "/Foto-perritos/perrito3.jpg"
+        }
+      ];
+      
+      setPets(mockPets);
+      setMeta({
+        current_page: 1,
+        last_page: 1,
+        per_page: 10,
+        total: 2,
+        from: 1,
+        to: 2
+      });
+      setError("Usando datos de prueba. Inicia el servidor Laravel para ver datos reales.");
     } finally {
       setLoading(false);
     }

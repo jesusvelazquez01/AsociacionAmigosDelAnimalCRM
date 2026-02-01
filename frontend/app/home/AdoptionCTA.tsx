@@ -155,7 +155,7 @@ const AdoptionCTA = () => {
                                 </Link>
                             </Button>
                             <Button asChild size="lg" variant="outline" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-6 text-lg h-auto font-bold">
-                                <Link href="/voluntariado">Quiero ayudar</Link>
+                                <Link href="/donar">Quiero ayudar</Link>
                             </Button>
                         </motion.div>
 

@@ -9,56 +9,39 @@ import {
   Heart, Syringe, Home, Sparkles, GripVertical,
   Users, BookOpen, Activity, Stethoscope, X, PawPrint, MapPin
 } from 'lucide-react';
+import AppStoreActivities from '@/components/AppStoreActivities';
 
-// --- DATOS DE ACTIVIDADES ---
-const activitiesData = [
+// --- DATOS DEL TIMELINE ---
+const timelineSteps = [
   {
-    id: "atencion-vet",
-    icon: Stethoscope,
-    title: "Atención Veterinaria Integral",
-    description: "Chequeos médicos completos, vacunaciones, desparasitación, cirugías y tratamientos especializados. Contamos con veterinarios voluntarios disponibles 24/7 para emergencias y cuidados intensivos.",
-    color: "#EC4899",
-    image: "/Foto-actividad-refugio/atencionvet.jpeg"
-  },
-  {
-    id: "rehabilitacion",
-    icon: Home,
-    title: "Rehabilitación y Cuidados",
-    description: "Proporcionamos un ambiente seguro, cómodo y amoroso. Cada animal recibe atención personalizada, alimentación nutritiva y las medicinas necesarias para su pronta recuperación física y emocional.",
-    color: "#F97316",
-    image: "/Foto-perritos/perrito2.jpg"
-  },
-  {
-    id: "socializacion",
+    title: "Rescate",
+    desc: "Recibimos animales abandonados, heridos o en situación de calle en nuestra sede de Jujuy.",
     icon: Heart,
-    title: "Socialización y Adiestramiento",
-    description: "Trabajamos en la confianza y comportamiento de los animales. Les enseñamos comandos básicos y los ayudamos a superar miedos para que estén listos para convivir en armonía con su futura familia.",
-    color: "#EF4444",
-    image: "/Foto-perritos/perrito3.jpg"
+    color: "bg-primary"
   },
   {
-    id: "adopcion",
-    icon: Users,
-    title: "Adopción Responsable",
-    description: "No solo entregamos animales, buscamos hogares. Realizamos entrevistas exhaustivas, estudios de hogar y seguimiento post-adopción para asegurar que el vínculo sea para toda la vida.",
-    color: "#3B82F6",
-    image: "/Foto-actividad-refugio/adopcion.jpg"
+    title: "Atención Médica",
+    desc: "Evaluación veterinaria completa, tratamientos y cirugías necesarias para su recuperación.",
+    icon: Syringe,
+    color: "bg-primary"
   },
   {
-    id: "bienestar",
+    title: "Rehabilitación",
+    desc: "Cuidados especializados, alimentación nutritiva y terapia emocional en un ambiente seguro.",
     icon: Activity,
-    title: "Enriquecimiento y Bienestar",
-    description: "Actividades recreativas, juegos, interacción social y paseos al aire libre. Estimulamos su mente y cuerpo para que su estancia en el refugio sea lo más feliz y activa posible.",
-    color: "#10B981",
-    image: "/Foto-actividad-refugio/entretenimiento.jpg"
+    color: "bg-primary"
   },
   {
-    id: "educacion",
-    icon: BookOpen,
-    title: "Educación Comunitaria",
-    description: "Talleres y charlas sobre tenencia responsable. Creemos que la educación es la base para prevenir el maltrato animal y fomentar una sociedad más empática con los seres sintientes.",
-    color: "#8B5CF6",
-    image: "/Foto-actividad-refugio/educacion.jpg"
+    title: "Socialización",
+    desc: "Trabajo de comportamiento y socialización para prepararlos para su nueva familia.",
+    icon: Users,
+    color: "bg-primary"
+  },
+  {
+    title: "Adopción",
+    desc: "Búsqueda de hogares responsables y seguimiento post-adopción para garantizar su bienestar.",
+    icon: Home,
+    color: "bg-primary"
   }
 ];
 
@@ -97,88 +80,6 @@ const BeforeAfterSlider = ({ beforeImage, afterImage }: { beforeImage: string, a
         <div className="w-10 h-10 bg-white rounded-full flex items-center justify-center shadow-lg text-pink-500"><GripVertical size={20} /></div>
       </div>
     </div>
-  );
-};
-
-// --- COMPONENTE: ACTIVIDADES APP STORE ---
-const AppStoreActivities = () => {
-  const [selectedId, setSelectedId] = useState<string | null>(null);
-
-  useEffect(() => {
-    if (selectedId) document.body.style.overflow = 'hidden';
-    else document.body.style.overflow = 'auto';
-  }, [selectedId]);
-
-  const selectedActivity = activitiesData.find(item => item.id === selectedId);
-
-  return (
-    <div className="relative px-4">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-7xl mx-auto">
-        {activitiesData.map((activity) => (
-          <motion.div
-            key={activity.id}
-            layoutId={`card-${activity.id}`}
-            onClick={() => setSelectedId(activity.id)}
-            className="relative h-[450px] rounded-[32px] overflow-hidden cursor-pointer shadow-xl bg-white group"
-            whileHover={{ y: -10 }}
-          >
-            <motion.img layoutId={`image-${activity.id}`} src={activity.image} className="absolute inset-0 w-full h-full object-cover" />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
-            <div className="absolute bottom-0 p-8 w-full">
-              <motion.div layoutId={`icon-${activity.id}`} className="w-12 h-12 rounded-2xl flex items-center justify-center mb-4 shadow-lg bg-primary">
-                <activity.icon className="w-6 h-6 text-white" />
-              </motion.div>
-              <motion.h3 layoutId={`title-${activity.id}`} className="text-2xl font-black text-white mb-2 leading-tight">{activity.title}</motion.h3>
-              <p className="text-white/70 text-sm">Toca para más información</p>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-
-      <AnimatePresence>
-        {selectedId && selectedActivity && (
-          <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
-            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="absolute inset-0 bg-black/60 backdrop-blur-md" onClick={() => setSelectedId(null)} />
-            <motion.div layoutId={`card-${selectedActivity.id}`} className="relative w-full max-w-2xl bg-white rounded-[40px] overflow-hidden shadow-2xl flex flex-col md:flex-row max-h-[85vh]">
-              <div className="relative w-full md:w-1/2 h-48 md:h-auto">
-                <motion.img layoutId={`image-${selectedActivity.id}`} src={selectedActivity.image} className="w-full h-full object-cover" />
-              </div>
-              <div className="w-full md:w-1/2 p-6 md:p-8 overflow-y-auto">
-                <motion.h3 layoutId={`title-${selectedActivity.id}`} className="text-2xl font-black text-gray-900 mb-4 leading-tight">{selectedActivity.title}</motion.h3>
-                <p className="text-gray-600 text-base leading-relaxed mb-6">{selectedActivity.description}</p>
-                <Button onClick={() => setSelectedId(null)} className="w-full h-12 rounded-2xl text-white font-bold" style={{ backgroundColor: selectedActivity.color }}>Cerrar</Button>
-              </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-    </div>
-  );
-};
-
-// --- COMPONENTE 2: TIMELINE ANIMADO ---
-const TimelineItem = ({ icon: Icon, title, desc, index }: any) => {
-  return (
-    <motion.div
-      initial={{ opacity: 0, x: index % 2 === 0 ? -50 : 50 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.6, delay: index * 0.2 }}
-      className={`flex items-center gap-8 mb-12 ${index % 2 === 0 ? 'flex-row' : 'flex-row-reverse text-right'}`}
-    >
-      <div className={`w-1/2 ${index % 2 === 0 ? 'text-right' : 'text-left'}`}>
-        <h3 className="text-xl font-bold text-gray-900 mb-2">{title}</h3>
-        <p className="text-gray-600">{desc}</p>
-      </div>
-
-      <div className="relative z-10 flex-shrink-0">
-        <div className="w-14 h-14 bg-primary rounded-full flex items-center justify-center shadow-lg shadow-pink-200 border-4 border-white">
-          <Icon className="w-6 h-6 text-white" />
-        </div>
-      </div>
-
-      <div className="w-1/2" />
-    </motion.div>
   );
 };
 
@@ -379,189 +280,109 @@ export default function ElRefugioPageCreative() {
         </div>
       </section>
 
-      {/* --- SECTION: THE JOURNEY (ENHANCED CARDS STYLE) --- */}
-      <section className="py-32 bg-gradient-to-b from-background via-primary/5 to-background relative overflow-hidden">
-        {/* Enhanced Decorative Background Elements */}
-        <div className="absolute inset-0 overflow-hidden pointer-events-none">
-          {/* Animated gradient orbs */}
-          <div className="absolute top-20 right-20 w-[500px] h-[500px] bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-20 left-20 w-[600px] h-[600px] bg-gradient-to-tr from-accent/15 via-primary/15 to-secondary/15 rounded-full blur-3xl" style={{ animation: 'pulse 4s ease-in-out infinite' }} />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-gradient-to-r from-secondary/10 to-primary/10 rounded-full blur-2xl" />
-
-          {/* Organic shapes */}
-          <div className="absolute top-32 left-16 w-80 h-80 bg-primary/8" style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }} />
-          <div className="absolute bottom-32 right-1/3 w-96 h-96 bg-secondary/15 blur-lg" style={{ borderRadius: '30% 70% 70% 30% / 30% 30% 70% 70%' }} />
-
-          {/* Scattered Paw Prints with varied opacity */}
-          <PawPrint className="absolute top-32 right-1/4 w-40 h-40 text-primary/8 transform -rotate-12" />
-          <PawPrint className="absolute bottom-1/3 left-1/4 w-36 h-36 text-primary/12 transform rotate-30" />
-          <PawPrint className="absolute top-2/3 right-20 w-32 h-32 text-primary/10 transform -rotate-60" />
-          <PawPrint className="absolute bottom-40 right-1/2 w-36 h-36 text-primary/15 transform rotate-15" />
-          <PawPrint className="absolute top-1/4 left-16 w-28 h-28 text-primary/7 transform rotate-75" />
-          <PawPrint className="absolute bottom-1/4 left-1/2 w-32 h-32 text-primary/11 transform -rotate-20" />
-        </div>
-
-        <div className="max-w-7xl mx-auto px-4 relative z-10">
-          {/* Enhanced Header */}
-          <div className="text-center mb-24">
-            <motion.div
-              initial={{ opacity: 0, y: 30 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-              className="space-y-6"
-            >
-              <div className="inline-flex items-center gap-2 bg-gradient-to-r from-primary/10 via-secondary/10 to-primary/10 text-primary px-6 py-3 rounded-full text-sm font-bold border border-primary/20 shadow-lg">
-                <Sparkles className="w-4 h-4" />
-                Nuestro Proceso de Transformación
-                <Sparkles className="w-4 h-4" />
+       {/* --- SECTION: NUESTRO PROCESO (TIMELINE WAVE/DIAGONAL) --- */}
+            <section className="py-24 bg-gradient-to-b from-pink-50 via-white to-pink-50 relative overflow-hidden">
+              {/* Decoración de fondo */}
+              <div className="absolute inset-0 pointer-events-none">
+                <div className="absolute top-20 left-10 w-72 h-72 bg-primary/10 rounded-full blur-3xl" />
+                <div className="absolute bottom-20 right-10 w-80 h-80 bg-purple-300/10 rounded-full blur-3xl" />
               </div>
-              <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
-                El Camino del <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">Rescate</span>
-              </h2>
-              <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                Cada rescate es una historia de esperanza. Desde el momento del rescate hasta encontrar un hogar amoroso, acompañamos a cada animalito en su transformación.
-              </p>
-            </motion.div>
-          </div>
-
-          {/* Enhanced Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
-            {[
-              {
-                index: 0,
-                step: "01",
-                icon: Sparkles,
-                title: "El Rescate",
-                desc: "Recibimos el alerta y nuestro equipo acude inmediatamente. Evaluamos la situación y aseguramos al animal con calma, paciencia y seguridad.",
-                color: "from-primary to-primary/80",
-                bgColor: "bg-primary/5",
-                iconBg: "bg-gradient-to-br from-primary to-primary/90",
-                shadowColor: "shadow-primary/20"
-              },
-              {
-                index: 1,
-                step: "02",
-                icon: Syringe,
-                title: "Atención Veterinaria",
-                desc: "Chequeo médico completo, vacunas, desparasitación y tratamiento especializado de cualquier herida o enfermedad preexistente.",
-                color: "from-secondary to-secondary/80",
-                bgColor: "bg-secondary/5",
-                iconBg: "bg-gradient-to-br from-secondary to-secondary/90",
-                shadowColor: "shadow-secondary/20"
-              },
-              {
-                index: 2,
-                step: "03",
-                icon: Home,
-                title: "Rehabilitación",
-                desc: "El paso más importante. Aprenden a confiar de nuevo, socializan con otros animales y reciben todo el amor y mimos que merecen.",
-                color: "from-accent to-accent/80",
-                bgColor: "bg-accent/5",
-                iconBg: "bg-gradient-to-br from-accent to-accent/90",
-                shadowColor: "shadow-accent/20"
-              },
-              {
-                index: 3,
-                step: "04",
-                icon: Heart,
-                title: "Adopción Responsable",
-                desc: "Encontramos a la familia perfecta. Realizamos entrevistas exhaustivas y seguimiento post-adopción para asegurar un final feliz.",
-                color: "from-primary/90 to-secondary",
-                bgColor: "bg-primary/5",
-                iconBg: "bg-gradient-to-br from-primary/90 to-secondary",
-                shadowColor: "shadow-primary/20"
-              }
-            ].map((step) => {
-              const IconComponent = step.icon;
-
-              return (
+      
+              <div className="max-w-7xl mx-auto px-4 relative z-10">
+                {/* Header */}
                 <motion.div
-                  key={step.index}
-                  initial={{ opacity: 0, y: 50 }}
+                  initial={{ opacity: 0, y: 30 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
                   viewport={{ once: true }}
-                  transition={{ duration: 0.6, delay: step.index * 0.1 }}
-                  whileHover={{ y: -12, scale: 1.02 }}
-                  className="group relative"
+                  className="text-center mb-20"
                 >
-                  {/* Card Container */}
-                  <div className={`relative h-full bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 border-gray-100 hover:border-primary/30 overflow-hidden ${step.bgColor}/30`}>
-                    {/* Gradient overlay on hover */}
-                    <div className={`absolute inset-0 bg-gradient-to-br ${step.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-
-                    {/* Step number badge */}
-                    <div className="absolute top-6 right-6">
-                      <div className={`w-12 h-12 rounded-full bg-gradient-to-br ${step.color} flex items-center justify-center shadow-lg ${step.shadowColor} transform group-hover:scale-110 group-hover:rotate-12 transition-all duration-500`}>
-                        <span className="text-white font-black text-sm">{step.step}</span>
-                      </div>
-                    </div>
-
-                    {/* Icon Container */}
-                    <div className="relative mb-6">
-                      {/* Animated glow effect */}
-                      <div className={`absolute inset-0 rounded-2xl ${step.iconBg} opacity-20 blur-xl scale-150 group-hover:scale-175 transition-transform duration-500`} />
-
-                      <div className={`relative w-20 h-20 rounded-2xl ${step.iconBg} flex items-center justify-center shadow-xl ${step.shadowColor} transform group-hover:scale-110 group-hover:rotate-6 transition-all duration-500`}>
-                        <IconComponent className="w-10 h-10 text-white" />
-                      </div>
-                    </div>
-
-                    {/* Content */}
-                    <div className="relative space-y-4">
-                      <h3 className="text-2xl font-black text-gray-900 leading-tight group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-gray-900 group-hover:to-gray-600 transition-all duration-300">
-                        {step.title}
-                      </h3>
-                      <p className="text-gray-600 leading-relaxed text-base">
-                        {step.desc}
-                      </p>
-                    </div>
-
-                    {/* Animated progress bar */}
-                    <div className="absolute bottom-0 left-0 right-0 h-1.5 bg-gray-100 overflow-hidden">
-                      <motion.div
-                        initial={{ width: "0%" }}
-                        whileInView={{ width: "100%" }}
-                        transition={{ duration: 1.5, delay: step.index * 0.2 }}
-                        viewport={{ once: true }}
-                        className={`h-full bg-gradient-to-r ${step.color}`}
-                      />
-                    </div>
-                  </div>
-
-                  {/* Connecting arrow (hidden on mobile) */}
-                  {step.index < 3 && (
-                    <div className="hidden lg:block absolute top-1/2 -right-4 transform -translate-y-1/2 z-20">
-                      <motion.div
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ duration: 0.6, delay: step.index * 0.2 + 0.3 }}
-                        viewport={{ once: true }}
-                        className={`w-8 h-8 rounded-full bg-gradient-to-r ${step.color} flex items-center justify-center shadow-lg`}
-                      >
-                        <svg className="w-4 h-4 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
-                        </svg>
-                      </motion.div>
-                    </div>
-                  )}
+                  <span className="inline-block bg-primary/10 text-primary px-4 py-2 rounded-full text-sm font-bold mb-4">
+                    Nuestro Proceso
+                  </span>
+                  <h2 className="text-3xl md:text-4xl font-bold mb-4">
+                    Cómo Trabajamos en Jujuy
+                  </h2>
+                  <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                    Un ciclo de rescate, cuidado y esperanza sin fines de lucro.
+                  </p>
                 </motion.div>
-              );
-            })}
-          </div>
+      
+                {/* Timeline Wave Container */}
+                <div className="relative">
+                  {/* SVG Wave Line - Desktop (color sólido sin gradiente) */}
+                  <svg
+                    className="absolute left-0 right-0 top-1/2 -translate-y-1/2 w-full h-64 hidden lg:block"
+                    viewBox="0 0 1200 200"
+                    preserveAspectRatio="none"
+                  >
+                    <path
+                      d="M0,100 C150,180 300,20 450,100 C600,180 750,20 900,100 C1050,180 1200,100 1200,100"
+                      fill="none"
+                      stroke="#f3b7ca"
+                      strokeWidth="4"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+      
+                  {/* Steps Grid - Alternating positions */}
+                  <div className="grid grid-cols-1 md:grid-cols-5 gap-8 relative">
+                    {timelineSteps.map((step, index) => {
+                      const isTop = index % 2 === 0;
+                      const IconComponent = step.icon;
+      
+                      return (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: isTop ? -50 : 50 }}
+                          whileInView={{ opacity: 1, y: 0 }}
+                          viewport={{ once: true }}
+                          transition={{ duration: 0.6, delay: index * 0.15 }}
+                          className={`flex flex-col items-center ${isTop ? 'lg:mb-32' : 'lg:mt-32'}`}
+                        >
+                          {/* Contenido TOP para elementos pares */}
+                          {isTop && (
+                            <div className="text-center mb-6 lg:mb-8">
+                              <h3 className="text-lg font-bold text-gray-900 mb-2">
+                                {step.title}
+                              </h3>
+                              <p className="text-gray-600 text-sm leading-relaxed max-w-[200px] mx-auto">
+                                {step.desc}
+                              </p>
+                            </div>
+                          )}
+      
+                          {/* Ícono Lucide grande - Centro */}
+                          <div className="relative">
+                            {/* Circle background blur */}
+                            <div className={`absolute inset-0 rounded-full ${step.color} opacity-20 blur-xl scale-150`} />
+      
+                            {/* Icon Container */}
+                            <div className={`relative w-[100px] h-[100px] rounded-full ${step.color} flex items-center justify-center shadow-xl border-4 border-white`}>
+                              <IconComponent className="w-12 h-12 text-white" />
+                            </div>
+                          </div>
+      
+                          {/* Contenido BOTTOM para elementos impares */}
+                          {!isTop && (
+                            <div className="text-center mt-6 lg:mt-8">
+                              <h3 className="text-lg font-bold text-gray-900 mb-2">
+                                {step.title}
+                              </h3>
+                              <p className="text-gray-600 text-sm leading-relaxed max-w-[200px] mx-auto">
+                                {step.desc}
+                              </p>
+                            </div>
+                          )}
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </div>
+      
+              </div>
+            </section>
 
-          {/* Enhanced Bottom CTA */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.8 }}
-            viewport={{ once: true }}
-            className="mt-20"
-          >
-
-          </motion.div>
-        </div>
-      </section>
 
       {/* --- CTA FINAL CON CUADRO --- */}
       <section className="relative py-32 bg-background text-center px-4 overflow-hidden">

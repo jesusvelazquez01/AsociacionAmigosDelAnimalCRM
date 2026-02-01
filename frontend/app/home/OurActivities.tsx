@@ -223,8 +223,8 @@ const OurActivities = () => {
                     </p>
                     <div className="flex flex-wrap justify-center gap-4">
                         <Button asChild size="lg" className="rounded-full px-8 bg-primary hover:bg-primary/90">
-                            <a href="/voluntariado">
-                                Ser Voluntario
+                            <a href="/apadrinar">
+                                Apadrinar
                                 <ArrowRight className="ml-2 w-5 h-5" />
                             </a>
                         </Button>

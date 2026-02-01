@@ -143,7 +143,7 @@ export function MobileNavigation({
 
                 <Progress value={progress} className="h-1.5 mb-3" />
 
-                <div className="flex overflow-x-auto gap-2 pb-1 -mx-4 px-4">
+                <div className="flex overflow-x-auto gap-2 pb-1 -mx-4 px-4 scrollbar-hide">
                     {sections.map((section, index) => {
                         const sectionErrors = validateSection(index);
                         const isCompleted = sectionErrors.length === 0 && (
@@ -160,7 +160,7 @@ export function MobileNavigation({
                                         onSectionChange(index);
                                     }
                                 }}
-                                className={`flex items-center gap-2 px-3 py-2 rounded-lg whitespace-nowrap transition-all text-sm ${isCurrent
+                                className={`flex items-center gap-2 px-3 py-2 rounded-lg whitespace-nowrap transition-all text-sm flex-shrink-0 ${isCurrent
                                         ? 'bg-primary text-white shadow-md'
                                         : isCompleted
                                             ? 'bg-green-100 text-green-700'

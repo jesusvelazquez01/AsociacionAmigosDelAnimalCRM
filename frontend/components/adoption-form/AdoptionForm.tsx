@@ -340,7 +340,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
 
     return (
         <TooltipProvider>
-            <div className="min-h-screen bg-background flex">
+            <div className="min-h-screen bg-background flex flex-col lg:flex-row">
                 {/* Sidebar Navigation - Desktop */}
                 <FormNavigation
                     sections={FORM_SECTIONS}
@@ -363,7 +363,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
 
                     {/* Form Content */}
                     <main className="flex-1 bg-gradient-to-br from-secondary/20 via-background to-primary/5">
-                        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12" ref={formRef}>
+                        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-12" ref={formRef}>
                             {/* Section Header */}
                             <div className="mb-8">
                                 <motion.div
@@ -450,7 +450,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                                         type="button"
                                         onClick={handlePrevSection}
                                         variant="outline"
-                                        className="border-2 border-border hover:border-primary rounded-xl px-6 py-6 text-base"
+                                        className="w-full sm:w-auto border-2 border-border hover:border-primary rounded-xl px-6 py-6 text-base"
                                     >
                                         <ChevronLeft className="w-5 h-5 mr-2" />
                                         Anterior
@@ -461,7 +461,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                                     <Button
                                         type="button"
                                         onClick={handleNextSection}
-                                        className="flex-1 bg-primary hover:bg-primary/90 text-white rounded-xl px-6 py-6 text-base font-bold shadow-lg shadow-primary/25 hover:shadow-xl transition-all"
+                                        className="w-full sm:flex-1 bg-primary hover:bg-primary/90 text-white rounded-xl px-6 py-6 text-base font-bold shadow-lg shadow-primary/25 hover:shadow-xl transition-all"
                                     >
                                         Siguiente
                                         <ChevronRight className="w-5 h-5 ml-2" />
@@ -471,7 +471,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                                         type="button"
                                         onClick={() => handleSubmit()}
                                         disabled={submitting}
-                                        className="flex-1 bg-primary hover:bg-primary/90 text-white rounded-xl px-6 py-6 text-base font-bold shadow-lg shadow-primary/25 hover:shadow-xl transition-all"
+                                        className="w-full sm:flex-1 bg-primary hover:bg-primary/90 text-white rounded-xl px-6 py-6 text-base font-bold shadow-lg shadow-primary/25 hover:shadow-xl transition-all"
                                     >
                                         {submitting ? (
                                             <>
