@@ -234,6 +234,14 @@ const Navbar = () => {
                                 Adopción
                             </Link>
                             <Link
+                                href="/el-refugio"
+                                className="flex items-center gap-3 py-3 text-muted-foreground hover:text-primary font-medium"
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                <Building2 className="w-4 h-4" />
+                                El refugio
+                            </Link>
+                            <Link
                                 href="/nosotros"
                                 className="flex items-center gap-3 py-3 text-muted-foreground hover:text-primary font-medium"
                                 onClick={() => setIsMenuOpen(false)}
@@ -268,14 +276,6 @@ const Navbar = () => {
                                 >
                                     <Crown className="w-4 h-4" />
                                     Apadrinar
-                                </Link>
-                                <Link
-                                    href="/voluntarios"
-                                    className="flex items-center gap-3 py-2 pl-4 text-muted-foreground hover:text-primary font-medium"
-                                    onClick={() => setIsMenuOpen(false)}
-                                >
-                                    <HandshakeIcon className="w-4 h-4" />
-                                    Voluntarios
                                 </Link>
                                 <Link
                                     href="/denunciar"

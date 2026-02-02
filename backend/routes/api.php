@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\AdoptanteController;
 use App\Http\Controllers\Api\AnimalitoController;
 use App\Http\Controllers\Api\MensajeController;
 use App\Http\Controllers\Api\StatsController;

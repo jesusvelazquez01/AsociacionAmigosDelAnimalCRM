@@ -12,6 +12,8 @@ export interface Pet {
 }
 
 export interface FormData {
+    nombre_completo: string;
+    email: string;
     edad: string;
     domicilio: string;
     localidad: string;

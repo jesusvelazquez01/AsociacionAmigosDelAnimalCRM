@@ -3,88 +3,101 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Adoptante;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class AdoptanteController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(): JsonResponse
     {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        $adoptantes = Adoptante::with('animalitos')->latest()->get();
+        
+        return response()->json([
+            'success' => true,
+            'data' => $adoptantes,
+        ]);
     }
 
     /**
      * Store a newly created resource in storage.
+     * Recibe los datos del formulario de adopción del frontend
      */
     public function store(Request $request): JsonResponse
     {
-        try{
+        try {
             $validated = $request->validate([
-                'nombre_completo' => 'required|string|min:5|max:150',
-                'telefono' => 'required|string|min:5|max:150',
-                'email' => 'required|email|max:150',
-                'barrio' => 'required|string|min:5|max:150',
-                'calle' => 'required|string|min:5|max:150',
-                'numero' => 'required|string|min:5|max:150',
-                'piso' => 'nullable|string|min:5|max:150',
-                'puerta' => 'nullable|string|min:5|max:150',
-                'referencia_domicilio' => 'nullable|string|min:5|max:150',
-                'facebook' => 'nullable|string|min:5|max:150',
-            ],
-            );
+                // Personal
+                'nombre_completo' => 'required|string|min:2|max:255',
+                'email' => 'nullable|email|max:255',
+                'edad' => 'required|integer|min:18|max:100',
+                'telefono' => 'required|string|min:5|max:50',
+                'domicilio' => 'required|string|min:3|max:255',
+                'localidad' => 'required|string|min:2|max:255',
+                'facebook' => 'nullable|string|max:255',
+                
+                // Hogar
+                'personas_en_casa' => 'required|integer|min:1|max:20',
+                'todos_de_acuerdo' => 'required|in:si,no,tal_vez',
+                'composicion_familiar' => 'required|string|min:5|max:1000',
+                
+                // Animales
+                'tiene_otros_animales' => 'required|in:si,no',
+                'cuantos_animales' => 'nullable|string|max:1000',
+                'animales_castrados' => 'nullable|in:si,no',
+                'motivo_no_castracion' => 'nullable|string|max:1000',
+                'animales_vacunados' => 'nullable|in:si,no',
+                'animales_anteriores' => 'required|string|min:5|max:1000',
+                
+                // Planes
+                'plan_vacaciones' => 'required|string|min:5|max:1000',
+                'plan_embarazo_bebe' => 'required|string|min:5|max:1000',
+                'plan_alergia' => 'required|string|min:5|max:1000',
+                
+                // Animalitos seleccionados (array de IDs para la relación N:N)
+                'animalito_ids' => 'required|array|min:1',
+                'animalito_ids.*' => 'exists:animalitos,id',
+            ]);
 
-        }catch(\Exception $e){
+            // Separamos los IDs de animalitos del resto de datos
+            $animalitoIds = $validated['animalito_ids'];
+            unset($validated['animalito_ids']);
+
+            // Agregamos estado inicial
+           // $validated['estado'] = 'pendiente';
+
+            // Creamos el adoptante
+            $adoptante = Adoptante::create($validated);
+
+            // Asociamos los animalitos (relación N:N)
+            $adoptante->animalitos()->attach($animalitoIds);
+
+            // Cargamos la relación para la respuesta
+            $adoptante->load('animalitos');
+
+            return response()->json([
+                'success' => true,
+                'message' => '¡Tu solicitud de adopción fue enviada exitosamente! Nos pondremos en contacto contigo pronto.',
+                'data' => $adoptante,
+            ], 201);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
             return response()->json([
                 'success' => false,
-                'message' => 'Ocurrió un error al procesar tu mensaje. Por favor, intenta nuevamente.',
+                'message' => 'Por favor, completa todos los campos requeridos correctamente.',
+                'errors' => $e->errors(),
+            ], 422);
+
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Ocurrió un error al procesar tu solicitud. Por favor, intenta nuevamente.',
+                'error' => config('app.debug') ? $e->getMessage() : null,
             ], 500);
         }
-
-
-
-
-
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
-    }
 }

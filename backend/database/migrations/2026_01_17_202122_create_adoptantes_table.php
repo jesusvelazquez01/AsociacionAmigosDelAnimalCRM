@@ -13,16 +13,31 @@ return new class extends Migration
     {
         Schema::create('adoptantes', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre_completo');
-            $table->string('telefono');
-            $table->string('email');
-            $table->string('domicilio');
-            $table->string('direccion');
-            $table->string('numero')->nullable();
-            $table->string('piso')->nullable();
-            $table->string('puerta')->nullable();
-            $table->string('referencia_domicilio')->nullable();
-            $table->string('facebook')->nullable();
+           // Información Personal
+                $table->string('nombre_completo');
+                $table->string('email')->nullable();
+                $table->integer('edad');
+                $table->string('telefono');
+                $table->string('domicilio');      // ya existe
+                $table->string('localidad');
+                $table->string('facebook')->nullable();
+                // Información del Hogar
+                $table->integer('personas_en_casa');
+                $table->enum('todos_de_acuerdo', ['si', 'no', 'tal_vez']);
+                $table->text('composicion_familiar');
+                // Otros Animales
+                $table->enum('tiene_otros_animales', ['si', 'no']);
+                $table->text('cuantos_animales')->nullable();
+                $table->enum('animales_castrados', ['si', 'no'])->nullable();
+                $table->text('motivo_no_castracion')->nullable();
+                $table->enum('animales_vacunados', ['si', 'no'])->nullable();
+                $table->text('animales_anteriores');
+                // Planes Futuros
+                $table->text('plan_vacaciones');
+                $table->text('plan_embarazo_bebe');
+                $table->text('plan_alergia');
+                // Estado de la solicitud
+                $table->enum('estado', ['pendiente', 'en_revision', 'aprobado', 'rechazado'])->default('pendiente');
             $table->timestamps();
         });
           // Tabla pivote para la relación N:N entre Animalito y Padrino

@@ -11,7 +11,8 @@ import {
     CheckCircle2,
     ChevronRight,
     ChevronLeft,
-    AlertTriangle
+    AlertTriangle,
+    XCircle
 } from 'lucide-react';
 import {
     TooltipProvider,
@@ -47,55 +48,87 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
     const [submitted, setSubmitted] = useState(false);
     const [showAdditionalPets, setShowAdditionalPets] = useState(false);
     const [showConfirmDialog, setShowConfirmDialog] = useState(false);
+    const [submitError, setSubmitError] = useState<string | null>(null);
     const [errors, setErrors] = useState<FieldError[]>([]);
     const [touchedFields, setTouchedFields] = useState<Set<string>>(new Set());
     const formRef = useRef<HTMLDivElement>(null);
 
     const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
 
-    // Cargar datos guardados al inicio
+    // Cargar datos guardados y pets de la API al inicio
     useEffect(() => {
-        const savedData = localStorage.getItem(STORAGE_KEYS.FORM_DRAFT);
-        const savedPets = localStorage.getItem(STORAGE_KEYS.SELECTED_PETS);
-        const savedAdditionalPets = localStorage.getItem(STORAGE_KEYS.ADDITIONAL_PETS);
+        const loadData = async () => {
+            // Cargar form draft desde localStorage
+            const savedData = localStorage.getItem(STORAGE_KEYS.FORM_DRAFT);
+            const savedPets = localStorage.getItem(STORAGE_KEYS.SELECTED_PETS);
+            const savedAdditionalPets = localStorage.getItem(STORAGE_KEYS.ADDITIONAL_PETS);
 
-        if (savedData) {
+            if (savedData) {
+                try {
+                    const parsed = JSON.parse(savedData);
+                    setFormData(parsed);
+                } catch (e) {
+                    console.error('Error parsing saved data:', e);
+                }
+            }
+
+            if (savedAdditionalPets) {
+                try {
+                    const parsed = JSON.parse(savedAdditionalPets);
+                    setAdditionalPets(parsed);
+                } catch (e) {
+                    console.error('Error parsing saved pets:', e);
+                }
+            }
+
+            // Cargar pets desde la API
             try {
-                const parsed = JSON.parse(savedData);
-                setFormData(parsed);
-            } catch (e) {
-                console.error('Error parsing saved data:', e);
-            }
-        }
+                const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+                const response = await fetch(`${API_URL}/rescataditos`);
+                const result = await response.json();
 
-        if (savedAdditionalPets) {
-            try {
-                const parsed = JSON.parse(savedAdditionalPets);
-                setAdditionalPets(parsed);
-            } catch (e) {
-                console.error('Error parsing saved pets:', e);
-            }
-        }
+                // Mapear los datos de la API al formato Pet del frontend
+                const pets: Pet[] = result.data.map((animal: any) => ({
+                    id: animal.id,
+                    name: animal.name,
+                    slug: animal.slug,
+                    age: animal.age || 'Desconocida',
+                    type: animal.type === 'Perro' ? 'Perro' : animal.type === 'Gato' ? 'Gato' : animal.type,
+                    image: animal.image || null
+                }));
 
-        // TODO: Reemplazar mock data con datos de API
-        setAvailablePets(MOCK_PETS);
+                setAvailablePets(pets);
 
-        if (initialPetId) {
-            const pet = MOCK_PETS.find((p: Pet) => p.id === parseInt(initialPetId));
-            if (pet) {
-                setSelectedPet(pet);
-            }
-        } else if (savedPets) {
-            try {
-                const parsed = JSON.parse(savedPets);
-                const pet = MOCK_PETS.find((p: Pet) => p.id === parsed.id);
-                if (pet) setSelectedPet(pet);
-            } catch (e) {
-                console.error('Error parsing saved pet:', e);
-            }
-        }
+                // Buscar pet inicial o guardado
+                if (initialPetId) {
+                    const pet = pets.find((p: Pet) => p.id === parseInt(initialPetId));
+                    if (pet) {
+                        setSelectedPet(pet);
+                    }
+                } else if (savedPets) {
+                    try {
+                        const parsed = JSON.parse(savedPets);
+                        const pet = pets.find((p: Pet) => p.id === parsed.id);
+                        if (pet) setSelectedPet(pet);
+                    } catch (e) {
+                        console.error('Error parsing saved pet:', e);
+                    }
+                }
+            } catch (error) {
+                console.error('Error cargando animalitos:', error);
+                // Usar MOCK_PETS como fallback
+                setAvailablePets(MOCK_PETS);
 
-        setLoading(false);
+                if (initialPetId) {
+                    const pet = MOCK_PETS.find((p: Pet) => p.id === parseInt(initialPetId));
+                    if (pet) setSelectedPet(pet);
+                }
+            }
+
+            setLoading(false);
+        };
+
+        loadData();
     }, [initialPetId]);
 
     // Guardar automáticamente
@@ -144,6 +177,9 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                 break;
 
             case 1: // Personal
+                if (!formData.nombre_completo || formData.nombre_completo.trim().length < 2) {
+                    newErrors.push({ field: 'nombre_completo', message: 'El nombre completo es requerido (mínimo 2 caracteres)' });
+                }
                 if (!formData.edad) {
                     newErrors.push({ field: 'edad', message: 'La edad es requerida' });
                 } else if (parseInt(formData.edad) < 18) {
@@ -285,18 +321,51 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
     const confirmSubmit = async () => {
         setShowConfirmDialog(false);
         setSubmitting(true);
+        setSubmitError(null);
 
         try {
+            // Construir array de IDs de animalitos para la relación N:N
             const allPetIds = selectedPet ? [selectedPet.id, ...additionalPets] : additionalPets;
 
+            // Payload que coincide con el backend
             const payload = {
-                ...formData,
-                pet_ids: allPetIds,
-                primary_pet_id: selectedPet?.id
+                nombre_completo: formData.nombre_completo,
+                email: formData.email || null,
+                edad: parseInt(formData.edad),
+                telefono: formData.telefono,
+                domicilio: formData.domicilio,
+                localidad: formData.localidad,
+                facebook: null,
+                personas_en_casa: parseInt(formData.personas_en_casa),
+                todos_de_acuerdo: formData.todos_de_acuerdo,
+                composicion_familiar: formData.composicion_familiar,
+                tiene_otros_animales: formData.tiene_otros_animales,
+                cuantos_animales: formData.cuantos_animales || null,
+                animales_castrados: formData.animales_castrados || null,
+                motivo_no_castracion: formData.motivo_no_castracion || null,
+                animales_vacunados: formData.animales_vacunados || null,
+                animales_anteriores: formData.animales_anteriores,
+                plan_vacaciones: formData.plan_vacaciones,
+                plan_embarazo_bebe: formData.plan_embarazo_bebe,
+                plan_alergia: formData.plan_alergia,
+                animalito_ids: allPetIds
             };
 
-            console.log('Formulario enviado (simulado):', payload);
-            await new Promise(resolve => setTimeout(resolve, 1500));
+            const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+            const response = await fetch(`${API_URL}/adoptantes`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                throw new Error(data.message || 'Error al enviar la solicitud');
+            }
 
             // Limpiar localStorage
             localStorage.removeItem(STORAGE_KEYS.FORM_DRAFT);
@@ -310,7 +379,11 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
             }, 3000);
         } catch (error) {
             console.error('Error enviando formulario:', error);
-            alert('Hubo un error al enviar el formulario. Por favor intenta nuevamente.');
+            setSubmitError(
+                error instanceof Error
+                    ? error.message
+                    : 'Hubo un error al enviar el formulario. Por favor intenta nuevamente.'
+            );
         } finally {
             setSubmitting(false);
         }
@@ -528,6 +601,14 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                         </DialogHeader>
 
                         <div className="space-y-4 max-h-[60vh] overflow-y-auto py-4">
+                            {/* Error de envío */}
+                            {submitError && (
+                                <div className="bg-destructive/10 border border-destructive/30 rounded-lg p-3 flex gap-2">
+                                    <XCircle className="w-5 h-5 text-destructive flex-shrink-0" />
+                                    <p className="text-sm text-destructive">{submitError}</p>
+                                </div>
+                            )}
+
                             {/* Mascotas seleccionadas */}
                             <div>
                                 <h4 className="font-semibold text-gray-900 mb-2">Mascotas seleccionadas:</h4>
@@ -554,10 +635,12 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                             <div>
                                 <h4 className="font-semibold text-gray-900 mb-2">Información Personal:</h4>
                                 <div className="text-sm space-y-1 text-gray-600">
-                                    <p>Edad: {formData.edad} años</p>
-                                    <p>Domicilio: {formData.domicilio}</p>
-                                    <p>Localidad: {formData.localidad}</p>
-                                    <p>Teléfono: {formData.telefono}</p>
+                                    <p><strong>Nombre:</strong> {formData.nombre_completo}</p>
+                                    {formData.email && <p><strong>Email:</strong> {formData.email}</p>}
+                                    <p><strong>Edad:</strong> {formData.edad} años</p>
+                                    <p><strong>Domicilio:</strong> {formData.domicilio}</p>
+                                    <p><strong>Localidad:</strong> {formData.localidad}</p>
+                                    <p><strong>Teléfono:</strong> {formData.telefono}</p>
                                 </div>
                             </div>
 
@@ -565,8 +648,8 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                             <div>
                                 <h4 className="font-semibold text-gray-900 mb-2">Información del Hogar:</h4>
                                 <div className="text-sm space-y-1 text-gray-600">
-                                    <p>Personas en casa: {formData.personas_en_casa}</p>
-                                    <p>Todos de acuerdo: {formData.todos_de_acuerdo}</p>
+                                    <p><strong>Personas en casa:</strong> {formData.personas_en_casa}</p>
+                                    <p><strong>Todos de acuerdo:</strong> {formData.todos_de_acuerdo === 'si' ? 'Sí' : formData.todos_de_acuerdo === 'no' ? 'No' : 'Tal vez'}</p>
                                 </div>
                             </div>
                         </div>

@@ -37,6 +37,8 @@ export const FORM_SECTIONS: FormSection[] = [
 ];
 
 export const INITIAL_FORM_DATA: FormData = {
+    nombre_completo: '',
+    email: '',
     edad: '',
     domicilio: '',
     localidad: '',

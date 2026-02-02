@@ -34,11 +34,24 @@ export default function StepPets({
                 <Card className="overflow-hidden border-2 border-primary">
                     <CardContent className="p-6">
                         <div className="flex items-center gap-4">
-                            <img
-                                src={selectedPet.image || '/Foto-perritos/placeholder.jpg'}
-                                alt={selectedPet.name}
-                                className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
-                            />
+                            {selectedPet.image ? (
+                                <img
+                                    src={selectedPet.image}
+                                    alt={selectedPet.name}
+                                    className="w-20 h-20 rounded-full object-cover border-4 border-white shadow-lg"
+                                    onError={(e) => {
+                                        (e.target as HTMLImageElement).style.display = 'none';
+                                    }}
+                                />
+                            ) : (
+                                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center border-4 border-white shadow-lg">
+                                    {selectedPet.type === 'Perro' ? (
+                                        <Dog className="w-10 h-10 text-primary" />
+                                    ) : (
+                                        <Cat className="w-10 h-10 text-primary" />
+                                    )}
+                                </div>
+                            )}
                             <div className="flex-1">
                                 <h3 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
                                     {selectedPet.type === 'Perro' ? (
@@ -107,11 +120,24 @@ export default function StepPets({
                                                 : 'border-gray-200 hover:border-primary/50'
                                                 }`}
                                         >
-                                            <img
-                                                src={pet.image || '/Foto-perritos/placeholder.jpg'}
-                                                alt={pet.name}
-                                                className="w-full h-24 object-cover"
-                                            />
+                                            {pet.image ? (
+                                                <img
+                                                    src={pet.image}
+                                                    alt={pet.name}
+                                                    className="w-full h-24 object-cover"
+                                                    onError={(e) => {
+                                                        (e.target as HTMLImageElement).style.display = 'none';
+                                                    }}
+                                                />
+                                            ) : (
+                                                <div className="w-full h-24 bg-gradient-to-br from-primary/20 to-primary/40 flex items-center justify-center">
+                                                    {pet.type === 'Perro' ? (
+                                                        <Dog className="w-10 h-10 text-primary" />
+                                                    ) : (
+                                                        <Cat className="w-10 h-10 text-primary" />
+                                                    )}
+                                                </div>
+                                            )}
                                             <div className="p-2 bg-white">
                                                 <p className="text-xs font-bold text-gray-900 truncate">
                                                     {pet.name}

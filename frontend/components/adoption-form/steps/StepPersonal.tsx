@@ -31,6 +31,52 @@ export default function StepPersonal({
                     </p>
                 </div>
 
+                {/* Nombre Completo */}
+                <div className="space-y-2">
+                    <Label htmlFor="nombre_completo" className="text-base font-semibold">
+                        Nombre Completo <span className="text-red-500">*</span>
+                    </Label>
+                    <Input
+                        id="nombre_completo"
+                        value={formData.nombre_completo}
+                        onChange={(e) => onInputChange('nombre_completo', e.target.value)}
+                        className={`text-base ${hasError('nombre_completo') ? 'border-red-500' : ''}`}
+                        placeholder="Ej: Juan Pérez"
+                        data-error={hasError('nombre_completo')}
+                    />
+                    {hasError('nombre_completo') && (
+                        <p className="text-sm text-red-600 flex items-center gap-1">
+                            <AlertCircle className="w-4 h-4" />
+                            {getFieldError('nombre_completo')?.message}
+                        </p>
+                    )}
+                </div>
+
+                {/* Email */}
+                <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                        <Label htmlFor="email" className="text-base font-semibold">
+                            Email
+                        </Label>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Info className="w-4 h-4 text-gray-400 cursor-help" />
+                            </TooltipTrigger>
+                            <TooltipContent>
+                                <p>Opcional, pero nos ayuda a comunicarnos contigo</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </div>
+                    <Input
+                        id="email"
+                        type="email"
+                        value={formData.email}
+                        onChange={(e) => onInputChange('email', e.target.value)}
+                        className="text-base"
+                        placeholder="ejemplo@mail.com"
+                    />
+                </div>
+
                 {/* Edad */}
                 <div className="space-y-2">
                     <div className="flex items-center gap-2">
