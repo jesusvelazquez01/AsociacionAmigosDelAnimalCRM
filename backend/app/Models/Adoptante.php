@@ -8,6 +8,7 @@ class Adoptante extends Model
 {
     protected $fillable = [
         'nombre_completo',
+        'dni',
         'telefono',
         'email',
         'calle',
@@ -15,6 +16,7 @@ class Adoptante extends Model
         'numero',
         'piso',
         'puerta',
+        'domicilio',
         'referencia_domicilio',
         'facebook'
     ];

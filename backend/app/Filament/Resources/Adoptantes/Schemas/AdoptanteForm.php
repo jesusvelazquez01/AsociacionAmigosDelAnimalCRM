@@ -25,6 +25,12 @@ class AdoptanteForm
                                     ->maxLength(255)
                                     ->placeholder('Juan Pérez'),
                                 
+                                TextInput::make('dni')
+                                    ->label('DNI')
+                                    ->numeric()
+                                    ->maxLength(20)
+                                    ->placeholder('12345678'),
+                                
                                 TextInput::make('telefono')
                                     ->label('Teléfono')
                                     ->tel()
