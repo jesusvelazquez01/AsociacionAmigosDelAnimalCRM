@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Adoptante;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
-
+use Filament\Notifications\Notification;
+use Filament\Actions\Action;
 class AdoptanteController extends Controller
 {
     /**
@@ -67,7 +69,7 @@ class AdoptanteController extends Controller
             unset($validated['animalito_ids']);
 
             // Agregamos estado inicial
-           // $validated['estado'] = 'pendiente';
+         $validated['estado'] = 'pendiente';
 
             // Creamos el adoptante
             $adoptante = Adoptante::create($validated);
@@ -77,6 +79,19 @@ class AdoptanteController extends Controller
 
             // Cargamos la relación para la respuesta
             $adoptante->load('animalitos');
+
+            // Obtener nombres de animalitos para la notificación
+            $nombresAnimalitos = $adoptante->animalitos->pluck('nombre')->join(', ');
+
+            // Enviar notificación a todos los usuarios del panel admin
+            $recipients = User::all();
+            
+            Notification::make()
+                ->title('Nueva Solicitud de Adopción')
+                ->icon('heroicon-o-heart')
+                ->iconColor('success')
+                ->body("**{$adoptante->nombre_completo}** quiere adoptar a: {$nombresAnimalitos}")
+                ->sendToDatabase($recipients);
 
             return response()->json([
                 'success' => true,

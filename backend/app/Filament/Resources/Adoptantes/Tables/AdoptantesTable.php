@@ -4,10 +4,12 @@ namespace App\Filament\Resources\Adoptantes\Tables;
 
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
+ use Filament\Actions\Action;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use App\Models\Adoptante;
 
 class AdoptantesTable
 {
@@ -29,6 +31,14 @@ class AdoptantesTable
                 TextColumn::make('localidad')
                     ->label('Localidad')
                     ->searchable(),
+                TextColumn::make('domicilio')
+                    ->label('Domicilio')
+                    ->url(fn (Adoptante $record): string => 
+                        'https://www.google.com/maps/search/' . urlencode($record->domicilio . ', ' . $record->localidad)
+                    )
+                    ->openUrlInNewTab()
+                    ->icon('heroicon-o-map-pin')
+                    ->copyable(),
                 TextColumn::make('tiene_otros_animales')
                     ->label('Tiene mascotas')
                     ->badge()
@@ -60,6 +70,13 @@ class AdoptantesTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+                Action::make('whatsapp')
+                    ->icon('heroicon-o-phone')
+                    ->color('success')
+                    ->url(fn (Adoptante $record): string => 
+                        'https://wa.me/' . preg_replace('/[^0-9]/', '', $record->telefono)
+                    )
+                    ->openUrlInNewTab(),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([

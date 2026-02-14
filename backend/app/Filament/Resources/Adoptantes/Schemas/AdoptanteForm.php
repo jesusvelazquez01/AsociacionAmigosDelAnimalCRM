@@ -62,6 +62,13 @@ class AdoptanteForm
                         TextInput::make('facebook')
                             ->label('Facebook (Opcional)')
                             ->placeholder('URL de perfil de Facebook'),
+                        Select::make('animalitos')
+                            ->label('Animalitos')
+                            ->relationship('animalitos', 'nombre')
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                            ->columnSpanFull(),
                     ])
                     ->columns(2)
                     ->collapsible(),
@@ -184,6 +191,19 @@ class AdoptanteForm
                             ->columnSpanFull(),
                     ])
                     ->collapsible(),
-            ]);
+                Section::make('Estado de solicitud')
+                ->schema([
+                    Select::make('estado')
+                        ->label('Estado')
+                        ->options([
+                            'pendiente' => 'Pendiente',
+                            'en_revision' => 'En revisión',
+                            'aprobado' => 'Aprobado',
+                            'rechazado' => 'Rechazado',
+                        ])
+                        ->required()
+                        ->native(false),
+                ])
+                ]);
     }
 }

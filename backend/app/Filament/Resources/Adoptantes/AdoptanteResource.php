@@ -7,6 +7,7 @@ use App\Filament\Resources\Adoptantes\Pages\EditAdoptante;
 use App\Filament\Resources\Adoptantes\Pages\ListAdoptantes;
 use App\Filament\Resources\Adoptantes\Schemas\AdoptanteForm;
 use App\Filament\Resources\Adoptantes\Tables\AdoptantesTable;
+
 use App\Models\Adoptante;
 use BackedEnum;
 use Filament\Resources\Resource;
@@ -18,9 +19,9 @@ class AdoptanteResource extends Resource
 {
     protected static ?string $model = Adoptante::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
-
     protected static ?string $recordTitleAttribute = 'nombre_completo';
+    protected static string|\UnitEnum|null $navigationGroup = 'Refugio';
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedUsers;
 
     public static function form(Schema $schema): Schema
     {
