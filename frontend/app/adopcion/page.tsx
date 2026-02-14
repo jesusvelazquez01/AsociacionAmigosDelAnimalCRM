@@ -54,6 +54,7 @@ export default function AdopcionPage() {
   const [genderFilter, setGenderFilter] = useState<string>('Todos');
   const [sizeFilter, setSizeFilter] = useState<string>('Todos');
   const [searchQuery, setSearchQuery] = useState<string>('');
+  const [debouncedSearch, setDebouncedSearch] = useState<string>('');
   const [currentPage, setCurrentPage] = useState(1);
 
   // Estados de checkboxes de comportamiento
@@ -72,6 +73,12 @@ export default function AdopcionPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
+  // Debounce del buscador (300ms)
+  useEffect(() => {
+    const timer = setTimeout(() => setDebouncedSearch(searchQuery), 300);
+    return () => clearTimeout(timer);
+  }, [searchQuery]);
+
   // Fetch con filtros y paginación
   const fetchPets = useCallback(async () => {
     setLoading(true);
@@ -86,7 +93,10 @@ export default function AdopcionPage() {
         params.append('tamaño', sizeFilter);
       }
       if (typeFilter !== 'Todos') {
-        params.append('tipo', typeFilter);
+        params.append('especie', typeFilter);
+      }
+      if (debouncedSearch) {
+        params.append('buscar', debouncedSearch);
       }
 
       const response = await api.get<ApiResponse>(`/rescataditos?${params.toString()}`);
@@ -99,7 +109,7 @@ export default function AdopcionPage() {
     } finally {
       setLoading(false);
     }
-  }, [currentPage, genderFilter, sizeFilter, typeFilter]);
+  }, [currentPage, genderFilter, sizeFilter, typeFilter, debouncedSearch]);
 
   useEffect(() => {
     fetchPets();
@@ -108,7 +118,7 @@ export default function AdopcionPage() {
   // Reset page cuando cambian filtros
   useEffect(() => {
     setCurrentPage(1);
-  }, [genderFilter, sizeFilter, typeFilter]);
+  }, [genderFilter, sizeFilter, typeFilter, debouncedSearch]);
 
   // Limpiar filtros
   const clearFilters = () => {
