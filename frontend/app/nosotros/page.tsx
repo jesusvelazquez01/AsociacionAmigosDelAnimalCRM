@@ -198,7 +198,7 @@ export default function SobreNosotros() {
                 viewport={{ once: true }}
                 className="relative order-2 md:order-1"
               >
-                <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl transform rotate-3 hover:rotate-0 transition-transform duration-500">
+                <div className="relative rounded-[2.5rem] overflow-hidden shadow-2xl" style={{ borderRadius: '60% 40% 30% 70% / 60% 30% 70% 40%' }}>
                   <Image
                     src="/Foto-perfil/brenda1.jpeg"
                     alt="Brenda activista"
