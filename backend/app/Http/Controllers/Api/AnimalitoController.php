@@ -35,6 +35,11 @@ class AnimalitoController extends Controller
             $query->where('especie', request('especie'));
         }
 
+        // Búsqueda por nombre
+        if (request()->has('buscar') && request('buscar') !== '') {
+            $query->where('nombre', 'LIKE', '%' . request('buscar') . '%');
+        }
+
         // Paginación (12 por página por defecto)
         $perPage = request('per_page', 12);
         $animalitos = $query->orderBy('created_at', 'desc')->paginate($perPage);
