@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
@@ -153,8 +153,8 @@ export default function AdopcionPage() {
     </label>
   );
 
-  // Componente de filtros reutilizable
-  const FiltersContent = () => (
+  // Componente de filtros reutilizable - memoizado para evitar pérdida de foco
+  const FiltersContent = useMemo(() => (
     <div className="space-y-6">
       {/* Búsqueda */}
       <div className="furs-card bg-card border border-border/50 p-6">
@@ -293,7 +293,7 @@ export default function AdopcionPage() {
         </Link>
       </div>
     </div>
-  );
+  ), [searchQuery, setSearchQuery, typeFilter, setTypeFilter, genderFilter, setGenderFilter, sizeFilter, setSizeFilter, goodWithCats, setGoodWithCats, goodWithDogs, setGoodWithDogs, hasActiveFilters, clearFilters, meta, loading]);
 
   return (
     <div className="bg-background overflow-hidden">
@@ -362,7 +362,7 @@ export default function AdopcionPage() {
             {/* SIDEBAR DE FILTROS */}
             <aside className={`lg:w-80 flex-shrink-0 ${showFilters ? 'block' : 'hidden lg:block'}`}>
               <div className="lg:sticky lg:top-24">
-                <FiltersContent />
+                {FiltersContent}
               </div>
             </aside>
 
