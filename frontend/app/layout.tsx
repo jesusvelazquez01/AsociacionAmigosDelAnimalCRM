@@ -25,6 +25,14 @@ export const metadata: Metadata = {
   keywords: "adopción, mascotas, perros, gatos, rescate animal, Jujuy, Argentina, protectora",
 };
 
+// Viewport configuration - CRITICAL for mobile responsiveness
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 5,
+  userScalable: true,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

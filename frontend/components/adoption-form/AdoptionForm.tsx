@@ -413,7 +413,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
 
     return (
         <TooltipProvider>
-            <div className="min-h-screen bg-background flex">
+            <div className="min-h-screen bg-background flex overflow-hidden">
                 {/* Sidebar Navigation - Desktop */}
                 <FormNavigation
                     sections={FORM_SECTIONS}
@@ -424,7 +424,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                 />
 
                 {/* Main Content Area */}
-                <div className="flex-1 flex flex-col min-h-screen">
+                <div className="flex-1 flex flex-col min-h-screen min-w-0">
                     {/* Mobile Navigation - Header */}
                     <MobileNavigation
                         sections={FORM_SECTIONS}
@@ -435,8 +435,8 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                     />
 
                     {/* Form Content */}
-                    <main className="flex-1 bg-gradient-to-br from-secondary/20 via-background to-primary/5">
-                        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 lg:py-12" ref={formRef}>
+                    <main className="flex-1 bg-gradient-to-br from-secondary/20 via-background to-primary/5 overflow-x-hidden">
+                        <div className="max-w-3xl mx-auto px-3 sm:px-6 lg:px-8 py-8 lg:py-12" ref={formRef}>
                             {/* Section Header */}
                             <div className="mb-8">
                                 <motion.div
@@ -448,12 +448,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                                     <span className="text-sm font-medium text-primary">
                                         Paso {currentSection + 1} de {FORM_SECTIONS.length}
                                     </span>
-                                    <h2 className="text-3xl font-bold text-foreground mt-1">
-                                        {FORM_SECTIONS[currentSection].title}
-                                    </h2>
-                                    <p className="text-muted-foreground mt-2">
-                                        {FORM_SECTIONS[currentSection].description}
-                                    </p>
+
                                 </motion.div>
                             </div>
 

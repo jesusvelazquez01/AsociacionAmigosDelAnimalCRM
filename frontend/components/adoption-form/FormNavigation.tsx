@@ -62,17 +62,17 @@ export default function FormNavigation({
                                 }
                             }}
                             className={`w-full flex items-center gap-4 p-4 rounded-xl transition-all text-left group ${isCurrent
-                                    ? 'bg-primary text-white shadow-lg shadow-primary/25'
-                                    : isCompleted
-                                        ? 'bg-green-50 text-green-700 hover:bg-green-100'
-                                        : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground'
+                                ? 'bg-primary text-white shadow-lg shadow-primary/25'
+                                : isCompleted
+                                    ? 'bg-green-50 text-green-700 hover:bg-green-100'
+                                    : 'bg-secondary/50 text-muted-foreground hover:bg-secondary hover:text-foreground'
                                 }`}
                         >
                             <div className={`w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0 ${isCurrent
-                                    ? 'bg-white/20'
-                                    : isCompleted
-                                        ? 'bg-green-100'
-                                        : 'bg-background'
+                                ? 'bg-white/20'
+                                : isCompleted
+                                    ? 'bg-green-100'
+                                    : 'bg-background'
                                 }`}>
                                 {isCompleted ? (
                                     <Check className="w-5 h-5" />
@@ -86,10 +86,10 @@ export default function FormNavigation({
                                     {section.title}
                                 </p>
                                 <p className={`text-xs truncate ${isCurrent
-                                        ? 'text-white/70'
-                                        : isCompleted
-                                            ? 'text-green-600'
-                                            : 'text-muted-foreground'
+                                    ? 'text-white/70'
+                                    : isCompleted
+                                        ? 'text-green-600'
+                                        : 'text-muted-foreground'
                                     }`}>
                                     {section.description}
                                 </p>
@@ -122,7 +122,7 @@ export function MobileNavigation({
     progress
 }: FormNavigationProps) {
     return (
-        <div className="lg:hidden bg-card border-b border-border/50 sticky top-0 z-10">
+        <div className="lg:hidden bg-card border-b border-border/50 sticky top-0 z-10 overflow-hidden">
             <div className="px-4 py-3">
                 <div className="flex items-center justify-between mb-3">
                     <Button
@@ -161,10 +161,10 @@ export function MobileNavigation({
                                     }
                                 }}
                                 className={`flex items-center gap-2 px-3 py-2 rounded-lg whitespace-nowrap transition-all text-sm ${isCurrent
-                                        ? 'bg-primary text-white shadow-md'
-                                        : isCompleted
-                                            ? 'bg-green-100 text-green-700'
-                                            : 'bg-secondary text-muted-foreground'
+                                    ? 'bg-primary text-white shadow-md'
+                                    : isCompleted
+                                        ? 'bg-green-100 text-green-700'
+                                        : 'bg-secondary text-muted-foreground'
                                     }`}
                             >
                                 {isCompleted ? (

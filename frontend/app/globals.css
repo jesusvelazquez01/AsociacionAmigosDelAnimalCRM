@@ -169,8 +169,22 @@
     @apply border-border outline-ring/50;
   }
 
+  /* Prevent horizontal overflow on mobile */
+  html,
+  body {
+    overflow-x: hidden;
+    max-width: 100vw;
+  }
+
   body {
     @apply bg-background text-foreground;
+  }
+
+  /* Ensure all elements use border-box sizing */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
   }
 
   /* Títulos con fuente Serif (estilo Furs) */
@@ -182,6 +196,29 @@
   h6 {
     font-family: var(--font-serif);
     letter-spacing: -0.02em;
+  }
+
+  /* Ensure responsive images and media */
+  img,
+  video,
+  svg {
+    max-width: 100%;
+    height: auto;
+  }
+
+  /* Ensure form inputs are responsive */
+  input,
+  textarea,
+  select {
+    max-width: 100%;
+  }
+
+  /* Prevent text overflow */
+  p,
+  span,
+  div {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
   }
 }
 
