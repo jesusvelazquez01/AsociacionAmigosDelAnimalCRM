@@ -35,9 +35,9 @@ class AnimalitoController extends Controller
             $query->where('especie', request('especie'));
         }
 
-        // Búsqueda por nombre
+        // Búsqueda por nombre (case-insensitive)
         if (request()->has('buscar') && request('buscar') !== '') {
-            $query->where('nombre', 'LIKE', '%' . request('buscar') . '%');
+            $query->whereRaw('LOWER(nombre) LIKE ?', ['%' . strtolower(request('buscar')) . '%']);
         }
 
         // Paginación (12 por página por defecto)
