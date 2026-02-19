@@ -5,7 +5,9 @@ namespace App\Filament\Resources\Adoptantes;
 use App\Filament\Resources\Adoptantes\Pages\CreateAdoptante;
 use App\Filament\Resources\Adoptantes\Pages\EditAdoptante;
 use App\Filament\Resources\Adoptantes\Pages\ListAdoptantes;
+use App\Filament\Resources\Adoptantes\Pages\ViewAdoptante;
 use App\Filament\Resources\Adoptantes\Schemas\AdoptanteForm;
+
 use App\Filament\Resources\Adoptantes\Tables\AdoptantesTable;
 
 use App\Models\Adoptante;
@@ -46,6 +48,7 @@ class AdoptanteResource extends Resource
             'index' => ListAdoptantes::route('/'),
             'create' => CreateAdoptante::route('/create'),
             'edit' => EditAdoptante::route('/{record}/edit'),
+            'view' => ViewAdoptante::route('/{record}'),
         ];
     }
 }

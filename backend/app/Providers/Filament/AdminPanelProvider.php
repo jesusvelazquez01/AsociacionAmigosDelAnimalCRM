@@ -20,6 +20,10 @@ use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Enums\UserMenuPosition;
 use CraftForge\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
+use Resma\FilamentAwinTheme\FilamentAwinTheme;
+use Caresome\FilamentAuthDesigner\AuthDesignerPlugin;
+use Caresome\FilamentAuthDesigner\Data\AuthPageConfig;
+use Caresome\FilamentAuthDesigner\Enums\MediaPosition;
 use Filament\View\PanelsRenderHook;
 
 class AdminPanelProvider extends PanelProvider
@@ -31,11 +35,12 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
+
             ->globalSearch(false)
             ->databaseNotifications()
-            ->colors([
-                'primary' => Color::Pink,
-            ])
+            ->font('Poppins')
+            ->brandLogo("Asoc.jpg")
+            ->favicon(asset("Asoc.jpg"))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -45,10 +50,10 @@ class AdminPanelProvider extends PanelProvider
             ->widgets([
                 AccountWidget::class,
             ])
-             ->spa(hasPrefetching: true)
-             ->sidebarCollapsibleOnDesktop()
+            ->spa(hasPrefetching: true)
+            ->sidebarCollapsibleOnDesktop()
             ->brandName('Amigos del Animal')
-             ->middleware([
+            ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
                 StartSession::class,
@@ -62,12 +67,28 @@ class AdminPanelProvider extends PanelProvider
             ->authMiddleware([
                 Authenticate::class,
             ])
-              ->plugins([
-            FilamentLanguageSwitcherPlugin::make()
+            ->plugins([
+                FilamentAwinTheme::make()
+                    ->primaryColor('#FEA5D5'),
+
+                AuthDesignerPlugin::make()
+                    ->login(
+                        fn(AuthPageConfig $config) => $config
+                            ->media(asset('refugio-4.jpg'))
+                            ->mediaPosition(MediaPosition::Left)
+                            ->mediaSize('50%')
+                    ),
+
+
+
+
+
+
+                FilamentLanguageSwitcherPlugin::make()
                     ->locales([
-                ['code' => 'es', 'name' => 'Español'],
-            ])
-             ->showFlags(false)
-        ]);
+                        ['code' => 'es', 'name' => 'Español'],
+                    ])
+                    ->showFlags(false)
+            ]);
     }
 }
