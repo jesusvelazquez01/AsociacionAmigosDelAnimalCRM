@@ -21,7 +21,8 @@ return [
 
     'allowed_origins' => [
         'https://asociacion-amigos-del-animal-crm.vercel.app',
-        'http://localhost:3000',  // Para desarrollo local
+        'http://localhost:3000',
+        'https://sitio.amigos.del.animal.jujuysoft.site'  // Para desarrollo local
     ],
 
     'allowed_origins_patterns' => [],
