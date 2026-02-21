@@ -14,6 +14,7 @@ use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Notifications\Notification;
 use Filament\Schemas\Components\Grid;
+use Filament\Schemas\Components\Group;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\SpatieMediaLibraryImageColumn;
 use Filament\Tables\Columns\TextColumn;
@@ -41,7 +42,7 @@ class AnimalitosTable
 
                 TextColumn::make('especie')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'Perro' => 'info',
                         'Gato' => 'warning',
                         default => 'gray',
@@ -54,7 +55,7 @@ class AnimalitosTable
                 TextColumn::make('genero')
                     ->label('Género')
                     ->badge()
-                    ->color(fn (string $state): string => match ($state) {
+                    ->color(fn(string $state): string => match ($state) {
                         'Macho' => 'info',
                         'Hembra' => 'danger',
                         default => 'gray',
@@ -88,11 +89,14 @@ class AnimalitosTable
                         'Perro' => 'Perro',
                         'Gato' => 'Gato',
                         'Otro' => 'Otro',
-                    ]),
+                    ])
+                    ->native(false),
                 TernaryFilter::make('activo')
-                    ->label('En refugio'),
+                    ->label('En refugio')
+                    ->native(false),
                 TernaryFilter::make('estado')
-                    ->label('En web'),
+                    ->label('En web')
+                    ->native(false),
             ])
             ->recordActions([
                 ViewAction::make(),
@@ -110,7 +114,7 @@ class AnimalitosTable
                         ->modalDescription('Esta vacuna se aplicará a todos los animalitos seleccionados.')
                         ->modalSubmitActionLabel('Asignar Vacuna')
                         ->form([
-                            Grid::make(2)
+                            Group::make()
                                 ->schema([
                                     TextInput::make('nombre')
                                         ->label('Nombre de la vacuna')
@@ -122,7 +126,7 @@ class AnimalitosTable
                                         ->maxLength(255),
                                 ]),
 
-                            Grid::make(2)
+                            Group::make()
                                 ->schema([
                                     DatePicker::make('fecha_aplicacion')
                                         ->label('Fecha de aplicación')
@@ -137,11 +141,11 @@ class AnimalitosTable
                                         ->displayFormat('d/m/Y'),
                                 ]),
 
-                            Grid::make(2)
+                            Group::make()
                                 ->schema([
                                     Select::make('veterinario_id')
                                         ->label('Veterinario')
-                                        ->options(fn () => \App\Models\Veterinario::pluck('nombre', 'id'))
+                                        ->options(fn() => \App\Models\Veterinario::pluck('nombre', 'id'))
                                         ->searchable()
                                         ->preload()
                                         ->createOptionForm([
@@ -169,7 +173,7 @@ class AnimalitosTable
                         ])
                         ->action(function (Collection $records, array $data): void {
                             $count = 0;
-                            
+
                             foreach ($records as $animalito) {
                                 Vacuna::create([
                                     'animalito_id' => $animalito->id,
@@ -197,4 +201,3 @@ class AnimalitosTable
             ]);
     }
 }
-

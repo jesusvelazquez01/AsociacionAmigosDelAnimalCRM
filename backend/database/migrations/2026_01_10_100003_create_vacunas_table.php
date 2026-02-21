@@ -15,7 +15,7 @@ return new class extends Migration
             $table->string('lote')->nullable();
             $table->date('fecha_aplicacion');
             $table->date('fecha_proxima')->nullable();
-            $table->string('veterinario')->nullable();
+            $table->foreignId('veterinario_id')->nullable();
             $table->decimal('costo', 10, 2)->default(0);
             $table->text('observaciones')->nullable();
             $table->timestamps();

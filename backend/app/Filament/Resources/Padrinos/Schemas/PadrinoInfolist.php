@@ -12,8 +12,9 @@ class PadrinoInfolist
     {
         return $schema
             ->components([
-                TextEntry::make('nombre'),
-                TextEntry::make('apellido'),
+                TextEntry::make('nombre')
+                    ->label('Nombre completo'),
+
                 TextEntry::make('email')
                     ->label('Email address'),
                 TextEntry::make('telefono'),

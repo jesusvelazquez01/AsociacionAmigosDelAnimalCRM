@@ -16,6 +16,8 @@ use Illuminate\Cookie\Middleware\AddQueuedCookiesToResponse;
 use Illuminate\Cookie\Middleware\EncryptCookies;
 use Illuminate\Foundation\Http\Middleware\VerifyCsrfToken;
 use Illuminate\Routing\Middleware\SubstituteBindings;
+use Filament\View\PanelsRenderHook;
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Enums\UserMenuPosition;
@@ -24,7 +26,7 @@ use Resma\FilamentAwinTheme\FilamentAwinTheme;
 use Caresome\FilamentAuthDesigner\AuthDesignerPlugin;
 use Caresome\FilamentAuthDesigner\Data\AuthPageConfig;
 use Caresome\FilamentAuthDesigner\Enums\MediaPosition;
-use Filament\View\PanelsRenderHook;
+
 
 class AdminPanelProvider extends PanelProvider
 {
@@ -35,22 +37,27 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-
+            ->profile()
             ->globalSearch(false)
             ->databaseNotifications()
+            ->unsavedChangesAlerts()
             ->font('Poppins')
-            ->brandLogo("Asoc.jpg")
-            ->favicon(asset("Asoc.jpg"))
+            ->brandLogo(asset('Asoc.png'))
+            ->brandLogoHeight('3.5rem')
+            ->brandName('Asociacion Amigos del Animal')
+            ->favicon(asset('Asoc.png'))
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
                 Dashboard::class,
+
             ])
             ->discoverWidgets(in: app_path('Filament/Widgets'), for: 'App\Filament\Widgets')
             ->widgets([
                 AccountWidget::class,
+
             ])
-            ->spa(hasPrefetching: true)
+
             ->sidebarCollapsibleOnDesktop()
             ->brandName('Amigos del Animal')
             ->middleware([
@@ -77,13 +84,9 @@ class AdminPanelProvider extends PanelProvider
                             ->media(asset('refugio-4.jpg'))
                             ->mediaPosition(MediaPosition::Left)
                             ->mediaSize('50%')
+
+
                     ),
-
-
-
-
-
-
                 FilamentLanguageSwitcherPlugin::make()
                     ->locales([
                         ['code' => 'es', 'name' => 'Español'],
