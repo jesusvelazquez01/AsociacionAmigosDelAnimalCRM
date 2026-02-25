@@ -14,6 +14,7 @@ return [
      */
     'service_account_credentials_json' => storage_path(env('ANALYTICS_CREDENTIALS_PATH', 'app/analytics/service-account-credentials.json')),
 
+
     /*
      * The amount of minutes the Google API responses will be cached.
      * If you set this to zero, the responses won't be cached at all.
