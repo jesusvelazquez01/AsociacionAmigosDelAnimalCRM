@@ -206,7 +206,7 @@ export default function AnimalDetailPage() {
     const [isAdoptionModalOpen, setIsAdoptionModalOpen] = useState(false);
     const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
     const [isFavorite, setIsFavorite] = useState(false);
-    const [showScrollTop, setShowScrollTop] = useState(false);
+    
 
     const stickyRef = useRef<HTMLDivElement>(null);
     const { scrollYProgress } = useScroll();
@@ -243,22 +243,7 @@ export default function AnimalDetailPage() {
             });
     }, [slug]);
 
-    // Manejo del scroll
-    useEffect(() => {
-        const handleScroll = () => {
-            setShowScrollTop(window.scrollY > 400);
-        };
-
-        window.addEventListener('scroll', handleScroll, { passive: true });
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, []);
-
-    const scrollToTop = () => {
-        window.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
-    };
+   
 
     // Construir array de imágenes para el carrusel
     const getGalleryImages = (): string[] => {
@@ -470,7 +455,7 @@ export default function AnimalDetailPage() {
                                             <span className="font-medium text-sm">En tratamiento</span>
                                         </motion.div>
                                     )}
-                                    {!pet.vaccinated && !pet.in_treatment && (
+                                    {pet?.vaccinated && pet?.in_treatment && (
                                         <motion.div
                                             whileHover={{ scale: 1.05 }}
                                             className="flex items-center gap-2 bg-green-50 text-green-700 px-4 py-2 rounded-full"
@@ -485,26 +470,7 @@ export default function AnimalDetailPage() {
                             {/* Separador */}
                             <div className="border-t border-border/50" />
 
-                            {/* Personalidad */}
-                            <div>
-                                <h3 className="text-xl font-black text-foreground mb-4 uppercase tracking-wide">Personalidad</h3>
-                                <div className="flex flex-wrap gap-2">
-                                    {['Bueno con niños', 'Amigable con gatos', 'Sociable'].map((trait, index) => (
-                                        <motion.div
-                                            key={trait}
-                                            initial={{ opacity: 0, scale: 0.9 }}
-                                            animate={{ opacity: 1, scale: 1 }}
-                                            transition={{ delay: index * 0.1 }}
-                                            whileHover={{ scale: 1.05 }}
-                                        >
-                                            <Badge className="bg-primary/10 text-primary border-0 rounded-full px-3 py-1.5">
-                                                <CheckCircle2 className="w-3 h-3 mr-1.5" />
-                                                {trait}
-                                            </Badge>
-                                        </motion.div>
-                                    ))}
-                                </div>
-                            </div>
+                 
 
                             {/* Separador */}
                             <div className="border-t border-border/50" />
@@ -758,22 +724,7 @@ export default function AnimalDetailPage() {
             </section>
 
             {/* Botón de scroll to top */}
-            <AnimatePresence>
-                {showScrollTop && (
-                    <motion.button
-                        initial={{ opacity: 0, scale: 0.5 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        exit={{ opacity: 0, scale: 0.5 }}
-                        onClick={scrollToTop}
-                        className="fixed bottom-8 right-8 bg-primary hover:bg-primary/90 text-white rounded-full p-4 shadow-lg z-40 transition-all hover:scale-110"
-                        whileHover={{ y: -4 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <ArrowLeft className="w-6 h-6 rotate-90" />
-                    </motion.button>
-                )}
-            </AnimatePresence>
-
+         
             {/* Gallery Modal */}
             <AnimatePresence>
                 {isGalleryModalOpen && (

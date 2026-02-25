@@ -29,8 +29,21 @@ class Tratamientos extends TableWidget
             )
             ->columns([
                 TextColumn::make('tratamientos.0.fecha_fin')
-                    ->label('Próximos tratamientos')
+                    ->label('Renovar tratamientos')
                     ->date()
+                    ->color(
+                        fn($record) =>
+                        $record->tratamientos->first()->fecha_fin->isBefore(now()->addDays(15))
+                            ? 'warning'
+                            : 'success'
+                    ),
+                TextColumn::make('tratamientos.0.animalito.nombre')
+                    ->label('Animalito'),
+
+                TextColumn::make('tratamientos.0.nombre')
+                    ->label('Tratamiento'),
+                TextColumn::make('tratamientos.0.veterinario.nombre')
+                    ->label('Veterinario'),
 
             ])
             ->filters([

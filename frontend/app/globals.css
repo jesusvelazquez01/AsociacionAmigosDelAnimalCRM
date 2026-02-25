@@ -263,7 +263,7 @@
 
   .furs-title-xl {
     font-family: var(--font-serif);
-    @apply font-bold tracking-tight text-5xl md:text-7xl lg:text-8xl;
+    @apply font-bold tracking-tight text-3xl sm:text-5xl md:text-7xl lg:text-8xl;
   }
 
   .furs-title-lg {

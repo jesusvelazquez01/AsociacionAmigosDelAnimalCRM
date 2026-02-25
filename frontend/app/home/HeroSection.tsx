@@ -38,7 +38,7 @@ const HeroSection = () => {
 
                         {/* Título principal */}
                         <motion.h1
-                            className="text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight"
+                            className="text-3xl sm:text-5xl md:text-6xl font-bold text-foreground mb-6 leading-tight"
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
@@ -92,7 +92,7 @@ const HeroSection = () => {
                             <motion.img
                                 src="/Foto-refugio/refugio-9.jpg"
                                 alt="Perros rescatados por Amigos del Animal"
-                                className="rounded-3xl shadow-2xl w-full h-[500px] object-cover border border-border/50"
+                                className="rounded-3xl shadow-2xl w-full h-[280px] sm:h-[400px] md:h-[500px] object-cover border border-border/50"
                                 whileHover={{ scale: 1.02 }}
                                 transition={{ duration: 0.3 }}
                             />
@@ -102,7 +102,7 @@ const HeroSection = () => {
 
                         {/* Card flotante de estadísticas */}
                         <motion.div
-                            className="absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-border/50"
+                            className="hidden sm:block absolute -bottom-6 -left-6 bg-white p-6 rounded-2xl shadow-xl border border-border/50"
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5, delay: 0.5 }}
@@ -122,7 +122,7 @@ const HeroSection = () => {
 
                         {/* Card flotante adicional */}
                         <motion.div
-                            className="absolute -top-4 -right-4 bg-primary text-white px-4 py-2 rounded-full shadow-lg"
+                            className="hidden sm:block absolute -top-4 -right-4 bg-primary text-white px-4 py-2 rounded-full shadow-lg"
                             initial={{ opacity: 0, scale: 0.8 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ duration: 0.5, delay: 0.6 }}

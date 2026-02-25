@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useCallback, useMemo } from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
@@ -48,6 +49,7 @@ interface ApiResponse {
 export default function AdopcionPage() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const { trackFilterApplied, trackPetSearched, trackPetCardClicked, trackPaginationUsed, trackContactFromAdoption } = useAnalytics();
 
   // Estados de filtros
   const [typeFilter, setTypeFilter] = useState<string>('Todos');
@@ -119,6 +121,12 @@ export default function AdopcionPage() {
   useEffect(() => {
     setCurrentPage(1);
   }, [genderFilter, sizeFilter, typeFilter, debouncedSearch]);
+
+  // Tracking de búsqueda (cuando el debounce termina)
+  useEffect(() => {
+    if (debouncedSearch) trackPetSearched({ search_term: debouncedSearch });
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearch]);
 
   // Limpiar filtros
   const clearFilters = () => {
@@ -196,7 +204,7 @@ export default function AdopcionPage() {
           {/* Tipo */}
           <div>
             <label className="text-xs font-medium text-muted-foreground mb-2 block">Tipo de Animal</label>
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
+            <Select value={typeFilter} onValueChange={(v) => { setTypeFilter(v); if (v !== 'Todos') trackFilterApplied({ filter_type: 'especie', filter_value: v }); }}>
               <SelectTrigger className="w-full rounded-xl bg-background">
                 <SelectValue placeholder="Todos" />
               </SelectTrigger>
@@ -221,7 +229,7 @@ export default function AdopcionPage() {
           {/* Género */}
           <div>
             <label className="text-xs font-medium text-muted-foreground mb-2 block">Género</label>
-            <Select value={genderFilter} onValueChange={setGenderFilter}>
+            <Select value={genderFilter} onValueChange={(v) => { setGenderFilter(v); if (v !== 'Todos') trackFilterApplied({ filter_type: 'genero', filter_value: v }); }}>
               <SelectTrigger className="w-full rounded-xl bg-background">
                 <SelectValue placeholder="Todos" />
               </SelectTrigger>
@@ -236,7 +244,7 @@ export default function AdopcionPage() {
           {/* Tamaño */}
           <div>
             <label className="text-xs font-medium text-muted-foreground mb-2 block">Tamaño</label>
-            <Select value={sizeFilter} onValueChange={setSizeFilter}>
+            <Select value={sizeFilter} onValueChange={(v) => { setSizeFilter(v); if (v !== 'Todos') trackFilterApplied({ filter_type: 'tamaño', filter_value: v }); }}>
               <SelectTrigger className="w-full rounded-xl bg-background">
                 <SelectValue placeholder="Todos" />
               </SelectTrigger>
@@ -252,25 +260,7 @@ export default function AdopcionPage() {
       </div>
 
       {/* Filtros de comportamiento */}
-      <div className="furs-card bg-card border border-border/50 p-6">
-        <div className="flex items-center gap-2 mb-4">
-          <Filter className="w-5 h-5 text-primary" />
-          <h3 className="font-bold text-foreground">Compatibilidad</h3>
-        </div>
-
-        <div className="space-y-1">
-          <FilterCheckbox
-            checked={goodWithCats}
-            onChange={setGoodWithCats}
-            label="Convive con gatos"
-          />
-          <FilterCheckbox
-            checked={goodWithDogs}
-            onChange={setGoodWithDogs}
-            label="Convive con perros"
-          />
-        </div>
-      </div>
+      
 
       {/* Contador de resultados */}
       {meta && !loading && (
@@ -437,7 +427,7 @@ export default function AdopcionPage() {
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.4, delay: index * 0.05 }}
                       >
-                        <Link href={`/adopcion/${pet.slug}`} className="block group">
+                        <Link href={`/adopcion/${pet.slug}`} className="block group" onClick={() => trackPetCardClicked({ pet_name: pet.name, pet_type: pet.type, pet_id: pet.id })}>
                           <div className="bg-card rounded-3xl border border-border/50 overflow-hidden hover:shadow-xl hover:-translate-y-1 transition-all duration-300">
                             {/* Imagen con badges */}
                             <div className="relative overflow-hidden aspect-[4/3]">
@@ -506,7 +496,7 @@ export default function AdopcionPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
+                        onClick={() => { const p = Math.max(1, currentPage - 1); setCurrentPage(p); trackPaginationUsed({ page_number: p }); }}
                         disabled={currentPage === 1}
                         className="rounded-full"
                       >
@@ -544,7 +534,7 @@ export default function AdopcionPage() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => setCurrentPage(p => Math.min(meta.last_page, p + 1))}
+                        onClick={() => { const p = Math.min(meta.last_page, currentPage + 1); setCurrentPage(p); trackPaginationUsed({ page_number: p }); }}
                         disabled={currentPage === meta.last_page}
                         className="rounded-full"
                       >
@@ -578,7 +568,7 @@ export default function AdopcionPage() {
               Cada adopción es un acto de amor. Al adoptar, no solo salvás una vida, también ganás un amigo incondicional.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/contacto" className="btn-pill-primary text-lg px-8 py-4">
+              <Link href="/contacto" className="btn-pill-primary text-lg px-8 py-4" onClick={trackContactFromAdoption}>
                 Contactar al Refugio
               </Link>
               <Link href="/apadrinar" className="btn-pill-secondary text-lg px-8 py-4">

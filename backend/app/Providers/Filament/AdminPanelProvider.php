@@ -21,10 +21,14 @@ use Illuminate\Support\Facades\Blade;
 use Illuminate\Session\Middleware\StartSession;
 use Illuminate\View\Middleware\ShareErrorsFromSession;
 use Filament\Enums\UserMenuPosition;
-use CraftForge\FilamentLanguageSwitcher\FilamentLanguageSwitcherPlugin;
 use Resma\FilamentAwinTheme\FilamentAwinTheme;
 use Caresome\FilamentAuthDesigner\AuthDesignerPlugin;
 use Caresome\FilamentAuthDesigner\Data\AuthPageConfig;
+use Joaopaulolndev\FilamentEditProfile\FilamentEditProfilePlugin;
+use Joaopaulolndev\FilamentEditProfile\Pages\EditProfilePage;
+use Filament\Actions\Action;
+use BezhanSalleh\GoogleAnalytics\GoogleAnalyticsPlugin;
+
 use Caresome\FilamentAuthDesigner\Enums\MediaPosition;
 
 
@@ -37,7 +41,6 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->profile()
             ->globalSearch(false)
             ->databaseNotifications()
             ->unsavedChangesAlerts()
@@ -46,6 +49,7 @@ class AdminPanelProvider extends PanelProvider
             ->brandLogoHeight('3.5rem')
             ->brandName('Asociacion Amigos del Animal')
             ->favicon(asset('Asoc.png'))
+            ->viteTheme('resources/css/filament/admin/theme.css')
             ->discoverResources(in: app_path('Filament/Resources'), for: 'App\Filament\Resources')
             ->discoverPages(in: app_path('Filament/Pages'), for: 'App\Filament\Pages')
             ->pages([
@@ -60,6 +64,12 @@ class AdminPanelProvider extends PanelProvider
 
             ->sidebarCollapsibleOnDesktop()
             ->brandName('Amigos del Animal')
+            ->userMenuItems([
+                'profile' => Action::make('profile')
+                    ->label(fn() => auth()->user()?->name ?? 'Mi Perfil')
+                    ->url(fn(): string => EditProfilePage::getUrl())
+                    ->icon('heroicon-m-user-circle'),
+            ])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,
@@ -87,11 +97,18 @@ class AdminPanelProvider extends PanelProvider
 
 
                     ),
-                FilamentLanguageSwitcherPlugin::make()
-                    ->locales([
-                        ['code' => 'es', 'name' => 'Español'],
-                    ])
-                    ->showFlags(false)
+
+                FilamentEditProfilePlugin::make()
+                    ->setTitle('Mi Perfil')
+                    ->setNavigationLabel('Mi Perfil')
+                    ->setIcon('heroicon-o-user-circle')
+                    ->shouldRegisterNavigation(false)
+                    ->shouldShowAvatarForm()
+                    ->shouldShowEmailForm()
+                    ->shouldShowBrowserSessionsForm()
+                    ->shouldShowDeleteAccountForm(false),
+
+                GoogleAnalyticsPlugin::make(),
             ]);
     }
 }

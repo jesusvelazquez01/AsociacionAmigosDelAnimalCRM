@@ -4,6 +4,8 @@ import "./globals.css";
 import Navbar from "./layout/Navbar";
 import Footer from "./layout/Footer";
 import { CookieConsent } from "@/components/cookies/cookie";
+import { GoogleTagManager, GoogleAnalytics } from '@next/third-parties/google'
+import { ScrollToTop } from "@/components/ui/ScrollToTop";
 
 // Fuente para títulos (estilo Furs - Serif elegante)
 const playfair = Playfair_Display({
@@ -32,7 +34,6 @@ export const viewport = {
   maximumScale: 5,
   userScalable: true,
 };
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -43,11 +44,16 @@ export default function RootLayout({
       <body
         className={`${playfair.variable} ${manrope.variable} font-sans antialiased`}
       >
+        <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID || 'GTM-XYZ'} />
+        {process.env.NEXT_PUBLIC_GA_ID && (
+          <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID} />
+        )}
         <Navbar />
         <main className="min-h-screen">
           {children}
         </main>
         <Footer />
+        <ScrollToTop />
         <CookieConsent demo={true} />
       </body>
     </html>

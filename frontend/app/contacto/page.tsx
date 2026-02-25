@@ -9,6 +9,7 @@ import { MapPin, Mail, Phone, Facebook, Instagram, MessageCircle, Send, Heart } 
 import { Button } from '@/components/ui/button';
 import api from '@/lib/axios';
 import Script from 'next/script';
+import { useAnalytics } from '@/hooks/useAnalytics';
 
 // Declarar el tipo global de Turnstile
 declare global {
@@ -43,6 +44,7 @@ const formSchema = z.object({
 export default function ContactoPage() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const { trackContactFormSubmitted, trackContactFormError, trackWhatsappUrgentClicked } = useAnalytics();
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<{
@@ -136,8 +138,9 @@ export default function ContactoPage() {
           success: true,
           message: response.data.message || "¡Mensaje enviado con éxito! Gracias por contactarnos.",
         });
+        trackContactFormSubmitted({ subject: values.subject });
         reset();
-        resetTurnstile(); // Reset el widget para el próximo uso
+        resetTurnstile();
       } else {
         setSubmitStatus({
           success: false,
@@ -151,6 +154,7 @@ export default function ContactoPage() {
         success: false,
         message: errorMessage,
       });
+      trackContactFormError({ error_message: errorMessage });
     } finally {
       setIsSubmitting(false);
     }
@@ -182,7 +186,7 @@ export default function ContactoPage() {
             <span className="inline-block py-1 px-3 rounded-full border border-primary text-primary text-sm mb-6 uppercase tracking-[0.2em] bg-pink-500/10 backdrop-blur-md">
               Estamos para ayudarte
             </span>
-            <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none">
               HABLEMOS<br />
               <span className="text-transparent bg-clip-text bg-primary/80 animate-gradient-xy">
                 AHORA
@@ -288,6 +292,7 @@ export default function ContactoPage() {
                   href="https://wa.me/5493884219759?text=Hola,%20encontré%20un%20animal%20que%20necesita%20ayuda%20urgente"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={trackWhatsappUrgentClicked}
                   className="inline-block w-full bg-white text-primary font-semibold py-3 px-4 rounded-full hover:bg-white/90 transition-colors text-center"
                 >
                   WhatsApp Urgente

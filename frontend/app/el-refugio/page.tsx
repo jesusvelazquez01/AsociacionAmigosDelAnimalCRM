@@ -295,13 +295,13 @@ export default function ElRefugioPageCreative() {
                 alt="El Refugio del Amor"
                 width={800}
                 height={600}
-                className="w-full h-[500px] object-cover"
+                className="w-full h-[280px] sm:h-[400px] md:h-[500px] object-cover"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent" />
             </div>
 
             {/* Floating Card */}
-            <div className="absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
+            <div className="hidden sm:block absolute -bottom-6 -left-6 bg-white rounded-2xl p-6 shadow-xl border border-gray-100">
               <div className="flex items-center gap-3">
                 <div className="w-12 h-12 bg-primary rounded-full flex items-center justify-center">
                   <Heart className="w-6 h-6 text-white" />
@@ -343,11 +343,11 @@ export default function ElRefugioPageCreative() {
 
         <div className="max-w-6xl mx-auto px-4 relative z-10">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold text-gray-900 mb-6">Un Lugar de Esperanza</h2>
+            <h2 className="text-3xl sm:text-5xl font-bold text-gray-900 mb-6">Un Lugar de Esperanza</h2>
           </div>
           <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
             <motion.div initial={{ opacity: 0, x: -50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="space-y-6">
-              <h3 className="text-5xl font-bold text-gray-900">Nuestra Misión</h3>
+              <h3 className="text-3xl sm:text-5xl font-bold text-gray-900">Nuestra Misión</h3>
               <p className="text-lg text-gray-600 leading-relaxed">Dedicados al rescate, cuidado y rehabilitación de animales abandonados en San Salvador de Jujuy. Cada animal recibe atención veterinaria completa y amor incondicional.</p>
             </motion.div>
             <motion.div initial={{ opacity: 0, x: 50 }} whileInView={{ opacity: 1, x: 0 }} transition={{ duration: 0.6 }} viewport={{ once: true }} className="relative h-96 rounded-3xl overflow-hidden shadow-2xl border-4 border-white">
@@ -356,7 +356,7 @@ export default function ElRefugioPageCreative() {
           </div>
 
           {/* Slider Benito */}
-          <div className="bg-primary/10 rounded-[40px] p-8 md:p-12">
+          <div className="bg-primary/10 rounded-[40px] p-4 sm:p-8 md:p-12">
             <div className="grid md:grid-cols-2 gap-12 items-center">
               <BeforeAfterSlider beforeImage="/Foto-perritos/perrito12.jpg" afterImage="/Foto-perritos/perrito13.jpg" />
               <div className="space-y-6">
@@ -434,7 +434,7 @@ export default function ElRefugioPageCreative() {
                 Nuestro Proceso de Transformación
                 <Sparkles className="w-4 h-4" />
               </div>
-              <h2 className="text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
+              <h2 className="text-3xl sm:text-5xl md:text-6xl font-black text-gray-900 mb-6 leading-tight">
                 El Camino del <span className="text-transparent bg-clip-text bg-gradient-to-r from-primary via-secondary to-accent">Rescate</span>
               </h2>
               <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">

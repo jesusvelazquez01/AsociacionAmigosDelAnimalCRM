@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState } from 'react';
+import { useAnalytics } from '@/hooks/useAnalytics';
 import Link from 'next/link';
 import Image from 'next/image';
 import { motion, useScroll, useSpring } from 'framer-motion';
@@ -18,12 +19,14 @@ import {
 } from '@/components/ui/carousel';
 
 // Componente para copiar al portapapeles
-const CopyButton = ({ text, label }: { text: string; label: string }) => {
+const CopyButton = ({ text, label, trackField }: { text: string; label: string; trackField?: 'alias' | 'cbu' | 'paypal' }) => {
+  const { trackAliasCopied } = useAnalytics();
   const [copied, setCopied] = useState(false);
 
   const handleCopy = async () => {
     await navigator.clipboard.writeText(text);
     setCopied(true);
+    if (trackField) trackAliasCopied({ field: trackField });
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -47,6 +50,7 @@ const CopyButton = ({ text, label }: { text: string; label: string }) => {
 export default function DonarPage() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
+  const { trackDonationClicked, trackSponsorClicked } = useAnalytics();
 
   return (
     <div className="bg-background overflow-hidden">
@@ -227,6 +231,7 @@ export default function DonarPage() {
                 href="https://www.mercadopago.com.ar/"
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackDonationClicked({ amount: item.amount, method: 'mercadopago' })}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 whileHover={{ scale: 1.05, y: -5 }}
@@ -305,8 +310,8 @@ export default function DonarPage() {
               </div>
 
               <div className="space-y-4">
-                <CopyButton text="LUZ.GRUTA.FOCA" label="Alias" />
-                <CopyButton text="0000003100000000000000" label="CBU" />
+                <CopyButton text="LUZ.GRUTA.FOCA" label="Alias" trackField="alias" />
+                <CopyButton text="0000003100000000000000" label="CBU" trackField="cbu" />
 
                 <div className="bg-secondary/20 rounded-2xl p-4 border border-border/30">
                   <p className="text-sm text-muted-foreground">
@@ -390,7 +395,7 @@ export default function DonarPage() {
                   Ideal para donaciones en USD o desde el exterior.
                 </p>
 
-                <CopyButton text="paypal.me/Animal735" label="Link de PayPal" />
+                <CopyButton text="paypal.me/Animal735" label="Link de PayPal" trackField="paypal" />
 
                 <a
                   href="https://www.paypal.com/paypalme/Animal735"
@@ -507,7 +512,7 @@ export default function DonarPage() {
               Si el dinero no es una opción, tu tiempo, talento y hogar temporal son invaluables para nosotros.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
-              <Link href="/voluntarios" className="btn-pill-primary text-lg px-8 py-4">
+              <Link href="/voluntarios" className="btn-pill-primary text-lg px-8 py-4" onClick={trackSponsorClicked}>
                 Ser voluntario
               </Link>
               <Link href="/adopcion" className="btn-pill-secondary text-lg px-8 py-4">

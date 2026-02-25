@@ -150,7 +150,7 @@ export default function ApadrinarPage() {
             <span className="inline-block py-1 px-3 rounded-full border border-primary text-primary text-sm mb-6 uppercase tracking-[0.2em] bg-primary/10 backdrop-blur-md">
               Apadrinamiento
             </span>
-            <h1 className="text-6xl md:text-7xl font-black mb-6 leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
               Sé su <span className="text-primary">Héroe</span> Mensual.
             </h1>
             <p className="text-xl text-gray-300 mb-10 font-light">

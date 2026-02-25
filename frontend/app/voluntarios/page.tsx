@@ -43,7 +43,7 @@ export default function VoluntariosPage() {
             <span className="inline-block py-1 px-3 rounded-full border border-pink-500/50 text-pink-400 text-sm mb-6 uppercase tracking-[0.2em] bg-pink-500/10 backdrop-blur-md">
               Únete al Cambio
             </span>
-            <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none">
+            <h1 className="text-4xl sm:text-6xl md:text-8xl font-black mb-6 tracking-tighter leading-none">
               SÉ EL<br />
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 animate-gradient-xy">
                 CAMBIO

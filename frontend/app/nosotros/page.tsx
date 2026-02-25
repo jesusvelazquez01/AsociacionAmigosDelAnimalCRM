@@ -70,7 +70,7 @@ export default function SobreNosotros() {
               <span className="text-pink-300 font-bold uppercase tracking-widest text-sm">San Salvador de Jujuy, Argentina</span>
             </div>
 
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter leading-none">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black mb-6 tracking-tighter leading-none">
               CASI 40 AÑOS<br />
               <span className="text-transparent bg-clip-text bg-primary">
                 DE RESCATE
@@ -182,7 +182,7 @@ export default function SobreNosotros() {
                     className="w-full h-[350px] object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-6 -right-6 bg-white rounded-xl p-4 shadow-lg border-2 border-primary/30">
+                <div className="hidden sm:block absolute -bottom-6 -right-6 bg-white rounded-xl p-4 shadow-lg border-2 border-primary/30">
                   <p className="font-bold text-gray-900">Primer rescate</p>
                   <p className="text-sm text-primary">5 años de edad</p>
                 </div>
@@ -279,7 +279,7 @@ export default function SobreNosotros() {
                     style={{ objectPosition: 'center top' }}
                   />
                 </div>
-                <div className="absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-lg border-2 border-primary/30">
+                <div className="hidden sm:block absolute -bottom-6 -left-6 bg-white rounded-xl p-4 shadow-lg border-2 border-primary/30">
                   <p className="font-bold text-gray-900">Impacto Digital</p>
                   <p className="text-sm text-primary">Miles de personas movilizadas</p>
                 </div>

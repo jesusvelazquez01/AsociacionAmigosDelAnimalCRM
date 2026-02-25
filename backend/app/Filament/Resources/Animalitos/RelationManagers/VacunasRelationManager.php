@@ -28,7 +28,7 @@ class VacunasRelationManager extends RelationManager
     {
         return $schema
             ->components([
-                Grid::make(2)
+                Grid::make(1)
                     ->schema([
                         TextInput::make('nombre')
                             ->label('Nombre de la vacuna')
@@ -40,7 +40,7 @@ class VacunasRelationManager extends RelationManager
                             ->maxLength(255),
                     ]),
 
-                Grid::make(2)
+                Grid::make(1)
                     ->schema([
                         DatePicker::make('fecha_aplicacion')
                             ->label('Fecha de aplicación')
@@ -54,7 +54,7 @@ class VacunasRelationManager extends RelationManager
                             ->displayFormat('d/m/Y'),
                     ]),
 
-                Grid::make(2)
+                Grid::make(1)
                     ->schema([
                         Select::make('veterinario_id')
                             ->label('Veterinario')
@@ -113,9 +113,10 @@ class VacunasRelationManager extends RelationManager
                     ->label('Próxima')
                     ->date('d/m/Y')
                     ->placeholder('No programada')
-                    ->color(fn ($record) => 
-                        $record->fecha_proxima && $record->fecha_proxima->isBefore(now()->addDays(30)) 
-                            ? 'warning' 
+                    ->color(
+                        fn($record) =>
+                        $record->fecha_proxima && $record->fecha_proxima->isBefore(now()->addDays(30))
+                            ? 'warning'
                             : null
                     ),
 
@@ -138,7 +139,8 @@ class VacunasRelationManager extends RelationManager
                     ->falseIcon('heroicon-o-check-circle')
                     ->trueColor('warning')
                     ->falseColor('success')
-                    ->getStateUsing(fn ($record) => 
+                    ->getStateUsing(
+                        fn($record) =>
                         $record->fecha_proxima && $record->fecha_proxima->isBefore(now()->addDays(30))
                     ),
             ])

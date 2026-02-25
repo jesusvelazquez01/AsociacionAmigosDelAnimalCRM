@@ -126,6 +126,8 @@ const AccordionItem = ({ item, isOpen, onToggle }: {
         onClick={onToggle}
         className={`w-full p-6 flex items-center justify-between gap-4 text-left transition-colors ${isOpen ? 'bg-primary/5' : 'hover:bg-secondary/30'
           }`}
+
+          
       >
         <div className="flex items-center gap-4">
           <div className={`w-12 h-12 rounded-2xl flex items-center justify-center ${isOpen ? 'bg-primary text-primary-foreground' : 'bg-primary/10 text-primary'
