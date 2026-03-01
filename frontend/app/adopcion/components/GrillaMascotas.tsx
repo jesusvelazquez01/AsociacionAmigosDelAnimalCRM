@@ -6,7 +6,8 @@ import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
-import { Loader2, Heart, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Heart, X, ChevronLeft, ChevronRight } from 'lucide-react';
+import PatitosCaminando from '@/components/ui/PatitosCaminando';
 import { useAnalytics } from '@/hooks/useAnalytics';
 
 interface Pet {
@@ -80,14 +81,9 @@ export default function GrillaMascotas({
         </div>
       )}
 
-      {/* Loading state */}
+      {/* Loading state — patitas animadas */}
       {loading && (
-        <div className="flex items-center justify-center py-16">
-          <div className="text-center">
-            <Loader2 className="w-12 h-12 animate-spin text-primary mx-auto mb-4" />
-            <p className="text-muted-foreground">Cargando rescataditos...</p>
-          </div>
-        </div>
+        <PatitosCaminando mensaje="Buscando rescataditos..." size="lg" />
       )}
 
       {/* Error message */}

@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { AdoptionForm } from '@/components/adoption-form';
-import { Loader2 } from 'lucide-react';
+import PatitosCaminando from '@/components/ui/PatitosCaminando';
 
 // Metadata para SEO
 export const metadata = {
@@ -12,7 +12,7 @@ export const metadata = {
 function FormLoading() {
     return (
         <div className="min-h-screen flex items-center justify-center bg-white">
-            <Loader2 className="w-10 h-10 animate-spin text-primary" />
+            <PatitosCaminando mensaje="Preparando el formulario..." size="lg" />
         </div>
     );
 }
