@@ -7,7 +7,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, useScroll, useSpring } from 'framer-motion';
 import { MapPin, Mail, Phone, Facebook, Instagram, MessageCircle, Send, Heart } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import api from '@/lib/axios';
+
 import Script from 'next/script';
 import { useAnalytics } from '@/hooks/useAnalytics';
 
@@ -128,15 +128,22 @@ export default function ContactoPage() {
     setSubmitStatus(null);
 
     try {
-      const response = await api.post('/mensajes', {
-        ...values,
-        'cf-turnstile-response': turnstileToken,
+      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
+      const res = await fetch(`${API_URL}/mensajes`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        body: JSON.stringify({
+          ...values,
+          'cf-turnstile-response': turnstileToken,
+        }),
       });
 
-      if (response.data.success) {
+      const data = await res.json();
+
+      if (data.success) {
         setSubmitStatus({
           success: true,
-          message: response.data.message || "¡Mensaje enviado con éxito! Gracias por contactarnos.",
+          message: data.message || "¡Mensaje enviado con éxito! Gracias por contactarnos.",
         });
         trackContactFormSubmitted({ subject: values.subject });
         reset();
@@ -144,9 +151,10 @@ export default function ContactoPage() {
       } else {
         setSubmitStatus({
           success: false,
-          message: response.data.message || "Error al enviar el mensaje.",
+          message: data.message || "Error al enviar el mensaje.",
         });
       }
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       const errorMessage = error.response?.data?.message ||
         "Ocurrió un error inesperado. Por favor, inténtalo de nuevo.";

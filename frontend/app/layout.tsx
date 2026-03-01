@@ -54,7 +54,6 @@ export default function RootLayout({
         </main>
         <Footer />
         <ScrollToTop />
-        <CookieConsent demo={true} />
       </body>
     </html>
   );

@@ -1,415 +1,377 @@
 'use client';
 
-import React, { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Badge } from '@/components/ui/badge';
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
-import { PawPrint, Heart, ShoppingBag, ShieldCheck, Mail, ArrowRight, DollarSign } from 'lucide-react';
+import React from 'react';
 
-// --- DATA ---
-const sponsorshipPlans = [
-  {
-    name: "Básico",
-    amount: "$3.000",
-    description: "Alimentación mensual y lo esencial.",
-    features: ["Comida diaria", "Agua fresca", "Reporte mensual por email"],
-    icon: PawPrint
-  },
-  {
-    name: "Completo",
-    amount: "$5.000",
-    description: "Alimentación, cuidados y extras.",
-    features: ["Todo lo básico", "Higiene y aseo", "Juguetes y enriquecimiento", "Fotos semanales"],
-    icon: ShoppingBag
-  },
-  {
-    name: "Premium",
-    amount: "$8.000",
-    description: "Cuidado integral incluyendo veterinario.",
-    features: ["Todo lo completo", "Atención veterinaria preventiva", "Medicamentos especiales", "Visitas ilimitadas al refugio"],
-    icon: ShieldCheck
-  },
-];
+// Import local components
+import HeroApadrinar from './components/HeroApadrinar';
+import PlanesApadrinar from './components/PlanesApadrinar';
+import ProcesoApadrinar from './components/ProcesoApadrinar';
+import SignificadoApadrinar from './components/SignificadoApadrinar';
+import FaqYAnimales from './components/FaqYAnimales';
+import LlamadoAAccion from './components/LlamadoAAccion';
 
-const petCards = [
-  { id: 1, image: '/Foto-perritos/perrito1.jpg', name: 'Luna', species: 'Perro', age: '2 años' },
-  { id: 2, image: '/Foto-perritos/perrito2.jpg', name: 'Max', species: 'Perro', age: '5 meses' },
-  { id: 3, image: '/Foto-perritos/perrito3.jpg', name: 'Bella', species: 'Gato', age: '1 año' },
-  { id: 4, image: '/Foto-perritos/perrito4.jpg', name: 'Rocky', species: 'Perro', age: '7 años' },
-  { id: 5, image: '/Foto-perritos/perrito5.jpg', name: 'Mia', species: 'Gato', age: '3 años' },
-  { id: 6, image: '/Foto-perritos/perrito6.jpg', name: 'Bruno', species: 'Perro', age: '1 año' },
-];
-
-const faqs = [
-  { q: "¿Qué significa apadrinar?", a: "Apadrinar significa comprometerte a ayudar económicamente con los gastos mensuales de un animal específico mientras permanece en nuestro refugio, proporcionándole sustento y cuidados." },
-  { q: "¿Puedo conocer a mi ahijado?", a: "¡Por supuesto! Dependiendo de tu plan de apadrinamiento, puedes visitarlo cuando quieras (Plan Premium) o recibirás fotos y actualizaciones regulares de su progreso." },
-  { q: "¿Por cuánto tiempo debo apadrinar?", a: "No hay un tiempo mínimo. Puedes apadrinar por el tiempo que desees y cancelar cuando lo necesites. Cada mes cuenta enormemente para su bienestar." },
-  { q: "¿Qué pasa si mi ahijado es adoptado?", a: "Te notificaremos inmediatamente y podrás elegir apadrinar a otro animal necesitado o finalizar tu apadrinamiento. ¡Celebramos cada adopción!" },
-  { q: "¿A dónde va mi dinero?", a: "Tu contribución se destina directamente a cubrir los gastos de alimentación, atención veterinaria, medicamentos y mantenimiento del espacio que ocupa tu animal apadrinado." },
-];
-
-const steps = [
-  { emoji: "", title: "1. Elegí tu Padrino", desc: "Conoce a los animales que más necesitan tu ayuda y elige el que te robe el corazón." },
-  { emoji: "", title: "2. Seleccioná el Plan", desc: "Elige el nivel de apoyo (Básico, Completo o Premium) que mejor se adapte a tu generosidad." },
-  { emoji: "", title: "3. Confirma tu Ayuda", desc: "Formaliza tu compromiso mensual de forma segura y sencilla." },
-  { emoji: "", title: "4. Recibe Novedades", desc: "Te enviaremos fotos y reportes periódicos del progreso de tu ahijado." },
-];
-
-// --- COMPONENTES REUTILIZABLES ---
-
-// Componente para el carrusel de mascotas arrastrable
-function PetCard({ card, onDragEnd }: { card: any, onDragEnd: any }) {
-  const x = useMotionValue(0);
-  const rotate = useTransform(x, [-200, 200], [-10, 10]);
-  const opacity = useTransform(x, [-200, 0, 200], [0.5, 1, 0.5]);
-
-  return (
-    <motion.div
-      drag="x"
-      dragConstraints={{ left: 0, right: 0 }} // Limita el arrastre para solo detectar el final
-      dragElastic={0.5}
-      style={{ x, rotate, opacity }}
-      onDragEnd={(event, info) => onDragEnd(event, info)}
-      initial={{ scale: 0.9, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.5 }}
-      className="absolute w-full h-full bg-white rounded-3xl shadow-2xl cursor-grab active:cursor-grabbing overflow-hidden border-4 border-white"
-    >
-      <Image
-        src={card.image}
-        alt={card.name}
-        width={400}
-        height={360}
-        className="w-full h-3/4 object-cover"
-      />
-      <div className="p-6 text-center">
-        <h3 className="text-3xl font-bold text-gray-900 mb-1">{card.name}</h3>
-        <div className="flex justify-center gap-3">
-          <Badge variant="secondary">{card.species}</Badge>
-          <Badge variant="outline" className="text-primary border-primary">{card.age}</Badge>
-        </div>
-        <p className="text-sm text-gray-500 mt-3">Desliza o haz clic para ver más</p>
-      </div>
-    </motion.div>
-  );
-}
-
-// Componente principal de la página
+// ─── PÁGINA PRINCIPAL ─────────────────────────────────────────────────────────
 export default function ApadrinarPage() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
-  const handleDragEnd = (event: any, info: any) => {
-    const offset = info.offset.x;
-
-    if (Math.abs(offset) > 50) {
-      if (offset > 0) {
-        // Deslizar a la derecha - imagen anterior
-        setCurrentIndex((prev) => prev === 0 ? petCards.length - 1 : prev - 1);
-      } else {
-        // Deslizar a la izquierda - siguiente imagen
-        setCurrentIndex((prev) => (prev + 1) % petCards.length);
-      }
-    }
-  };
-
-  const handleNext = () => {
-    setCurrentIndex((prev) => (prev + 1) % petCards.length);
-  };
-
-  const handlePrev = () => {
-    setCurrentIndex((prev) => prev === 0 ? petCards.length - 1 : prev - 1);
-  };
-
   return (
-    <div className="bg-white overflow-hidden">
-      {/* --- HERO: ALTO IMPACTO --- */}
-      <section className="relative min-h-[80vh] flex items-center bg-[#0a0a0a] text-white">
-        {/* Fondo con imagen oscura y tinte */}
-        <div className="absolute inset-0">
-          <Image
-            src="/Foto-refugio/refugio-4.jpg"
-            fill
-            className="object-cover opacity-40"
-            alt="Fondo Refugio"
-          />
-        </div>
-        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent"></div>
+    <>
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600;1,700&family=Outfit:wght@300;400;500;600;700&display=swap');
 
-        <div className="relative z-10 max-w-7xl mx-auto px-4 py-20">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 1 }}
-            className="max-w-2xl"
-          >
-            <span className="inline-block py-1 px-3 rounded-full border border-primary text-primary text-sm mb-6 uppercase tracking-[0.2em] bg-primary/10 backdrop-blur-md">
-              Apadrinamiento
-            </span>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black mb-6 leading-tight">
-              Sé su <span className="text-primary">Héroe</span> Mensual.
-            </h1>
-            <p className="text-xl text-gray-300 mb-10 font-light">
-              Conviértete en el padrino o madrina de un animal. Tu ayuda sostenida garantiza su comida, salud y felicidad mientras espera una familia.
-            </p>
-            <Link href="#planes">
-              <Button size="lg" className="h-14 px-8 text-lg rounded-full">
-                Elegir mi Plan <ArrowRight className="w-5 h-5 ml-2" />
-              </Button>
-            </Link>
-          </motion.div>
-        </div>
-      </section>
+        :root {
+          --cream:       #FAF5EE;
+          --cream-dark:  #F0E6D3;
+          --terracotta:  #C28253;
+          --terra-deep:  #A0623A;
+          --forest:      #2D4A35;
+          --brown:       #2C1A0E;
+          --muted:       #9A7A5A;
+          --card:        #FFFDF8;
+        }
 
-      {/* --- SECTION: PLANES DE APADRINAMIENTO --- */}
-      <section id="planes" className="py-24 bg-pink-50">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <DollarSign className="w-10 h-10 text-primary mx-auto mb-3" />
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-4">
-              Elige tu <span className="text-primary">Nivel de Apoyo</span>
-            </h2>
-            <p className="text-xl text-gray-500 max-w-3xl mx-auto">Cada contribución se traduce en días de alegría y bienestar.</p>
-          </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {sponsorshipPlans.map((plan, index) => {
-              const isFeatured = index === 1;
-              const Icon = plan.icon;
-              return (
-                <motion.div
-                  key={index}
-                  initial={{ opacity: 0, y: 50 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  whileHover={{ scale: 1.05, y: isFeatured ? -15 : -10 }}
-                  viewport={{ once: true, amount: 0.3 }}
-                  transition={{ duration: 0.6, delay: index * 0.1 }}
-                >
-                  <Card className={`h-full flex flex-col justify-between p-6 ${isFeatured ? 'border-4 border-primary shadow-2xl shadow-pink-200' : 'border border-gray-200'}`}>
-                    <CardHeader className="text-center p-0 mb-6">
-                      <div className={`w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-3 ${isFeatured ? 'bg-primary' : 'bg-primary/10'}`}>
-                        <Icon className={`w-6 h-6 ${isFeatured ? 'text-white' : 'text-primary'}`} />
-                      </div>
-                      <CardTitle className="text-3xl font-bold text-gray-900">{plan.name}</CardTitle>
-                      <p className="text-5xl font-extrabold text-primary mt-2">{plan.amount}</p>
-                      <p className="text-gray-500 mt-1">{plan.description}</p>
-                    </CardHeader>
-                    <CardContent className="p-0 flex flex-col justify-between flex-grow">
-                      <ul className="space-y-3 mb-8">
-                        {plan.features.map((feature, i) => (
-                          <li key={i} className="flex items-start gap-3">
-                            <span className="text-primary mt-1">✓</span>
-                            <span className="text-gray-700">{feature}</span>
-                          </li>
-                        ))}
-                      </ul>
-                      <Button
-                        className="w-full mt-auto"
-                        size="lg"
-                        variant={isFeatured ? "default" : "outline"}
-                      >
-                        Elegir Plan {plan.name}
-                      </Button>
-                    </CardContent>
-                  </Card>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
-      {/* --- SECTION: CÓMO FUNCIONA (Timeline simplificado) --- */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-4xl font-bold text-gray-900 mb-4">4 Pasos para Apadrinar</h2>
-            <p className="text-lg text-gray-600">Comienza a cambiar una vida hoy mismo.</p>
-          </div>
-          <div className="grid md:grid-cols-4 gap-8 max-w-6xl mx-auto">
-            {steps.map((step, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-                viewport={{ once: true, amount: 0.5 }}
-                className="text-center relative group"
-              >
-                <div className="relative w-full mb-6">
-                  <div className="w-16 h-16 bg-primary text-white rounded-full flex items-center justify-center mx-auto text-3xl font-bold shadow-lg transform group-hover:scale-110 transition-transform">
-                    {step.emoji}
-                  </div>
-                  {index < steps.length - 1 && (
-                    <div className="hidden md:block absolute top-1/2 left-[calc(50%+32px)] w-[calc(100%+16px)] h-0.5 bg-primary/30 -translate-y-1/2"></div>
-                  )}
-                </div>
-                <h3 className="text-xl font-bold mb-3 text-gray-900">{step.title}</h3>
-                <p className="text-gray-600 leading-relaxed">{step.desc}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
+        .ap-page { background: var(--cream); font-family: 'Outfit', sans-serif; color: var(--brown); overflow-x: hidden; }
 
-      {/* --- SECTION: QUÉ SIGNIFICA APADRINAR E IMAGEN --- */}
-      <section className="py-20 bg-pink-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-            >
-              <h2 className="text-4xl font-bold text-gray-900 mb-6">¿Qué significa apadrinar?</h2>
-              <p className="text-lg text-gray-600 mb-6">
-                Apadrinar es una forma especial de ayudar sin adoptar. Te conviertes en el "padrino" o "madrina" de un animal específico,
-                ayudando con sus gastos mensuales mientras encuentra su hogar definitivo.
-              </p>
-              <div className="space-y-4">
-                {['Recibes fotos y actualizaciones regulares', 'Puedes visitarlo cuando quieras', 'Ayudas con alimentación y cuidados', 'No hay compromiso de tiempo mínimo'].map((benefit, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: index * 0.1 }}
-                    className="flex items-center gap-3"
-                  >
-                    <span className="text-primary text-xl">•</span>
-                    <span className="text-gray-700">{benefit}</span>
-                  </motion.div>
-                ))}
-              </div>
-            </motion.div>
+        /* ── HERO ── */
+        .ap-hero {
+          min-height: 92vh;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          position: relative;
+          overflow: hidden;
+        }
+        @media (max-width: 768px) { .ap-hero { grid-template-columns: 1fr; min-height: auto; } }
 
-            <motion.div
-              initial={{ opacity: 0, x: 50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.8 }}
-              className="relative"
-            >
-              <div className="bg-white p-8 rounded-3xl shadow-xl">
-                <div className="rounded-xl overflow-hidden">
-                  <Image
-                    src="/Foto-perritos/unnamed.jpg"
-                    alt="Amigos del Animal"
-                    width={500}
-                    height={400}
-                    className="w-full h-auto object-contain"
-                  />
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
+        .ap-hero-left {
+          background: var(--forest);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          padding: 80px 64px 80px 48px;
+          position: relative;
+          z-index: 2;
+        }
+        @media (max-width: 768px) { .ap-hero-left { padding: 64px 32px; } }
 
-      {/* --- SECTION: ANIMALES Y FAQ --- */}
-      <section className="py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-16 items-start">
-            {/* FAQ */}
-            <div>
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="mb-12"
-              >
-                <h2 className="text-4xl font-bold text-gray-900 mb-4">Dudas Comunes</h2>
-                <p className="text-xl text-gray-600">Todo lo que necesitas saber antes de empezar.</p>
-              </motion.div>
+        .ap-hero-eyebrow {
+          display: inline-flex; align-items: center; gap: 8px;
+          border: 1.5px solid rgba(194,130,83,0.4);
+          color: var(--terracotta);
+          font-size: 11px; font-weight: 600;
+          letter-spacing: 0.18em; text-transform: uppercase;
+          padding: 7px 16px; border-radius: 50px;
+          margin-bottom: 32px; width: fit-content;
+          background: rgba(194,130,83,0.08);
+        }
 
-              <Accordion type="single" collapsible className="space-y-4 w-full">
-                {faqs.map((faq, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, amount: 0.1 }}
-                    transition={{ delay: index * 0.1 }}
-                  >
-                    <AccordionItem value={`item-${index}`} className="bg-pink-50/50 rounded-xl shadow-sm px-4 border-b-0 hover:bg-pink-50 transition-colors">
-                      <AccordionTrigger className="hover:no-underline font-semibold text-gray-900 py-4">
-                        {faq.q}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-gray-600 pb-4 pr-4">
-                        {faq.a}
-                      </AccordionContent>
-                    </AccordionItem>
-                  </motion.div>
-                ))}
-              </Accordion>
-            </div>
+        .ap-hero-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(52px, 6vw, 88px);
+          font-weight: 700;
+          line-height: 0.95;
+          color: white;
+          margin-bottom: 28px;
+          letter-spacing: -0.01em;
+        }
+        .ap-hero-title em { color: var(--terracotta); font-style: italic; }
 
-            {/* Conoce a nuestros animales (Carrusel) */}
-            <div className="flex flex-col items-center">
-              <motion.div
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                className="mb-8 text-center lg:text-left w-full"
-              >
-                <h2 className="text-4xl font-bold text-gray-900 mb-4">Nuestros Ahijados</h2>
-                <p className="text-lg text-gray-600">Desliza para conocer a quienes necesitan tu ayuda ahora.</p>
-              </motion.div>
+        .ap-hero-sub {
+          font-size: 16px; font-weight: 300;
+          color: rgba(255,255,255,0.65);
+          line-height: 1.75;
+          max-width: 400px;
+          margin-bottom: 48px;
+        }
 
-              <div className="relative w-full max-w-sm h-[480px] z-10">
-                <AnimatePresence mode="popLayout">
-                  <PetCard
-                    key={petCards[currentIndex].id}
-                    card={petCards[currentIndex]}
-                    onDragEnd={handleDragEnd}
-                  />
-                </AnimatePresence>
-              </div>
+        .ap-hero-cta {
+          display: inline-flex; align-items: center; gap: 10px;
+          background: var(--terracotta);
+          color: white; font-size: 16px; font-weight: 600;
+          padding: 16px 36px; border-radius: 50px; border: none;
+          cursor: pointer; font-family: 'Outfit', sans-serif;
+          transition: all 0.25s; text-decoration: none;
+          box-shadow: 0 8px 32px rgba(194,130,83,0.35);
+          width: fit-content;
+        }
+        .ap-hero-cta:hover { background: var(--terra-deep); transform: translateY(-2px); box-shadow: 0 12px 40px rgba(194,130,83,0.45); }
 
-              {/* Controles de navegación */}
-              <div className="flex gap-4 mt-8">
-                <Button variant="outline" size="icon" onClick={handlePrev}>
-                  <ArrowRight className="w-5 h-5 transform rotate-180" />
-                </Button>
-                <Button variant="outline" size="icon" onClick={handleNext}>
-                  <ArrowRight className="w-5 h-5" />
-                </Button>
-              </div>
-              <p className="text-sm text-gray-500 mt-2">
-                Animal {currentIndex + 1} de {petCards.length}
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
+        .ap-hero-right {
+          position: relative;
+          overflow: hidden;
+        }
+        @media (max-width: 768px) { .ap-hero-right { height: 360px; } }
 
-      {/* --- CTA FINAL: BARRA DE CONTACTO --- */}
-      <section className="py-32 bg-gray-900 text-center px-4">
-        <motion.div
-          initial={{ scale: 0.9, opacity: 0 }}
-          whileInView={{ scale: 1, opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto px-4"
-        >
-          <Heart className="w-16 h-16 text-primary mx-auto mb-6 animate-pulse" />
-          <h2 className="text-4xl md:text-6xl font-bold text-white mb-8">
-            ¿Listo para ser un Héroe?
-          </h2>
-          <p className="text-gray-300 mb-8 max-w-2xl mx-auto">
-            Si tienes preguntas o quieres formalizar tu apadrinamiento, contáctanos hoy.
-          </p>
-          <Link href="/contacto">
-            <Button size="lg" className="bg-primary text-white rounded-full px-12 py-8 text-xl h-auto hover:scale-105 transition-all">
-              Contactar al Refugio
-            </Button>
-          </Link>
-        </motion.div>
-      </section>
-    </div>
+        .ap-hero-right img { object-fit: cover; }
+
+        .ap-hero-right::after {
+          content: '';
+          position: absolute; inset: 0;
+          background: linear-gradient(135deg, var(--forest) 0%, transparent 45%);
+          z-index: 1;
+        }
+
+        /* Big decorative number */
+        .ap-hero-num {
+          position: absolute; bottom: -20px; right: 24px; z-index: 2;
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 220px; font-weight: 700; font-style: italic;
+          color: rgba(255,255,255,0.06); line-height: 1;
+          pointer-events: none; user-select: none;
+        }
+
+        /* ── SECTION SHARED ── */
+        .ap-section { padding: 96px 24px; }
+        .ap-container { max-width: 1200px; margin: 0 auto; }
+
+        .ap-section-tag {
+          display: inline-flex; align-items: center; gap: 6px;
+          font-size: 11px; font-weight: 600; letter-spacing: 0.16em;
+          text-transform: uppercase; color: var(--terracotta);
+          margin-bottom: 16px;
+        }
+        .ap-section-tag::before { content: ''; width: 24px; height: 1.5px; background: var(--terracotta); display: block; }
+
+        .ap-title-display {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(36px, 4.5vw, 60px);
+          font-weight: 700; color: var(--brown);
+          line-height: 1.1; margin-bottom: 16px;
+        }
+        .ap-title-display em { color: var(--terracotta); font-style: italic; }
+        .ap-title-display.light { color: white; }
+        .ap-title-display.light em { color: var(--terracotta); }
+
+        .ap-sub { font-size: 16px; color: var(--muted); line-height: 1.7; max-width: 520px; }
+        .ap-sub.center { text-align: center; margin: 0 auto; }
+        .ap-sub.light { color: rgba(255,255,255,0.6); }
+
+        /* ── PLANES ── */
+        .ap-planes-bg { background: var(--cream-dark); }
+
+        .ap-planes-header { text-align: center; margin-bottom: 64px; }
+
+        .ap-planes-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+        @media (max-width: 900px) { .ap-planes-grid { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; } }
+
+        .ap-plan-card {
+          background: var(--card);
+          border-radius: 28px;
+          padding: 40px 32px;
+          display: flex; flex-direction: column;
+          border: 2px solid rgba(194,130,83,0.15);
+          position: relative;
+          overflow: hidden;
+          transition: all 0.3s;
+        }
+        .ap-plan-card:hover { transform: translateY(-8px); box-shadow: 0 24px 64px rgba(44,26,14,0.12); border-color: rgba(194,130,83,0.4); }
+        .ap-plan-card.featured {
+          background: var(--forest);
+          border-color: transparent;
+          box-shadow: 0 16px 64px rgba(45,74,53,0.3);
+        }
+        .ap-plan-card.featured:hover { transform: translateY(-12px); box-shadow: 0 28px 80px rgba(45,74,53,0.35); }
+
+        .ap-plan-badge {
+          position: absolute; top: 24px; right: 24px;
+          background: var(--terracotta); color: white;
+          font-size: 11px; font-weight: 700;
+          letter-spacing: 0.1em; text-transform: uppercase;
+          padding: 5px 14px; border-radius: 50px;
+        }
+
+        .ap-plan-icon {
+          width: 48px; height: 48px; border-radius: 16px;
+          display: flex; align-items: center; justify-content: center;
+          margin-bottom: 20px;
+        }
+        .ap-plan-icon.normal { background: rgba(194,130,83,0.12); }
+        .ap-plan-icon.featured { background: rgba(255,255,255,0.15); }
+
+        .ap-plan-name {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 28px; font-weight: 700;
+          color: var(--brown); margin-bottom: 6px;
+        }
+        .ap-plan-name.light { color: white; }
+
+        .ap-plan-price {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 52px; font-weight: 700;
+          color: var(--terracotta); line-height: 1;
+          margin: 12px 0 6px;
+        }
+        .ap-plan-price-sub { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+        .ap-plan-price-sub.light { color: rgba(255,255,255,0.5); }
+
+        .ap-plan-divider { height: 1px; background: rgba(194,130,83,0.15); margin-bottom: 24px; }
+        .ap-plan-divider.light { background: rgba(255,255,255,0.12); }
+
+        .ap-plan-features { list-style: none; display: flex; flex-direction: column; gap: 12px; flex: 1; margin-bottom: 32px; }
+        .ap-plan-feature { display: flex; align-items: flex-start; gap: 10px; font-size: 14px; color: var(--brown); }
+        .ap-plan-feature.light { color: rgba(255,255,255,0.8); }
+        .ap-plan-check { color: var(--forest); font-weight: 700; flex-shrink: 0; }
+        .ap-plan-check.light { color: var(--terracotta); }
+
+        .ap-plan-btn {
+          width: 100%; padding: 14px; border-radius: 14px;
+          font-size: 15px; font-weight: 600; cursor: pointer;
+          font-family: 'Outfit', sans-serif;
+          transition: all 0.2s; border: 2px solid;
+        }
+        .ap-plan-btn.normal { background: transparent; border-color: rgba(194,130,83,0.4); color: var(--brown); }
+        .ap-plan-btn.normal:hover { border-color: var(--terracotta); color: var(--terracotta); }
+        .ap-plan-btn.featured-btn { background: var(--terracotta); border-color: var(--terracotta); color: white; }
+        .ap-plan-btn.featured-btn:hover { background: var(--terra-deep); border-color: var(--terra-deep); }
+
+        /* ── STEPS ── */
+        .ap-steps-bg { background: var(--cream); }
+
+        .ap-steps-wrap { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; align-items: start; }
+        @media (max-width: 900px) { .ap-steps-wrap { grid-template-columns: 1fr; gap: 40px; } }
+
+        .ap-steps-list { display: flex; flex-direction: column; gap: 0; }
+
+        .ap-step-item {
+          display: flex; gap: 24px; align-items: flex-start;
+          padding: 28px 0;
+          border-bottom: 1px solid rgba(194,130,83,0.15);
+          position: relative;
+        }
+        .ap-step-item:last-child { border-bottom: none; }
+
+        .ap-step-num {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 48px; font-weight: 700; font-style: italic;
+          color: rgba(194,130,83,0.25); line-height: 1;
+          min-width: 56px; text-align: right;
+          transition: color 0.2s;
+        }
+        .ap-step-item:hover .ap-step-num { color: var(--terracotta); }
+
+        .ap-step-body { padding-top: 6px; }
+        .ap-step-title { font-size: 17px; font-weight: 600; color: var(--brown); margin-bottom: 6px; }
+        .ap-step-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+        /* ── QUÉ SIGNIFICA ── */
+        .ap-what-bg { background: var(--forest); }
+
+        .ap-what-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        @media (max-width: 900px) { .ap-what-grid { grid-template-columns: 1fr; gap: 48px; } }
+
+        .ap-benefit-list { display: flex; flex-direction: column; gap: 14px; margin-top: 32px; }
+        .ap-benefit-item {
+          display: flex; align-items: center; gap: 14px;
+          padding: 14px 18px; border-radius: 14px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.08);
+          font-size: 14px; color: rgba(255,255,255,0.8);
+          transition: background 0.2s;
+        }
+        .ap-benefit-item:hover { background: rgba(255,255,255,0.08); }
+        .ap-benefit-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--terracotta); flex-shrink: 0; }
+
+        .ap-what-img-wrap {
+          border-radius: 28px; overflow: hidden;
+          box-shadow: 0 32px 80px rgba(0,0,0,0.3);
+          position: relative;
+        }
+        .ap-what-img-frame {
+          background: rgba(255,255,255,0.06);
+          border-radius: 28px; padding: 16px;
+        }
+        .ap-what-img-inner { border-radius: 18px; overflow: hidden; }
+
+        /* ── ANIMALES + FAQ ── */
+        .ap-grid-two { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: start; }
+        @media (max-width: 900px) { .ap-grid-two { grid-template-columns: 1fr; gap: 64px; } }
+
+        /* FAQ */
+        .ap-faq-item {
+          background: var(--cream-dark);
+          border-radius: 18px; overflow: hidden;
+          margin-bottom: 10px; border: none;
+        }
+        .ap-faq-trigger {
+          width: 100%; text-align: left;
+          padding: 20px 24px;
+          display: flex; align-items: center; justify-content: space-between;
+          font-size: 15px; font-weight: 500; color: var(--brown);
+          cursor: pointer; background: none; border: none;
+          font-family: 'Outfit', sans-serif;
+          gap: 16px;
+        }
+        .ap-faq-trigger:hover { color: var(--terracotta); }
+        .ap-faq-content {
+          padding: 0 24px 20px;
+          font-size: 14px; color: var(--muted); line-height: 1.7;
+        }
+
+        /* Card carousel */
+        .ap-carousel-wrap { position: relative; width: 100%; max-width: 340px; height: 460px; margin: 0 auto; }
+        .ap-carousel-nav { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 24px; }
+        .ap-nav-btn {
+          width: 44px; height: 44px; border-radius: 50%;
+          border: 2px solid rgba(194,130,83,0.3);
+          background: transparent; cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          color: var(--brown); transition: all 0.2s;
+        }
+        .ap-nav-btn:hover { border-color: var(--terracotta); color: var(--terracotta); }
+        .ap-counter { font-size: 13px; color: var(--muted); font-family: 'Outfit', sans-serif; }
+
+        /* ── CTA FINAL ── */
+        .ap-cta-bg {
+          background: var(--brown);
+          padding: 120px 24px;
+          text-align: center;
+          position: relative; overflow: hidden;
+        }
+        .ap-cta-bg::before {
+          content: '♥';
+          position: absolute;
+          top: 50%; left: 50%; transform: translate(-50%, -50%);
+          font-size: 600px;
+          color: rgba(255,255,255,0.02);
+          pointer-events: none; line-height: 1;
+          font-family: serif;
+        }
+        .ap-cta-inner { max-width: 640px; margin: 0 auto; position: relative; z-index: 1; }
+        .ap-cta-icon {
+          width: 72px; height: 72px; border-radius: 50%;
+          background: rgba(194,130,83,0.15);
+          display: flex; align-items: center; justify-content: center;
+          margin: 0 auto 32px;
+        }
+        .ap-cta-title {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(40px, 6vw, 72px);
+          font-weight: 700; color: white;
+          line-height: 1.05; margin-bottom: 20px;
+        }
+        .ap-cta-title em { color: var(--terracotta); font-style: italic; }
+        .ap-cta-sub { font-size: 16px; color: rgba(255,255,255,0.5); line-height: 1.7; margin-bottom: 48px; }
+        .ap-cta-btn {
+          display: inline-flex; align-items: center; gap: 10px;
+          background: var(--terracotta); color: white;
+          font-size: 17px; font-weight: 600;
+          padding: 18px 48px; border-radius: 50px;
+          border: none; cursor: pointer;
+          font-family: 'Outfit', sans-serif;
+          transition: all 0.25s;
+          box-shadow: 0 8px 32px rgba(194,130,83,0.3);
+          text-decoration: none;
+        }
+        .ap-cta-btn:hover { background: var(--terra-deep); transform: translateY(-3px); box-shadow: 0 16px 48px rgba(194,130,83,0.4); }
+      `}</style>
+
+      <div className="ap-page">
+        <HeroApadrinar />
+        <PlanesApadrinar />
+        <ProcesoApadrinar />
+        <SignificadoApadrinar />
+        <FaqYAnimales />
+        <LlamadoAAccion />
+      </div>
+    </>
   );
 }

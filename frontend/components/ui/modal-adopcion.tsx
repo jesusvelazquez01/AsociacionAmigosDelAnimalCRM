@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 import { Heart, CheckCircle2, AlertCircle, X, PawPrint } from 'lucide-react';
 
 interface AdoptionModalProps {
@@ -117,12 +118,12 @@ export function ModalAdopcion({ isOpen, onClose, petName, petId }: AdoptionModal
                                         </div>
 
                                         <p className="text-gray-500 text-xs mt-4">
-                                            <a
+                                            <Link
                                                 href="/adopcion/requisitos"
                                                 className="text-primary hover:underline font-medium"
                                             >
                                                 Ver requisitos de adopción →
-                                            </a>
+                                            </Link>
                                         </p>
                                     </motion.div>
                                 ) : (

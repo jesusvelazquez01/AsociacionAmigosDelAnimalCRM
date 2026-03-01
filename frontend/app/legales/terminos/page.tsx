@@ -26,7 +26,7 @@ export default function TerminosYCondiciones() {
                     <h2 className="text-xl font-semibold mb-3 text-gray-900">2. Políticas de Adopción</h2>
                     <div className="space-y-3 text-justify">
                         <p>
-                            <strong>2.1. Naturaleza del Formulario:</strong> El completado y envío del "Formulario de Adopción" disponible en este sitio web
+                            <strong>2.1. Naturaleza del Formulario:</strong> El completado y envío del &quot;Formulario de Adopción&quot; disponible en este sitio web
                             constituye una <strong>solicitud de interés</strong> y una declaración jurada de los datos proporcionados.
                         </p>
                         <p className="font-medium text-gray-900">

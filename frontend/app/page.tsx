@@ -1,19 +1,18 @@
-import HeroSection from './home/HeroSection';
-import AdoptionCTA from './home/AdoptionCTA';
-import OurActivities from './home/OurActivities';
-import FeaturedPets from './home/FeaturedPets';
-import StatsSection from './home/StatsSection';
-import HowToHelp from './home/HowToHelp';
+import HeroInicio from './home/HeroInicio';
+import LlamadoAdopcion from './home/LlamadoAdopcion';
+import NuestrasActividades from './home/NuestrasActividades';
+import MascotasDestacadas from './home/MascotasDestacadas';
+import Estadisticas from './home/Estadisticas';
+import ComoAyudar from './home/ComoAyudar';
 
 export default function Home() {
   return (
     <>
-      <HeroSection />
-      <AdoptionCTA />
-      <OurActivities />
-     
-      <StatsSection />
-      <HowToHelp />
+      <HeroInicio />
+      <LlamadoAdopcion />
+      <NuestrasActividades />
+      <Estadisticas />
+      <ComoAyudar />
     </>
   );
 }

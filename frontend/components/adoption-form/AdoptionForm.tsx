@@ -88,6 +88,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                 const result = await response.json();
 
                 // Mapear los datos de la API al formato Pet del frontend
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const pets: Pet[] = result.data.map((animal: any) => ({
                     id: animal.id,
                     name: animal.name,

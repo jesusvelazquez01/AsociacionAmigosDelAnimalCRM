@@ -18,7 +18,7 @@ export function CookieConsent({ demo = false }: CookieConsentProps) {
         // En un caso real, verificaríamos localStorage aquí
         // Por ahora, mostramos después de un breve delay para simular
         if (!demo) {
-            const timer = setTimeout(() => setIsVisible(true), 1500);
+            const timer = setTimeout(() => setIsVisible(true), 6500);
             return () => clearTimeout(timer);
         }
     }, [demo]);
