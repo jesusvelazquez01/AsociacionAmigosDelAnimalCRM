@@ -20,10 +20,13 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-configure gd --with-freetype --with-jpeg --with-webp \
     && docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd zip gmp intl
 
-# 2. INSTALAR NODE.JS (Versión 20)
+# 2. INSTALAR NODE.JS (Versión 20) + NPM
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs
+    && apt-get install -y nodejs npm \
+    && node --version \
+    && npm --version
 
+    
 # 3. INSTALAR COMPOSER
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
