@@ -16,8 +16,8 @@ export default async function AnimalDetailPage({
 
     // Fetch paralelo con Promise.allSettled: si uno falla, el otro no se bloquea
     const [mascotaResult, listadoResult] = await Promise.allSettled([
-        apiFetch<Pet>(`/rescataditos/${slug}`, { cache: 'no-store' }),
-        apiFetch<ApiListResponse | RelatedPet[]>('/rescataditos', { cache: 'no-store' }),
+        apiFetch<Pet>(`/rescataditos/${slug}`, { next: { revalidate: 60 } }),
+        apiFetch<ApiListResponse | RelatedPet[]>('/rescataditos', { next: { revalidate: 60 } }),
     ]);
 
     // Si no se pudo cargar la mascota principal → 404

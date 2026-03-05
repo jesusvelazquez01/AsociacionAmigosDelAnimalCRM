@@ -10,6 +10,7 @@ import { Button } from '@/components/ui/button';
 
 import Script from 'next/script';
 import { useAnalytics } from '@/hooks/useAnalytics';
+import { apiPost } from '@/lib/api';
 
 // Declarar el tipo global de Turnstile
 declare global {
@@ -128,17 +129,10 @@ export default function ContactoPage() {
     setSubmitStatus(null);
 
     try {
-      const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000/api';
-      const res = await fetch(`${API_URL}/mensajes`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({
-          ...values,
-          'cf-turnstile-response': turnstileToken,
-        }),
+      const data = await apiPost<{ success: boolean; message: string; }>('/mensajes', {
+        ...values,
+        'cf-turnstile-response': turnstileToken,
       });
-
-      const data = await res.json();
 
       if (data.success) {
         setSubmitStatus({
