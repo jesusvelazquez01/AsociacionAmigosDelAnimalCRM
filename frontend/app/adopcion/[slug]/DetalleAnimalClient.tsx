@@ -24,6 +24,16 @@ import {
     X
 } from 'lucide-react';
 import { ModalAdopcion } from '@/components/ui/modal-adopcion';
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from "@/components/ui/alert-dialog";
 
 interface GalleryImage {
     id: number;
@@ -70,6 +80,7 @@ export default function DetalleAnimalClient({ pet, relatedPets, galleryImages }:
     const [currentImageIndex, setCurrentImageIndex] = useState(0);
     const [isAdoptionModalOpen, setIsAdoptionModalOpen] = useState(false);
     const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
+    const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
     const [showScrollTop, setShowScrollTop] = useState(false);
 
     const { scrollYProgress } = useScroll();
@@ -270,7 +281,7 @@ export default function DetalleAnimalClient({ pet, relatedPets, galleryImages }:
                         <div className="relative">
                             <div
                                 className="relative aspect-square rounded-3xl overflow-hidden shadow-2xl bg-muted cursor-pointer"
-                                onClick={() => setIsGalleryModalOpen(true)}
+                                onClick={() => setIsDisclaimerOpen(true)}
                             >
                                 <AnimatePresence mode="popLayout">
                                     <CarouselImage key={currentImageIndex} image={galleryImages[currentImageIndex]} onDragEnd={handleDragEnd} />
@@ -392,6 +403,29 @@ export default function DetalleAnimalClient({ pet, relatedPets, galleryImages }:
                     />
                 )}
             </AnimatePresence>
+
+            {/* Disclaimer Modal */}
+            <AlertDialog open={isDisclaimerOpen} onOpenChange={setIsDisclaimerOpen}>
+                <AlertDialogContent>
+                    <AlertDialogHeader>
+                        <AlertDialogTitle>Advertencia de contenido sensible</AlertDialogTitle>
+                        <AlertDialogDescription>
+                            Algunas de las imágenes de la galería muestran a nuestros rescataditos en el estado crítico en el que fueron encontrados o durante su tratamiento médico, lo cual puede ser fuerte de ver.
+                            <br /><br />
+                            Mostramos estas fotos para concientizar sobre la realidad que enfrentan y el increíble proceso de recuperación que logran con amor y cuidado. ¿Deseas continuar?
+                        </AlertDialogDescription>
+                    </AlertDialogHeader>
+                    <AlertDialogFooter>
+                        <AlertDialogCancel>Cancelar</AlertDialogCancel>
+                        <AlertDialogAction onClick={() => {
+                            setIsDisclaimerOpen(false);
+                            setIsGalleryModalOpen(true);
+                        }}>
+                            Sí, ver galería
+                        </AlertDialogAction>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+            </AlertDialog>
 
             {/* Adoption Modal */}
             <ModalAdopcion isOpen={isAdoptionModalOpen} onClose={() => setIsAdoptionModalOpen(false)} petName={pet.name} petId={pet.id} />
