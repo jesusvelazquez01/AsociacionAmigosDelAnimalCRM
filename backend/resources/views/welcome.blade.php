@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -20,13 +21,13 @@
             --card-foreground: oklch(0.3651 0.0325 287.0807);
             --popover: oklch(1.0000 0 0);
             --popover-foreground: oklch(0.3651 0.0325 287.0807);
-            
+
             /* Colores principales */
             --primary: oklch(0.8230 0.1200 346.0180);
             --primary-foreground: oklch(0.9777 0.0041 301.4256);
             --secondary: oklch(0.8990 0.0610 343.2310);
             --secondary-foreground: oklch(0.3651 0.0325 287.0807);
-            
+
             /* Colores de acento y estados */
             --muted: oklch(0.8906 0.0139 299.7754);
             --muted-foreground: oklch(0.5288 0.0375 290.7895);
@@ -34,26 +35,26 @@
             --accent-foreground: oklch(0.3394 0.0441 1.7583);
             --destructive: oklch(0.6332 0.1578 22.6734);
             --destructive-foreground: oklch(0.9777 0.0041 301.4256);
-            
+
             /* Bordes y inputs */
             --border: oklch(0.8690 0.0220 252.8940);
             --input: oklch(0.9329 0.0124 301.2783);
             --ring: oklch(0.8990 0.0610 343.2310);
-            
+
             /* Sidebar */
             --sidebar: oklch(0.9554 0.0082 301.3541);
             --sidebar-foreground: oklch(0.3651 0.0325 287.0807);
             --sidebar-primary: oklch(0.6104 0.0767 299.7335);
             --sidebar-border: oklch(0.8719 0.0198 302.1690);
-            
+
             /* Tipografía */
             --font-sans: "Manrope", system-ui, -apple-system, sans-serif;
             --font-serif: "Playfair Display", Georgia, serif;
-            
+
             /* Espaciado y bordes */
             --radius: 1.25rem;
             --spacing: 0.25rem;
-            
+
             /* Sombras */
             --shadow-sm: 1px 2px 1px 1px hsl(0 0% 0% / 0.12);
             --shadow-md: 1px 2px 1px 1px hsl(0 0% 0% / 0.24), 1px 2px 4px 0px hsl(0 0% 0% / 0.24);
@@ -64,7 +65,9 @@
         /* ========================================
            RESET Y CONFIGURACIÓN GLOBAL
            ======================================== */
-        *, *::before, *::after {
+        *,
+        *::before,
+        *::after {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
@@ -129,14 +132,18 @@
         }
 
         @keyframes float {
-            0%, 100% { 
-                transform: translate(0, 0) scale(1); 
+
+            0%,
+            100% {
+                transform: translate(0, 0) scale(1);
             }
-            33% { 
-                transform: translate(40px, -40px) scale(1.1); 
+
+            33% {
+                transform: translate(40px, -40px) scale(1.1);
             }
-            66% { 
-                transform: translate(-30px, 30px) scale(0.9); 
+
+            66% {
+                transform: translate(-30px, 30px) scale(0.9);
             }
         }
 
@@ -391,6 +398,7 @@
                 opacity: 0;
                 transform: translateY(30px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -566,6 +574,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Formas animadas de fondo -->
     <div class="bg-shapes">
@@ -589,9 +598,6 @@
                 </div>
             </div>
             <nav class="nav-links">
-                <a href="/api/rescataditos" class="nav-link secondary" target="_blank">
-                    API Docs
-                </a>
                 <a href="/admin" class="nav-link primary">
                     Panel Admin
                 </a>
@@ -607,28 +613,22 @@
                     </svg>
                     Sistema activo y funcionando
                 </div>
-                
+
                 <h2>
                     Gestiona los <span>rescataditos</span> de forma simple
                 </h2>
-                
+
                 <p>
-                    Panel administrativo para gestionar adopciones, padrinazgos, 
+                    Panel administrativo para gestionar adopciones, padrinazgos,
                     tratamientos médicos y toda la información de los animalitos rescatados.
                 </p>
-                
+
                 <div class="hero-buttons">
                     <a href="/admin" class="btn btn-primary">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 016 3.75h2.25A2.25 2.25 0 0110.5 6v2.25a2.25 2.25 0 01-2.25 2.25H6a2.25 2.25 0 01-2.25-2.25V6zM3.75 15.75A2.25 2.25 0 016 13.5h2.25a2.25 2.25 0 012.25 2.25V18a2.25 2.25 0 01-2.25 2.25H6A2.25 2.25 0 013.75 18v-2.25zM13.5 6a2.25 2.25 0 012.25-2.25H18A2.25 2.25 0 0120.25 6v2.25A2.25 2.25 0 0118 10.5h-2.25a2.25 2.25 0 01-2.25-2.25V6zM13.5 15.75a2.25 2.25 0 012.25-2.25H18a2.25 2.25 0 012.25 2.25V18A2.25 2.25 0 0118 20.25h-2.25A2.25 2.25 0 0113.5 18v-2.25z" />
                         </svg>
                         Ir al Panel
-                    </a>
-                    <a href="/api/rescataditos" class="btn btn-secondary" target="_blank">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 6.75L22.5 12l-5.25 5.25m-10.5 0L1.5 12l5.25-5.25m7.5-3l-4.5 16.5" />
-                        </svg>
-                        Ver API
                     </a>
                 </div>
             </div>
@@ -680,10 +680,10 @@
         <!-- Footer -->
         <footer>
             <p>
-                Hecho con ❤️ para <a href="#">Asociación Amigos del Animal</a>
+                Hecho con 🐾 para <a href="#">Asociación Amigos del Animal</a>
             </p>
             <small>Sistema de Gestión v1.0</small>
-            <small>Desarrollado por <a href="https://softlixs.com" class="text-green-500">Softlixs IT</a></small>
+            <small>Desarrollado por <a href="https://softlixs.com" class="text-green-800">Softlixs IT</a></small>
 
         </footer>
     </div>
@@ -694,7 +694,7 @@
             const start = 0;
             const increment = target / (duration / 16);
             let current = start;
-            
+
             const timer = setInterval(() => {
                 current += increment;
                 if (current >= target) {
@@ -711,7 +711,7 @@
             try {
                 const response = await fetch('/api/stats');
                 const data = await response.json();
-                
+
                 setTimeout(() => {
                     animateNumber(document.getElementById('stat-animalitos'), data.animalitos || 0);
                     animateNumber(document.getElementById('stat-padrinos'), data.padrinos || 0);
@@ -730,4 +730,5 @@
         });
     </script>
 </body>
+
 </html>
