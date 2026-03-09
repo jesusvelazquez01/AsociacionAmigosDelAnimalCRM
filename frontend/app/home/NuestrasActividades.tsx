@@ -8,33 +8,33 @@ import { Heart, Scissors, BookOpen, Gavel, Users, ArrowRight } from 'lucide-reac
 // Actividades con colores del sistema Furs (todos usan primary)
 const activities = [
     {
-        title: 'Acción directa',
+        title: 'Intervención inmediata',
         description:
-            'Intervenimos directamente en la asistencia a animales abandonados en situaciones críticas, proporcionándoles atención médica y fomentando su adopción posterior por parte de hogares responsables.',
+            'Actuamos en primera línea para socorrer a perros y gatos en estado de abandono o emergencia. Les brindamos los cuidados veterinarios necesarios y trabajamos para integrarlos en familias amorosas y comprometidas.',
         icon: Heart,
     },
     {
-        title: 'Acción preventiva',
+        title: 'Trabajo preventivo',
         description:
-            'Organizamos campañas de castración gratuitas y/o de bajo costo en áreas de alta vulnerabilidad donde la presencia estatal es ineficiente y los perros y gatos se reproducen sin control.',
+            'Llevamos a cabo jornadas de esterilización en zonas vulnerables o donde la intervención del Estado es escasa, buscando frenar la sobrepoblación descontrolada de mascotas.',
         icon: Scissors,
     },
     {
-        title: 'Acciones educativas',
+        title: 'Labor educativa',
         description:
-            'Impartimos charlas, talleres, campañas de bien público y eventos con el propósito de concientizar sobre temas cruciales como la sobrepoblación animal, la importancia de la castración, el cuidado responsable y la ética animal.',
+            'Desarrollamos talleres, encuentros y campañas comunitarias para sensibilizar a la sociedad sobre el respeto animal, la tenencia responsable, los beneficios de la esterilización y la prevención del abandono.',
         icon: BookOpen,
     },
     {
-        title: 'Acciones judiciales y legislativas',
+        title: 'Impulso legal y derechos',
         description:
-            'Exigimos el cumplimiento de las leyes existentes y respaldamos la presentación de proyectos de ley que beneficien a los animales, contribuyendo así a su protección y bienestar.',
+            'Velamos por el respeto de las normativas de protección vigentes y apoyamos nuevas iniciativas legales que garanticen una vida digna y segura para todos los animales.',
         icon: Gavel,
     },
     {
-        title: 'Acciones solidarias',
+        title: 'Redes de solidaridad',
         description:
-            'Establecemos colaboraciones estrechas con entidades de bien público, organizaciones y activistas que comparten nuestros objetivos, fortaleciendo la red de apoyo y compromiso hacia la causa animal.',
+            'Creamos lazos fuertes con otras ONGs, grupos de rescate y voluntarios independientes que persiguen nuestros mismos ideales, consolidando así el movimiento por la defensa animal.',
         icon: Users,
     },
 ];
@@ -189,7 +189,7 @@ const OurActivities = () => {
                 {/* --- 2. PILARES DE SOPORTE --- */}
                 <div className="text-center mb-10 mt-16">
                     <h3 className="text-2xl md:text-3xl font-bold text-foreground">
-                        Nuestros <span className="text-primary">Pilares</span> de Soporte
+                        Nuestras <span className="text-primary">Áreas</span> de Impacto
                     </h3>
                 </div>
 
@@ -210,29 +210,7 @@ const OurActivities = () => {
                     ))}
                 </motion.div>
 
-                {/* Bottom CTA */}
-                <motion.div
-                    className="text-center mt-16"
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.6, delay: 0.4 }}
-                    viewport={{ once: true }}
-                >
-                    <p className="text-muted-foreground mb-6 text-lg">
-                        ¿Querés sumarte a nuestra causa y ayudar a más animales?
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-4">
-                        <Button asChild size="lg" className="rounded-full px-8 bg-primary hover:bg-primary/90">
-                            <a href="/voluntariado">
-                                Ser Voluntario
-                                <ArrowRight className="ml-2 w-5 h-5" />
-                            </a>
-                        </Button>
-                        <Button asChild size="lg" variant="outline" className="rounded-full px-8 border-primary text-primary hover:bg-primary/10">
-                            <a href="/donar">Hacer una Donación</a>
-                        </Button>
-                    </div>
-                </motion.div>
+
             </div>
         </section>
     );

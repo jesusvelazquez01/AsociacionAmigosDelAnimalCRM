@@ -21,21 +21,21 @@ export default function PetCard({ card, onDragEnd }: any) {
       animate={{ scale: 1, opacity: 1 }}
       exit={{ opacity: 0, scale: 0.8 }}
       transition={{ type: "spring", stiffness: 300, damping: 30, duration: 0.5 }}
-      className="absolute w-full h-full cursor-grab active:cursor-grabbing overflow-hidden"
-      style={{ x, rotate, opacity, borderRadius: 28, background: '#FAF5EE', boxShadow: '0 24px 64px rgba(44,26,14,0.18)' }}
+      className="absolute w-full h-full cursor-grab active:cursor-grabbing overflow-hidden furs-card bg-background shadow-xl border border-border"
+      style={{ x, rotate, opacity }}
     >
-      <div style={{ height: '68%', overflow: 'hidden', position: 'relative' }}>
-        <Image src={card.image} alt={card.name} fill className="object-cover" />
+      <div className="h-[65%] relative overflow-hidden">
+        <Image src={card.image} alt={card.name} fill className="object-cover" sizes="(max-width: 768px) 100vw, 30vw" />
         {/* Gradient overlay */}
-        <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(to bottom, transparent 50%, rgba(20,10,4,0.45) 100%)' }} />
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-background/90" />
       </div>
-      <div style={{ padding: '20px 24px 24px', textAlign: 'center' }}>
-        <h3 style={{ fontFamily: 'Cormorant Garamond, serif', fontSize: 36, fontWeight: 700, color: '#2C1A0E', margin: '0 0 8px', lineHeight: 1 }}>{card.name}</h3>
-        <div style={{ display: 'flex', justifyContent: 'center', gap: 8, marginBottom: 10 }}>
-          <span style={{ background: 'rgba(194,130,83,0.12)', color: '#A0623A', fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 50, fontFamily: 'Outfit, sans-serif', letterSpacing: '0.06em', textTransform: 'uppercase' }}>{card.species}</span>
-          <span style={{ border: '1.5px solid rgba(194,130,83,0.35)', color: '#C28253', fontSize: 12, fontWeight: 600, padding: '4px 12px', borderRadius: 50, fontFamily: 'Outfit, sans-serif', letterSpacing: '0.06em' }}>{card.age}</span>
+      <div className="p-6 text-center bg-background h-auto flex flex-col justify-center relative z-10">
+        <h3 className="furs-title-lg text-foreground mb-3 leading-none">{card.name}</h3>
+        <div className="flex justify-center gap-3 mb-4">
+          <span className="bg-primary/10 text-primary text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">{card.species}</span>
+          <span className="border border-primary/30 text-primary text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-wider">{card.age}</span>
         </div>
-        <p style={{ fontFamily: 'Outfit, sans-serif', fontSize: 13, color: '#9A7A5A' }}>Deslizá para conocer más</p>
+        <p className="text-sm font-medium text-muted-foreground mt-2">← Deslizá para conocer más →</p>
       </div>
     </motion.div>
   );

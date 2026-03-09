@@ -4,7 +4,7 @@ import { apiFetch } from '@/lib/api';
 
 export const metadata: Metadata = {
   title: 'Adopciones | Asociación Amigos del Animal',
-  description: 'Conoce a nuestros perritos y gatitos que están buscando un hogar lleno de amor. ¡Adopta, no compres!',
+  description: 'Conoce a nuestros perritos que están buscando un hogar lleno de amor. ¡Adopta, no compres!',
 };
 
 interface Pet {
@@ -64,7 +64,7 @@ export default async function AdopcionPage(
         initialMeta = response.meta || null;
     } catch (error) {
         console.error("Error cargando rescataditos en servidor:", error);
-        serverError = "No se pudieron cargar las mascotas. Intenta más tarde.";
+        serverError = "No se pudieron cargar los rescataditos. Intenta más tarde.";
     }
 
     return (

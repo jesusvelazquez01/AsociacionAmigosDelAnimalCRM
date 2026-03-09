@@ -76,9 +76,8 @@ export default function MetodosDonacion() {
                 <p className="text-sm text-muted-foreground">
                   <strong className="text-foreground">Titular:</strong> ANA LIA QUISPE
                 </p>
-                <p className="text-xs text-muted-foreground mt-2">
-                  📧 Al donar, avisanos por <Link href="/contacto" className="text-primary hover:underline">contacto</Link> para emitir el comprobante.
-                </p>
+                
+
               </div>
             </div>
           </motion.div>
@@ -103,7 +102,7 @@ export default function MetodosDonacion() {
 
             <div className="space-y-4">
               <p className="text-muted-foreground">
-                Doná con tarjeta de crédito, débito o dinero en cuenta de MercadoPago.
+                Doná con tarjeta de crédito, débito o dinero en cuenta de MercadoPago (Próximamente).
               </p>
 
               <div className="grid grid-cols-3 gap-3">
@@ -202,7 +201,9 @@ export default function MetodosDonacion() {
               })}
 
               <Link
-                href="/contacto"
+                href="https://wa.me/5493884219759?text=Hola Asoc. Amigos del Animal, %20quiero%20donar%20al%20refugio%20con%20alimentos%20o%20insumos"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-pill-secondary w-full text-center py-4 block mt-4"
               >
                 Coordinar entrega

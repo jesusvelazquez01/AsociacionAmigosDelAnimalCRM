@@ -22,6 +22,7 @@ export default function MontosMensuales() {
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
             Con una donación mensual nos ayudás a planificar mejor el cuidado de nuestros rescataditos.
           </p>
+          <h2 className="bg-black  rounded-lg text-lg text-white mt-4 max-w-2xl mx-auto">¡Proximamente estara disponible la donacion mensual!</h2>
         </div>
 
         {/* Grid de montos - Estilo Montecito */}
@@ -78,7 +79,7 @@ export default function MontosMensuales() {
 
         {/* Nota de cancelación */}
         <p className="text-center text-sm text-muted-foreground mt-8">
-          💡 <strong>Sin preocupaciones:</strong> Podés cancelar cuando lo desees desde tu cuenta de MercadoPago.
+        <strong>Sin preocupaciones:</strong> Podés cancelar cuando lo desees desde tu cuenta de MercadoPago.
         </p>
       </div>
     </section>

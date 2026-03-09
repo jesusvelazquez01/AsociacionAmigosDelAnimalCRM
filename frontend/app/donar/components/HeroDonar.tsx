@@ -37,12 +37,12 @@ export default function HeroDonar() {
               Cada aporte se traduce directamente en rescates, tratamientos veterinarios y finales felices para nuestros rescataditos.
             </p>
 
-            <div className="flex flex-wrap gap-4">
-              <a href="#metodos-donacion" className="bg-primary hover:bg-primary/80 text-white font-bold rounded-full px-8 py-6 text-lg h-auto">
+            <div className="flex flex-wrap gap-4 mt-8">
+              <a href="#metodos-donacion" className="btn-pill-primary text-base sm:text-lg px-8 py-3 sm:py-4 flex items-center justify-center h-auto cursor-pointer">
                 Donar ahora
               </a>
-              <Link href="/apadrinar" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-6 text-lg h-auto font-bold">
-                <PawPrint className="w-5 h-5 mr-2 " />Apadrinar
+              <Link href="/apadrinar" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-3 sm:py-4 text-base sm:text-lg font-bold flex items-center justify-center transition-colors">
+                <PawPrint className="w-5 h-5 mr-2" /> Apadrinar
               </Link>
             </div>
           </motion.div>
@@ -79,7 +79,7 @@ export default function HeroDonar() {
                           alt={`Rescatadito ${index + 1}`}
                           width={400}
                           height={480}
-                          className="furs-image w-full h-120 md:h-120 object-cover"
+                          className="furs-image w-full aspect-[4/5] sm:aspect-[3/4] object-cover"
                         />
                         <span className={`absolute bottom-2 left-2 furs-badge text-xs ${item.label === "Antes"
                           ? "bg-white/90 text-foreground"

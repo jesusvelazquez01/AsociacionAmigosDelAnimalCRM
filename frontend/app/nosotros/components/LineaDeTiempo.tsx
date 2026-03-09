@@ -8,25 +8,25 @@ const timelineSteps = [
   {
     icon: Users,
     title: 'La Alerta Comunitaria',
-    desc: 'Vecinos de Alto Comedero, el Centro y alrededores nos alertan. La red solidaria es el inicio de cada rescate.',
+    desc: 'Vecinos de toda la ciudad y localidades cercanas nos alertan. La red solidaria es el inicio de cada rescate.',
     color: 'bg-primary',
   },
   {
     icon: Car,
     title: 'Rescate del Abandono',
-    desc: 'Nuestro equipo acude con seguridad y empatía. A menudo encontramos perros desnutridos, con sarna o heridas graves.',
+    desc: 'Acudimos con seguridad y empatía. A menudo encontramos perros desnutridos, con sarna o heridas graves.',
     color: 'bg-primary',
   },
   {
     icon: Syringe,
     title: 'Atención Veterinaria',
-    desc: 'Chequeo completo, vacunas, desparasitación y tratamientos especiales. Colaboramos con veterinarios locales.',
+    desc: 'Chequeo completo, vacunas, desparasitación y tratamientos especiales. Nos colaboran veterinarios locales.',
     color: 'bg-primary',
   },
   {
     icon: Home,
     title: 'Rehabilitación',
-    desc: 'Albergamos a +200 perros en el refugio y 67 en su hogar personal. Aprenden a confiar nuevamente.',
+    desc: 'Albergamos a +200 perros en el refugio y 67 en nuestro hogar personal. Aprenden a confiar nuevamente.',
     color: 'bg-primary',
   },
   {
@@ -48,10 +48,10 @@ export default function LineaDeTiempo() {
           viewport={{ once: true }}
           className="text-center mb-24"
         >
-          <span className="inline-block bg-pink-50 text-pink-500 px-4 py-1.5 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">
+          <span className="inline-block bg-primary/10 text-primary px-4 py-1.5 rounded-full text-xs font-bold mb-4 uppercase tracking-wider">
             Nuestro Proceso
           </span>
-          <h2 className="text-4xl font-bold mb-4 font-serif">
+          <h2 className="text-4xl font-bold mb-4">
             Cómo Trabajamos en Jujuy
           </h2>
           <p className="text-lg text-gray-600 max-w-xl mx-auto">
@@ -62,7 +62,7 @@ export default function LineaDeTiempo() {
         {/* Timeline Container */}
         <div className="relative">
           {/* Línea recta rosa */}
-          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-0.5 bg-pink-200 hidden lg:block" />
+          <div className="absolute left-0 right-0 top-1/2 -translate-y-1/2 h-0.5 bg-primary/10 hidden lg:block" />
 
           {/* Steps Grid */}
           <div className="grid grid-cols-1 md:grid-cols-5 gap-4 relative">
@@ -82,7 +82,7 @@ export default function LineaDeTiempo() {
                   {/* Contenido TOP */}
                   {isTop && (
                     <div className="text-center mb-6 lg:mb-12 px-2 hidden lg:block h-24">
-                      <h3 className="text-base font-bold text-gray-900 mb-2 font-serif">
+                      <h3 className="text-xl font-bold text-foreground mb-2">
                         {step.title}
                       </h3>
                       <p className="text-gray-500 text-xs leading-relaxed">
@@ -92,14 +92,14 @@ export default function LineaDeTiempo() {
                   )}
 
                   {/* Ícono pink circle */}
-                  <div className={`relative w-16 h-16 rounded-full bg-pink-100 flex items-center justify-center border-4 border-white shadow-sm z-10 my-4 lg:my-0`}>
-                    <IconComponent className="w-7 h-7 text-pink-500" />
+                  <div className={`relative w-16 h-16 rounded-full bg-primary/10 flex items-center justify-center border-4 border-white shadow-sm z-10 my-4 lg:my-0`}>
+                    <IconComponent className="w-7 h-7 text-primary" />
                   </div>
 
                   {/* Contenido BOTTOM / Mobile */}
                   {(!isTop || true) && (
                     <div className={`text-center mt-6 lg:mt-12 px-2 h-24 ${isTop ? 'lg:hidden' : 'lg:block'}`}>
-                      <h3 className="text-base font-bold text-gray-900 mb-2 font-serif">
+                      <h3 className="text-xl font-bold text-foreground mb-2">
                         {step.title}
                       </h3>
                       <p className="text-gray-500 text-xs leading-relaxed">

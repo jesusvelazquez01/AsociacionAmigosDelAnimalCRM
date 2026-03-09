@@ -14,14 +14,14 @@ export default function SobreNosotros() {
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
 
   return (
-    <div className="min-h-screen bg-white overflow-hidden text-gray-900 font-sans">
+    <div className="min-h-screen bg-background text-foreground overflow-hidden">
       {/* Barra de progreso de lectura */}
-      <motion.div className="fixed top-0 left-0 right-0 h-1.5 bg-pink-400 origin-left z-[60]" style={{ scaleX }} />
+      <motion.div className="fixed top-0 left-0 right-0 h-1.5 bg-primary origin-left z-[60]" style={{ scaleX }} />
 
       <HeroNosotros />
       <HistoriaBrenda />
       <LineaDeTiempo />
-      <LlamadoAAccion />
+    
     </div>
   );
 }

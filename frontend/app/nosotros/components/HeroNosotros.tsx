@@ -37,9 +37,9 @@ export default function HeroNosotros() {
             <span className="text-pink-400 font-semibold uppercase tracking-wider text-sm">San Salvador de Jujuy, Jujuy</span>
           </div>
 
-          <h1 className="text-5xl lg:text-7xl font-bold mb-6 tracking-tight leading-tight font-serif">
+          <h1 className="furs-title-xl text-foreground mb-6">
             CASI 40 AÑOS<br />
-            <span className="text-gray-900">
+            <span className="text-primary">
               DE RESCATE
             </span>
           </h1>
@@ -51,10 +51,10 @@ export default function HeroNosotros() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <Button asChild size="lg" className="rounded-full h-12 px-8 text-base bg-pink-400 hover:bg-pink-500 text-white transition-all shadow-md">
+            <Button asChild size="lg" className="px-8 py-4 rounded-full h-12 px-8 text-lg h-auto bg-primary hover:bg-primary/80 text-white transition-all shadow-md">
               <Link href="/adopcion">Conocer a la manada</Link>
             </Button>
-            <Button asChild size="lg" variant="outline" className="rounded-full h-12 px-8 text-base border-gray-900 text-gray-900 hover:bg-gray-100">
+            <Button asChild size="lg" variant="outline" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-4 text-lg h-auto font-bold ">
               <Link href="/voluntarios">Sumate como Voluntario</Link>
             </Button>
           </div>

@@ -8,7 +8,7 @@ const activitiesData = [
   {
     id: "atencion-vet",
     title: "Atención Veterinaria Integral",
-    description: "Chequeos médicos completos, vacunaciones, desparasitación, cirugías y tratamientos especializados. Contamos con veterinarios voluntarios disponibles 24/7 para emergencias y cuidados intensivos.",
+    description: "Con tu ayuda podemos realizar chequeos médicos completos, vacunaciones, desparasitación, cirugías y tratamientos especializados. Contamos con veterinarios voluntarios disponibles para emergencias y cuidados intensivos.",
     color: "#EC4899",
     image: "/Foto-actividad-refugio/atencionvet.jpeg"
   },
@@ -21,8 +21,8 @@ const activitiesData = [
   },
   {
     id: "socializacion",
-    title: "Socialización y Adiestramiento",
-    description: "Trabajamos en la confianza y comportamiento de los animales. Les enseñamos comandos básicos y los ayudamos a superar miedos para que estén listos para convivir en armonía con su futura familia.",
+    title: "Socialización y volver a vivir",
+    description: "Trabajamos en la confianza y comportamiento de los animales. Los ayudamos a superar miedos para que estén listos para convivir en armonía con su futura familia.",
     color: "#EF4444",
     image: "/Foto-perritos/perrito3.jpg"
   },
@@ -36,7 +36,7 @@ const activitiesData = [
   {
     id: "bienestar",
     title: "Enriquecimiento y Bienestar",
-    description: "Actividades recreativas, juegos, interacción social y paseos al aire libre. Estimulamos su mente y cuerpo para que su estancia en el refugio sea lo más feliz y activa posible.",
+    description: "Actividades recreativas, juegos, interacción social. Estimulamos su mente y cuerpo para que su estancia en el refugio sea lo más feliz y activa posible.",
     color: "#10B981",
     image: "/Foto-actividad-refugio/entretenimiento.jpg"
   },
@@ -80,7 +80,7 @@ const AppStoreActivities = () => {
             <div className="p-6 md:p-8 flex flex-col flex-grow bg-white">
               <motion.h3 
                 layoutId={`title-${activity.id}`} 
-                className="text-xl font-bold font-serif text-gray-900 mb-2"
+                className="furs-title-md text-foreground mb-2"
               >
                 {activity.title}
               </motion.h3>
@@ -102,9 +102,9 @@ const AppStoreActivities = () => {
                 <motion.img layoutId={`image-${selectedActivity.id}`} src={selectedActivity.image} className="w-full h-full object-cover" />
               </div>
               <div className="w-full md:w-1/2 p-6 md:p-8 overflow-y-auto flex flex-col">
-                <motion.h3 layoutId={`title-${selectedActivity.id}`} className="text-2xl font-bold font-serif text-gray-900 mb-4">{selectedActivity.title}</motion.h3>
+                <motion.h3 layoutId={`title-${selectedActivity.id}`} className="furs-title-md text-foreground mb-4">{selectedActivity.title}</motion.h3>
                 <p className="text-gray-600 text-sm leading-relaxed mb-8 flex-grow">{selectedActivity.description}</p>
-                <Button onClick={() => setSelectedId(null)} className="w-full h-12 rounded-full text-white font-bold bg-pink-400 hover:bg-pink-500 mt-auto">
+                <Button onClick={() => setSelectedId(null)} className="w-full h-12 rounded-full text-white font-bold bg-primary hover:bg-primary/80 mt-auto">
                   Cerrar
                 </Button>
               </div>
@@ -121,7 +121,7 @@ export default function ProgramasRefugio() {
     <>
       <div className="flex items-center justify-center max-w-7xl mx-auto px-6 py-12" id="programas">
         <div className="h-px bg-gray-300 flex-grow" />
-        <h2 className="px-6 text-3xl font-bold font-serif text-gray-900">Nuestros Programas</h2>
+        <h2 className="px-6 furs-title-md text-foreground">Nuestros Programas</h2>
         <div className="h-px bg-gray-300 flex-grow" />
       </div>
 

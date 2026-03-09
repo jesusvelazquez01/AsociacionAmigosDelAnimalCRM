@@ -5,7 +5,7 @@ import PatitosCaminando from '@/components/ui/PatitosCaminando';
 // Metadata para SEO
 export const metadata = {
     title: 'Formulario de Adopción | Asociación Amigos del Animal',
-    description: 'Completa el formulario para adoptar una mascota de nuestro refugio. Ayúdanos a encontrar un hogar para nuestros perritos.',
+    description: 'Completa el formulario para adoptar un rescatadito de nuestro refugio. Ayúdanos a encontrar un hogar para nuestros perritos.',
 };
 
 // Componente de loading para Suspense

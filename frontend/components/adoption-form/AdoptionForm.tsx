@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/dialog";
 
 import { Pet, FormData, FieldError, AdoptionFormProps } from './types';
-import { FORM_SECTIONS, INITIAL_FORM_DATA, MOCK_PETS, STORAGE_KEYS } from './constants';
+import { FORM_SECTIONS, INITIAL_FORM_DATA, STORAGE_KEYS } from './constants';
 import FormNavigation, { MobileNavigation } from './FormNavigation';
 import SuccessView from './SuccessView';
 import StepPets from './steps/StepPets';
@@ -55,39 +55,83 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
 
     const [formData, setFormData] = useState<FormData>(INITIAL_FORM_DATA);
 
-    // Cargar datos guardados y pets de la API al inicio
+    // Nuevos estados para paginación y búsqueda
+    const [searchQuery, setSearchQuery] = useState('');
+    const [debouncedSearch, setDebouncedSearch] = useState('');
+    const [currentPage, setCurrentPage] = useState(1);
+    const [totalPages, setTotalPages] = useState(1);
+    const [loadingPets, setLoadingPets] = useState(false);
+
+    // Cargar datos guardados iniciales
+
     useEffect(() => {
-        const loadData = async () => {
-            // Cargar form draft desde localStorage
+        const loadInitialDrafts = () => {
             const savedData = localStorage.getItem(STORAGE_KEYS.FORM_DRAFT);
             const savedPets = localStorage.getItem(STORAGE_KEYS.SELECTED_PETS);
             const savedAdditionalPets = localStorage.getItem(STORAGE_KEYS.ADDITIONAL_PETS);
 
             if (savedData) {
-                try {
-                    const parsed = JSON.parse(savedData);
-                    setFormData(parsed);
-                } catch (e) {
-                    console.error('Error parsing saved data:', e);
-                }
+                try { setFormData(JSON.parse(savedData)); } catch (e) {}
             }
-
             if (savedAdditionalPets) {
+                try { setAdditionalPets(JSON.parse(savedAdditionalPets)); } catch (e) {}
+            }
+            if (savedPets && !initialPetId) {
+                try { setSelectedPet(JSON.parse(savedPets)); } catch (e) {}
+            }
+        };
+        loadInitialDrafts();
+    }, [initialPetId]);
+
+    // Fetch initial pet if requested from URL
+    useEffect(() => {
+        const fetchInitialPet = async () => {
+            if (initialPetId) {
                 try {
-                    const parsed = JSON.parse(savedAdditionalPets);
-                    setAdditionalPets(parsed);
+                    const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
+                    const response = await fetch(`${API_URL}/rescataditos?id=${initialPetId}`);
+                    const result = await response.json();
+                    if (result.data && result.data.length > 0) {
+                        const animal = result.data[0];
+                        setSelectedPet({
+                            id: animal.id,
+                            name: animal.name,
+                            slug: animal.slug,
+                            age: animal.age || 'Desconocida',
+                            type: animal.type === 'Perro' ? 'Perro' : animal.type === 'Gato' ? 'Gato' : animal.type,
+                            image: animal.image || null
+                        });
+                    }
                 } catch (e) {
-                    console.error('Error parsing saved pets:', e);
+                    console.error('Error fetching initial pet', e);
                 }
             }
+        };
+        fetchInitialPet();
+    }, [initialPetId]);
 
-            // Cargar pets desde la API
+    // Handle Search Debounce
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setDebouncedSearch(searchQuery);
+            setCurrentPage(1);
+        }, 300);
+        return () => clearTimeout(timer);
+    }, [searchQuery]);
+
+    // Cargar mascotas disponibles con paginación
+    useEffect(() => {
+        const loadPets = async () => {
+            setLoadingPets(true);
             try {
                 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000/api';
-                const response = await fetch(`${API_URL}/rescataditos`);
+                let url = `${API_URL}/rescataditos?per_page=5&page=${currentPage}`;
+                if (debouncedSearch) {
+                    url += `&buscar=${encodeURIComponent(debouncedSearch)}`;
+                }
+                const response = await fetch(url);
                 const result = await response.json();
 
-                // Mapear los datos de la API al formato Pet del frontend
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 const pets: Pet[] = result.data.map((animal: any) => ({
                     id: animal.id,
@@ -99,38 +143,19 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                 }));
 
                 setAvailablePets(pets);
-
-                // Buscar pet inicial o guardado
-                if (initialPetId) {
-                    const pet = pets.find((p: Pet) => p.id === parseInt(initialPetId));
-                    if (pet) {
-                        setSelectedPet(pet);
-                    }
-                } else if (savedPets) {
-                    try {
-                        const parsed = JSON.parse(savedPets);
-                        const pet = pets.find((p: Pet) => p.id === parsed.id);
-                        if (pet) setSelectedPet(pet);
-                    } catch (e) {
-                        console.error('Error parsing saved pet:', e);
-                    }
+                if (result.meta) {
+                    setTotalPages(result.meta.last_page);
                 }
             } catch (error) {
                 console.error('Error cargando animalitos:', error);
-                // Usar MOCK_PETS como fallback
-                setAvailablePets(MOCK_PETS);
-
-                if (initialPetId) {
-                    const pet = MOCK_PETS.find((p: Pet) => p.id === parseInt(initialPetId));
-                    if (pet) setSelectedPet(pet);
-                }
+            } finally {
+                setLoadingPets(false);
+                setLoading(false); // Falla segura: indicamos que hemos terminado la carga general
             }
-
-            setLoading(false);
         };
 
-        loadData();
-    }, [initialPetId]);
+        loadPets();
+    }, [currentPage, debouncedSearch]);
 
     // Guardar automáticamente
     useEffect(() => {
@@ -172,7 +197,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                 if (!selectedPet && additionalPets.length === 0) {
                     newErrors.push({
                         field: 'selectedPet',
-                        message: 'Debes seleccionar al menos una mascota para adoptar'
+                        message: 'Debes seleccionar al menos un rescatadito para adoptar'
                     });
                 }
                 break;
@@ -471,6 +496,12 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
                                             onToggleAdditionalPet={toggleAdditionalPet}
                                             hasError={hasError}
                                             getFieldError={getFieldError}
+                                            searchQuery={searchQuery}
+                                            onSearchChange={setSearchQuery}
+                                            currentPage={currentPage}
+                                            totalPages={totalPages}
+                                            onPageChange={setCurrentPage}
+                                            loadingPets={loadingPets}
                                         />
                                     )}
 
@@ -607,7 +638,7 @@ export default function AdoptionForm({ initialPetId }: AdoptionFormProps) {
 
                             {/* Mascotas seleccionadas */}
                             <div>
-                                <h4 className="font-semibold text-gray-900 mb-2">Mascotas seleccionadas:</h4>
+                                <h4 className="font-semibold text-gray-900 mb-2">Rescataditos seleccionados:</h4>
                                 <div className="space-y-2">
                                     {selectedPet && (
                                         <div className="flex items-center gap-2 text-sm">

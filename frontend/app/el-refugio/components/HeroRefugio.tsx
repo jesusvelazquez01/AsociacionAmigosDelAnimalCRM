@@ -16,14 +16,14 @@ export default function HeroRefugio() {
           transition={{ duration: 0.8 }}
           className="space-y-6"
         >
-          <h1 className="text-5xl lg:text-7xl font-bold leading-tight font-serif text-gray-900">
+          <h1 className="furs-title-xl text-foreground">
             Historias de<br />Esperanza
           </h1>
           <p className="text-lg text-gray-600 max-w-lg leading-relaxed font-light">
             Con pasión y compromiso, transformamos vidas. Descubrí cómo cada rescate cuenta.
           </p>
           <div className="pt-4">
-            <Button asChild size="lg" className="rounded-full h-12 px-8 text-base bg-pink-400 hover:bg-pink-500 text-white transition-all shadow-md">
+            <Button asChild size="lg" className="px-8 py-4 h-auto rounded-full text-base bg-primary hover:bg-primary/80 text-white transition-all shadow-md">
               <Link href="#programas">Conocé Nuestros Programas</Link>
             </Button>
           </div>

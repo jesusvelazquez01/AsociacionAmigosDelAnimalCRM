@@ -15,11 +15,11 @@ const helpOptions = [
         buttonText: "Ver Animalitos",
     },
     {
-        title: "Sé Voluntario",
-        description: "Únete a nuestro equipo de voluntarios y ayúdanos en el cuidado y paseo de los animales.",
+        title: "Ser Padrino",
+        description: "Podes apadrinar a uno de nuestros rescataditos y ayudarlo a salir adelante",
         icon: UserPlus,
-        link: "/voluntarios",
-        buttonText: "Quiero Ayudar",
+        link: "/apadrinar",
+        buttonText: "Quiero ser Padrino",
     },
     {
         title: "Dona",

@@ -38,9 +38,9 @@ export default function FaqYAnimales() {
   const handlePrev = () => setCurrentIndex((prev) => prev === 0 ? petCards.length - 1 : prev - 1);
 
   return (
-    <section className="ap-section" style={{ background: 'var(--cream)' }}>
-      <div className="ap-container">
-        <div className="ap-grid-two">
+    <section className="furs-section bg-secondary/10">
+      <div className="furs-container">
+        <div className="grid lg:grid-cols-2 gap-16 lg:gap-24 items-center">
 
           {/* FAQ */}
           <motion.div
@@ -48,12 +48,12 @@ export default function FaqYAnimales() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <div className="ap-section-tag">Preguntas frecuentes</div>
-            <h2 className="ap-title-display" style={{ marginBottom: 32 }}>
-              Dudas <em>comunes</em>
+            <div className="furs-badge bg-primary/10 text-primary mb-4">Preguntas frecuentes</div>
+            <h2 className="furs-title-lg mb-8">
+              Dudas <em className="italic text-primary">comunes</em>
             </h2>
 
-            <Accordion type="single" collapsible className="w-full">
+            <Accordion type="single" collapsible className="w-full space-y-4">
               {faqs.map((faq, index) => (
                 <motion.div
                   key={index}
@@ -64,17 +64,15 @@ export default function FaqYAnimales() {
                 >
                   <AccordionItem
                     value={`item-${index}`}
-                    className="ap-faq-item border-0"
-                    style={{ marginBottom: 10 }}
+                    className="furs-card rounded-[1.5rem] bg-background px-6 border border-border shadow-sm border-0"
                   >
                     <AccordionTrigger
-                      className="hover:no-underline ap-faq-trigger"
-                      style={{ padding: '18px 22px', fontWeight: 500, fontSize: 15, fontFamily: 'Outfit, sans-serif', color: '#2C1A0E' }}
+                      className="hover:no-underline py-5 text-[15px] font-semibold text-foreground text-left"
                     >
                       {faq.q}
                     </AccordionTrigger>
                     <AccordionContent
-                      style={{ padding: '0 22px 18px', fontSize: 14, color: '#9A7A5A', lineHeight: 1.7 }}
+                      className="pb-5 text-[14px] text-muted-foreground leading-relaxed"
                     >
                       {faq.a}
                     </AccordionContent>
@@ -85,23 +83,23 @@ export default function FaqYAnimales() {
           </motion.div>
 
           {/* Carrusel */}
-          <div>
+          <div className="flex flex-col items-center lg:items-start w-full max-w-[400px] mx-auto lg:mx-0">
             <motion.div
               initial={{ opacity: 0, y: 24 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              style={{ marginBottom: 40 }}
+              className="mb-10 text-center lg:text-left w-full"
             >
-              <div className="ap-section-tag">Conocelos</div>
-              <h2 className="ap-title-display">
-                Nuestros <em>ahijados</em>
+              <div className="furs-badge bg-primary/10 text-primary mb-4">Conocelos</div>
+              <h2 className="furs-title-lg">
+                Nuestros <em className="italic text-primary">ahijados</em>
               </h2>
-              <p className="ap-sub" style={{ marginTop: 12 }}>
+              <p className="text-lg text-muted-foreground mt-4">
                 Deslizá para conocer a quienes necesitan tu ayuda ahora mismo.
               </p>
             </motion.div>
 
-            <div className="ap-carousel-wrap">
+            <div className="relative w-full aspect-[4/5] mx-auto">
               <AnimatePresence mode="popLayout">
                 <PetCard
                   key={petCards[currentIndex].id}
@@ -111,15 +109,23 @@ export default function FaqYAnimales() {
               </AnimatePresence>
             </div>
 
-            <div className="ap-carousel-nav">
-              <button className="ap-nav-btn" onClick={handlePrev}>
-                <ChevronLeft size={18} />
+            <div className="flex items-center justify-center gap-6 mt-10 w-full">
+              <button 
+                className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-secondary hover:border-secondary hover:text-secondary-foreground transition-all cursor-pointer bg-background z-10 text-foreground" 
+                onClick={handlePrev}
+                aria-label="Anterior animal"
+              >
+                <ChevronLeft size={20} />
               </button>
-              <span className="ap-counter">
+              <span className="font-bold text-muted-foreground w-12 text-center tracking-wide">
                 {currentIndex + 1} / {petCards.length}
               </span>
-              <button className="ap-nav-btn" onClick={handleNext}>
-                <ChevronRight size={18} />
+              <button 
+                className="w-12 h-12 rounded-full border border-border flex items-center justify-center hover:bg-secondary hover:border-secondary hover:text-secondary-foreground transition-all cursor-pointer bg-background z-10 text-foreground" 
+                onClick={handleNext}
+                aria-label="Siguiente animal"
+              >
+                <ChevronRight size={20} />
               </button>
             </div>
           </div>

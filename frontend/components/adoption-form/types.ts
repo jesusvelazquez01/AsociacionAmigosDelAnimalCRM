@@ -64,6 +64,12 @@ export interface StepPetsProps {
     onToggleAdditionalPet: (id: number) => void;
     hasError: (field: string) => boolean;
     getFieldError: (field: string) => FieldError | undefined;
+    searchQuery: string;
+    onSearchChange: (query: string) => void;
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+    loadingPets: boolean;
 }
 
 export interface FormNavigationProps {

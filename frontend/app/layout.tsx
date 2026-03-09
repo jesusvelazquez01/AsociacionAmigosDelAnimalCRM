@@ -22,9 +22,9 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Amigos del Animal | Asociación Protectora - San Salvador de Jujuy",
-  description: "Asociación Amigos del Animal - Rescatamos, cuidamos y encontramos hogares para animales abandonados en San Salvador de Jujuy, Argentina. Adopta, no compres.",
-  keywords: "adopción, mascotas, perros, gatos, rescate animal, Jujuy, Argentina, protectora",
+  title: "Amigos del Animal | Asociación Protectora de Animales - San Salvador de Jujuy, Argentina",
+  description: "Asociación Amigos del Animal - Desde 1987 Rescatamos, cuidamos y encontramos hogares para animales abandonados en San Salvador de Jujuy, Argentina. Adopta, no compres.",
+  keywords: "adopción jujuy, mascotas jujuy, perros jujuy, gatos jujuy, rescate animal jujuy, Jujuy, Argentina, protectora, apadrinar jujuy, donar jujuy, proteccion animal jujuy",
 };
 
 // Viewport configuration - CRITICAL for mobile responsiveness

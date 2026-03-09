@@ -27,10 +27,10 @@ export default function LlamadoAAccion() {
             Cada adopción es un acto de amor. Al adoptar, no solo salvás una vida, también ganás un amigo incondicional.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/contacto" className="btn-pill-primary text-lg px-8 py-4" onClick={trackContactFromAdoption}>
+            <Link href="https://wa.me/5493884219759?text=Hola Asoc. Amigos del Animal, %20quiero%20adoptar%20un%20animal" className="btn-pill-primary text-lg px-8 py-4" onClick={trackContactFromAdoption}>
               Contactar al Refugio
             </Link>
-            <Link href="/apadrinar" className="btn-pill-secondary text-lg px-8 py-4">
+            <Link href="/apadrinar" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-4 text-lg h-auto font-bold">
               Apadrinar
             </Link>
           </div>

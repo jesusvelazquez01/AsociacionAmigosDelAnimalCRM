@@ -176,50 +176,6 @@ export default function RequisitosPage() {
       </section>
 
       {/* ═══════════════════════════════════════════════════════════════════════════
-          NOTA IMPORTANTE
-          ═══════════════════════════════════════════════════════════════════════════ */}
-      <section className="furs-section bg-amber-50 border-y border-amber-100">
-        <div className="furs-container">
-          <div className="max-w-3xl mx-auto">
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.5 }}
-              viewport={{ once: true }}
-              className="flex gap-6 items-start"
-            >
-              <div className="w-14 h-14 bg-amber-500 text-white rounded-2xl flex items-center justify-center flex-shrink-0">
-                <AlertTriangle className="w-7 h-7" />
-              </div>
-              <div>
-                <h3 className="font-bold text-xl text-amber-900 mb-3">
-                  Importante saber
-                </h3>
-                <ul className="space-y-2 text-amber-800">
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600">•</span>
-                    La adopción es <strong>gratuita</strong>, no cobramos por nuestros animalitos.
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600">•</span>
-                    Todos nuestros rescataditos están <strong>vacunados, desparasitados y castrados</strong>.
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600">•</span>
-                    Realizamos <strong>seguimiento post-adopción</strong> para asegurarnos del bienestar del animal.
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="text-amber-600">•</span>
-                    Si por algún motivo no podés quedarte con el animal, <strong>debés devolverlo a nosotros</strong>, no a terceros.
-                  </li>
-                </ul>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════════════════════════════════════════════════════
           CTA FINAL
           ═══════════════════════════════════════════════════════════════════════════ */}
       <section className="furs-section bg-card border-t border-border/30">

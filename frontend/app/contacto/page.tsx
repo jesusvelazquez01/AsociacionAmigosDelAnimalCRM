@@ -235,7 +235,7 @@ export default function ContactoPage() {
                   <div>
                     <h3 className="text-lg font-bold text-foreground">Email</h3>
                     <a href="mailto:asociacionamigosdelanimal-jujuy@hotmail.com" className="text-muted-foreground hover:text-primary transition-colors">
-                      asociacionamigosdelanimal-jujuy@hotmail.com
+                      amigos.del.animal.jujuy@gmail.com
                     </a>
                   </div>
                 </div>

@@ -24,14 +24,12 @@ export default function LlamadoAAccion() {
             ¿Preferís involucrarte personalmente?
           </h2>
           <p className="text-lg text-muted-foreground mb-8 max-w-xl mx-auto">
-            Si el dinero no es una opción, tu tiempo, talento y hogar temporal son invaluables para nosotros.
+            Si el dinero no es una opción, tu tiempo, talento y un hogar son invaluables para nosotros.
           </p>
           <div className="flex flex-wrap justify-center gap-4">
-            <Link href="/voluntarios" className="btn-pill-primary text-lg px-8 py-4" onClick={trackSponsorClicked}>
-              Ser voluntario
-            </Link>
-            <Link href="/adopcion" className="btn-pill-secondary text-lg px-8 py-4">
-              Hogar temporal
+
+            <Link href="/adopcion" className="border-2 border-gray-900 text-gray-900 hover:bg-gray-900 hover:text-white rounded-full px-8 py-4 text-lg h-auto font-bold">
+              Adoptar
             </Link>
           </div>
         </motion.div>
