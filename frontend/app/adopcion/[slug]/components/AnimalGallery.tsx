@@ -1,6 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence, useMotionValue, useTransform } from 'framer-motion';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import {
@@ -23,6 +24,17 @@ export function AnimalGallery({ galleryImages }: AnimalGalleryProps) {
     const [isGalleryModalOpen, setIsGalleryModalOpen] = useState(false);
     const [isDisclaimerOpen, setIsDisclaimerOpen] = useState(false);
     const [isDisclaimerAccepted, setIsDisclaimerAccepted] = useState(false);
+
+    useEffect(() => {
+        if (isGalleryModalOpen || isDisclaimerOpen) {
+            document.body.style.overflow = 'hidden';
+        } else {
+            document.body.style.overflow = '';
+        }
+        return () => {
+            document.body.style.overflow = '';
+        };
+    }, [isGalleryModalOpen, isDisclaimerOpen]);
 
     const handleDragEnd = (event: any, info: any) => {
         const offset = info.offset.x;
@@ -199,18 +211,20 @@ function GalleryModal({ images, currentIndex, onClose, onIndexChange }: {
     const handleNext = () => onIndexChange((currentIndex + 1) % images.length);
     const handlePrev = () => onIndexChange(currentIndex === 0 ? images.length - 1 : currentIndex - 1);
 
-    return (
+    if (typeof document === 'undefined') return null;
+
+    return createPortal(
         <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 bg-black/95 flex items-center justify-center"
+            className="fixed inset-0 z-[100] bg-black/95 flex items-center justify-center"
             onClick={onClose}
         >
             <button onClick={onClose} className="absolute top-4 right-4 z-10 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full p-3 transition-all">
                 <X className="w-6 h-6 text-white" />
             </button>
-            <div className="relative w-full h-full flex items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
+            <div className="relative w-full h-full flex flex-col items-center justify-center p-4" onClick={(e) => e.stopPropagation()}>
                 <AnimatePresence mode="wait">
                     <motion.img
                         key={currentIndex}
@@ -237,6 +251,7 @@ function GalleryModal({ images, currentIndex, onClose, onIndexChange }: {
                     </>
                 )}
             </div>
-        </motion.div>
+        </motion.div>,
+        document.body
     );
 }
