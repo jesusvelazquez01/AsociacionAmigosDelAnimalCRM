@@ -20,6 +20,11 @@ class AnimalitoController extends Controller
             ->where('activo', true)
             ->where('adoptado', false);
 
+        // Filtro por ID (Para la inicialización en modal/formulario)
+        if (request()->has('id') && request('id') !== '') {
+            $query->where('id', request('id'));
+        }
+
         // Filtro por género
         if (request()->has('genero') && request('genero') !== 'Todos') {
             $query->where('genero', request('genero'));
